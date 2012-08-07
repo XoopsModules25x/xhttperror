@@ -28,10 +28,15 @@
  * ****************************************************************************
  */
 
-global $pathImageAdmin;
-echo "<div align='center'><a href='http://www.xoops.org' target='_blank'>
-         <img src='".$pathImageModule."/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a></div>";
-echo "<div class='center small italic pad5'>
-          <strong>" . $xoopsModule->getVar('name') . "</strong> "._AM_XHTTPERR_MAINTAINEDBY."
-            <a href='IN PROGRESS' title='Visit IN PROGRESS' class='tooltip' rel='external'>IN PROGRESS</a></div>";
-xoops_cp_footer();  
+global $pathImageAdmin; 
+    
+echo "<div align=\"center\">";
+echo "<a href=\"http://www.xoops.org\" target=\"_blank\">";
+echo "<img src=" . $pathImageAdmin.'/xoopsmicrobutton.gif'.' '." alt='XOOPS' title='XOOPS'>";
+echo "</a>";
+echo "</div>";
+echo "<div class='center small italic pad5'>";
+echo "<strong>" . $xoopsModule->getVar("name") . "</strong> " . _AM_XHTTPERR_MAINTAINEDBY . " <a class='tooltip' rel='external' href='http://www.xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a>";
+echo "</div>";
+
+xoops_cp_footer();

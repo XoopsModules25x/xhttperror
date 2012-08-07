@@ -47,7 +47,7 @@ $modversion['license_url'] = 'http://www.gnu.org/licenses/gpl-3.0.txt';
 
 $modversion['release_info'] = 'in progress';
 $modversion['release_file'] = XOOPS_URL . "/modules/{$dirname}/docs/RC";
-$modversion['release_date'] = '2012/08/06'; // 'Y/m/d'
+$modversion['release_date'] = '2012/08/08'; // 'Y/m/d'
 
 $modversion['min_php'] = '5.2';
 $modversion['min_xoops'] = '2.5.5';
@@ -71,7 +71,7 @@ $modversion['module_website_name'] = '';
 $modversion['support_site_url']	= '';
 $modversion['support_site_name'] = '';
 $modversion['release'] = "release";
-$modversion['module_status'] = 'beta'; //"Stable";
+$modversion['module_status'] = 'rc'; //"Stable";
 
 
 

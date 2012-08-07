@@ -32,6 +32,10 @@ if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
 
+define('XHTTPERR_REDIRECT_NO', 0);
+define('XHTTPERR_REDIRECT_URI', 1);
+define('XHTTPERR_REDIRECT_PREVIOUS', 2);
+
 class XhttperrorError extends XoopsObject
 { 
 
@@ -47,7 +51,7 @@ class XhttperrorError extends XoopsObject
         $this->initVar('error_text_smiley', XOBJ_DTYPE_INT, true, false); // default: true
         $this->initVar('error_text_breaks', XOBJ_DTYPE_INT, false, false); // default: false
         $this->initVar("error_showme", XOBJ_DTYPE_INT, true, false); // default: true
-        $this->initVar("error_redirect", XOBJ_DTYPE_INT, false, false); // default: false
+        $this->initVar("error_redirect", XOBJ_DTYPE_INT, XHTTPERR_REDIRECT_NO, false); // default: XHTTPERR_REDIRECT_NO
         $this->initVar("error_redirect_time", XOBJ_DTYPE_INT, 3, false); // default: 3 seconds
         $this->initVar("error_redirect_message", XOBJ_DTYPE_TXTBOX, '', false); // IN PROGRESS
         $this->initVar("error_redirect_uri", XOBJ_DTYPE_URL, XOOPS_URL, false); // default XOOPS_URL
@@ -68,9 +72,10 @@ class XhttperrorError extends XoopsObject
         $form->setExtra('enctype="multipart/form-data"');
 
         // Title
-            $title = new XoopsFormText(_AM_XHTTPERR_ERROR_TITLE, 'error_title', 40, 255, $this->getVar('error_title'));
-        $form->addElement($title, true);
-        unset($title);
+            $errorTitle = new XoopsFormText(_AM_XHTTPERR_ERROR_TITLE, 'error_title', 40, 255, $this->getVar('error_title'));
+            $errorTitle->setDescription(_AM_XHTTPERR_ERROR_TITLE_DESC);
+        $form->addElement($errorTitle, true);
+        unset($errorTitle);
         // Error number
         if ($this->isNew()) {
             $errorStatuscode = new XoopsFormText(_AM_XHTTPERR_ERROR_STATUSCODE, 'error_statuscode', 3, 3, $this->getVar('error_statuscode'));
@@ -80,8 +85,8 @@ class XhttperrorError extends XoopsObject
         $form->addElement($errorStatuscode, true);
         unset($errorStatuscode);
         // Text
-        $editor_configs=array();
-        $editor_configs["name"] ="error_text";
+        $editor_configs = array();
+        $editor_configs["name"] = "error_text";
         $editor_configs["value"] = $this->getVar('error_text', 'e');
         $editor_configs["rows"] = 10;
         $editor_configs["cols"] = 50;
@@ -96,6 +101,7 @@ class XhttperrorError extends XoopsObject
             $errorTextOptions->addElement(new XoopsFormRadioYN(_AM_XHTTPERR_ERROR_TEXT_HTML, 'error_text_html', $this->getVar('error_text_html'), _YES, _NO));
             $errorTextOptions->addElement(new XoopsFormRadioYN(_AM_XHTTPERR_ERROR_TEXT_SMILEY, 'error_text_smiley', $this->getVar('error_text_smiley'), _YES, _NO));
             $errorTextOptions->addElement(new XoopsFormRadioYN(_AM_XHTTPERR_ERROR_TEXT_BREAKS, 'error_text_breaks', $this->getVar('error_text_breaks'), _YES, _NO));
+            $errorTextOptions->setDescription(_AM_XHTTPERR_ERROR_TEXT_OPTIONS_DESC);
         $form->addElement($errorTextOptions);
         unset($errorTextOptions);
         // Showme
@@ -106,7 +112,11 @@ class XhttperrorError extends XoopsObject
         
         $form->addElement(new XoopsFormLabel(_AM_XHTTPERR_ERROR_REDIRECT_OPTIONS, '', ''));
         // Redirect
-            $errorRedirect = new XoopsFormRadioYN(_AM_XHTTPERR_ERROR_REDIRECT, 'error_redirect', $this->getVar('error_redirect'), _YES, _NO);
+            $errorRedirect = new XoopsFormSelect (_AM_XHTTPERR_ERROR_REDIRECT, 'error_redirect', $this->getVar('error_redirect'), 1, false);
+            $errorRedirect->addOption (XHTTPERR_REDIRECT_NO, _AM_XHTTPERR_ERROR_REDIRECT_OPTION_NO);
+            $errorRedirect->addOption (XHTTPERR_REDIRECT_URI, _AM_XHTTPERR_ERROR_REDIRECT_OPTION_URI);
+            $errorRedirect->addOption (XHTTPERR_REDIRECT_PREVIOUS, _AM_XHTTPERR_ERROR_REDIRECT_OPTION_PREVIOUS);
+            //$errorRedirect = new XoopsFormRadioYN(, _YES, _NO);
             $errorRedirect->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_DESC);
         $form->addElement($errorRedirect);
         unset($errorRedirect);
@@ -115,8 +125,13 @@ class XhttperrorError extends XoopsObject
             $errorRedirectTime->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_TIME_DESC);
         $form->addElement($errorRedirectTime);
         unset($errorRedirectTime);
+        /* IN PROGRESS
         // Redirect message
-        // IN PROGRESS
+            $errorRedirectMessage = new XoopsFormText(_AM_XHTTPERR_ERROR_REDIRECT_MESSAGE, 'error_redirect_message', 40, 255, $this->getVar('error_redirect_message'));
+            $errorRedirectMessage->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_MESSAGE_DESC);
+        $form->addElement($errorRedirectMessage, true);
+        unset($errorRedirectMessage);
+        */
         // Redirect uri
             $errorRedirectUri = new XoopsFormText(_AM_XHTTPERR_ERROR_REDIRECT_URI, 'error_redirect_uri', 40, 255, $this->getVar('error_redirect_uri'));
             $errorRedirectUri->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_URI_DESC);

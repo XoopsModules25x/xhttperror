@@ -59,7 +59,7 @@ switch($op ) {
 
             $GLOBALS['xoopsTpl']->assign('errors', $errors);
             $GLOBALS['xoopsTpl']->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML() );
-            $GLOBALS['xoopsTpl']->display("db:xhttperror_admin_errors_list.html");
+            $GLOBALS['xoopsTpl']->display('db:xhttperror_admin_errors_list.html');
         } else {
             echo _AM_XHTTPERR_ERROR_NOERRORS;
         }
@@ -120,6 +120,9 @@ switch($op ) {
         $error->setVar('error_showme', $_REQUEST['error_showme']);
         $error->setVar('error_redirect', $_REQUEST['error_redirect']);
         $error->setVar('error_redirect_time', (int)$_REQUEST['error_redirect_time']);
+        /* IN PROGRESS
+        $error->setVar('error_redirect_message', (int)$_REQUEST['error_redirect_message']);
+        */
         $error->setVar('error_redirect_uri', $_REQUEST['error_redirect_uri']);
 
         if ( $errorHandler->insert($error)  ) {
