@@ -53,7 +53,7 @@ define("_AM_XHTTPERR_ERROR_STATUS_DESC","Select Yes to display");
 define("_AM_XHTTPERR_ERROR_STATUS_SHOW","Published");
 define("_AM_XHTTPERR_ERROR_STATUS_HIDE","Hidden");
 define("_AM_XHTTPERR_ERROR_REDIRECT_OPTIONS","Redirect options");
-define("_AM_XHTTPERR_ERROR_REDIRECT_OPTIONS_DESC", "");
+define("_AM_XHTTPERR_ERROR_REDIRECT_OPTIONS_DESC","");
 define("_AM_XHTTPERR_ERROR_REDIRECT","Redirect");
 define("_AM_XHTTPERR_ERROR_REDIRECT_DESC","");
 define("_AM_XHTTPERR_ERROR_REDIRECT_OPTION_NO","No redirect");
