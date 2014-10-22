@@ -30,16 +30,8 @@
 
 $currentFile = basename(__FILE__);
 include 'admin_header.php';
+
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list_reports';
-
-// load classes
-$reportHandler =& xoops_getModuleHandler('report', 'xhttperror');
-
-// count reports
-$countReports = $reportHandler->getCount();
-
-
-
 switch($op ) {
     default:
     case 'list_reports' :
@@ -49,43 +41,40 @@ switch($op ) {
         $modcreate_admin = new ModuleAdmin();
         echo $modcreate_admin->addNavigation('reports.php');
 
-        if($countReports > 0) {
+        $reportCount = $xhttperror->getHandler('report')->getCount();
+        if($reportCount > 0) {
             $criteria = new CriteriaCompo();
             $criteria->setSort('report_date');
             $criteria->setOrder('ASC');
-            $criteria->setLimit($GLOBALS['xoopsModuleConfig']['reports_per_page']);
-            $reports = $reportHandler->getObjects($criteria, true, false);
-            foreach ($reports as $key=>$report) {
-                $reports[$key]['report_user'] = XoopsUserUtility::getUnameFromId($report['report_uid'], false, true);
-                $reports[$key]['report_date'] = formatTimeStamp($report['report_date'], _DATESTRING);
+            $criteria->setLimit($xhttperror->getConfig('reports_perpage'));
+            $reportObjs = $xhttperror->getHandler('report')->getObjects($criteria, true, false);
+            foreach ($reportObjs as $key => $reportObj) {
+                $reportObjs[$key]['report_user'] = XoopsUserUtility::getUnameFromId($reportObj['report_uid'], false, true);
+                $reportObjs[$key]['report_date'] = formatTimeStamp($reportObj['report_date'], _DATESTRING);
             }
-
-            $GLOBALS['xoopsTpl']->assign('reports', $reports);
+            $GLOBALS['xoopsTpl']->assign('reports', $reportObjs);
             $GLOBALS['xoopsTpl']->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML() );
-            $GLOBALS['xoopsTpl']->display("db:xhttperror_admin_reports_list.html");
+            $GLOBALS['xoopsTpl']->display("db:{$xhttperror->getModule()->dirname()}_admin_reports_list.html");
         } else {
-            echo _AM_XHTTPERR_REPORT_NOREPORTS;
+            echo _AM_XHTTPERROR_REPORT_NOREPORTS;
         }
         include "admin_footer.php";
         break;
-
-
-
     case 'delete_report' :
-        $report =& $reportHandler->get($_REQUEST['report_id']);
-        if ( isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1 ) {
+        $reportObj = $xhttperror->getHandler('report')->get($_REQUEST['report_id']);
+        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
             if ( !$GLOBALS['xoopsSecurity']->check()  ) {
-                redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors() ));
+                redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ( $reportHandler->delete($report) ) {
-                redirect_header($currentFile, 3, _AM_XHTTPERR_DELETEDSUCCESS );
+            if ( $xhttperror->getHandler('report')->delete($reportObj)) {
+                redirect_header($currentFile, 3, _AM_XHTTPERROR_DELETEDSUCCESS );
             } else {
-                echo $report->getHtmlErrors();
+                echo $reportObj->getHtmlErrors();
             }
         } else {
             // render start here
             xoops_cp_header();
-            xoops_confirm(array('ok' => 1, 'report_id' => $_REQUEST['report_id'], 'op' => 'delete_report'), $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, $report->getVar('report_id')));
+            xoops_confirm(array('ok' => 1, 'report_id' => $_REQUEST['report_id'], 'op' => 'delete_report'), $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERROR_REPORT_RUSUREDEL, $reportObj->getVar('report_id')));
             xoops_cp_footer();
         }
         break;

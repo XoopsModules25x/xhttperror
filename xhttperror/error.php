@@ -6,7 +6,7 @@ ob_start();
 error_reporting(0);
  
 function print_error_page() {
-    $status_reason = array(
+    $statusReason = array(
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',
@@ -60,7 +60,7 @@ function print_error_page() {
         510 => 'Not Extended'
         );
  
-    $status_msg = array(
+    $statusMessage = array(
         400 => "Your browser sent a request that this server could not understand.",
         401 => "This server could not verify that you are authorized to access the document requested.",
         402 => 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
@@ -97,52 +97,53 @@ function print_error_page() {
  
     // Get the Status Code
     if (isset($_SERVER['REDIRECT_STATUS']) && ($_SERVER['REDIRECT_STATUS'] != 200))
-        $sc = $_SERVER['REDIRECT_STATUS'];
+        $statusCode = $_SERVER['REDIRECT_STATUS'];
     elseif (isset($_SERVER['REDIRECT_REDIRECT_STATUS']) && ($_SERVER['REDIRECT_REDIRECT_STATUS'] != 200)) 
-        $sc = $_SERVER['REDIRECT_REDIRECT_STATUS'];
-    $sc = (!isset($_GET['error']) ? 404 : $_GET['error']);
+        $statusCode = $_SERVER['REDIRECT_REDIRECT_STATUS'];
+    $statusCode = (!isset($_GET['error']) ? 404 : $_GET['error']);
  
-  $sc=abs(intval($sc));
+  $statusCode = abs(intval($statusCode));
  
     // Redirect to server home if called directly or if status is under 400
-    if ( ( (isset($_SERVER['REDIRECT_STATUS']) && $_SERVER['REDIRECT_STATUS'] == 200) && (floor($sc / 100) == 3) )
+    if ( ( (isset($_SERVER['REDIRECT_STATUS']) && $_SERVER['REDIRECT_STATUS'] == 200) && (floor($statusCode / 100) == 3) )
         || (!isset($_GET['error']) && $_SERVER['REDIRECT_STATUS'] == 200)  ) {
         @header("Location: http://{$_SERVER['SERVER_NAME']}",1,302);
         die();
     }
 
     // Check range of code or issue 500
-    if (($sc < 200) || ($sc > 599)) $sc = 500;
+    if (($statusCode < 200) || ($statusCode > 599)) $statusCode = 500;
  
     // Check for valid protocols or else issue 505
     if (!in_array($_SERVER["SERVER_PROTOCOL"], array('HTTP/1.0','HTTP/1.1','HTTP/0.9')))
-        $sc = 505;
+        $statusCode = 505;
 
     // Get the status reason
-    $reason = (isset($status_reason[$sc]) ? $status_reason[$sc] : '');
+    $reason = (isset($statusReason[$statusCode]) ? $statusReason[$statusCode] : '');
 
     // Get the status message
-    $msg = (isset($status_msg[$sc]) ? str_replace('%U%', htmlspecialchars(strip_tags(stripslashes($_SERVER['REQUEST_URI']))), $status_msg[$sc]) : 'Error');
+    $message = (isset($statusMessage[$statusCode]) ? str_replace('%U%', htmlspecialchars(strip_tags(stripslashes($_SERVER['REQUEST_URI']))), $statusMessage[$statusCode]) : 'Error');
 
     // issue optimized headers (optimized for your server)
-    @header("{$_SERVER['SERVER_PROTOCOL']} {$sc} {$reason}", 1, $sc);
+    @header("{$_SERVER['SERVER_PROTOCOL']} {$statusCode} {$reason}", 1, $statusCode);
     if( @php_sapi_name() != 'cgi-fcgi' ) 
-        @header("Status: {$sc} {$reason}", 1, $sc);
+        @header("Status: {$statusCode} {$reason}", 1, $statusCode);
 
     // A very small footprint for certain types of 4xx class errors and all 5xx class errors
-    if (in_array($sc, array(400, 403, 405)) || (floor($sc / 100) == 5)) {
+    if (in_array($statusCode, array(400, 403, 405)) || (floor($statusCode / 100) == 5)) {
         @header("Connection: close", 1);
-        if ($sc == 405) 
+        if ($statusCode == 405)
             @header('Allow: GET,HEAD,POST,OPTIONS', 1, 405);
     }
 
     echo "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html>";
-    echo "<head>\n<title>{$sc} {$reason}</title>\n<h1>{$reason}</h1>\n<p>{$msg}<br />\n</p>\n";
+    echo "<head>\n<title>{$statusCode} {$reason}</title>\n<h1>{$reason}</h1>\n<p>{$message}<br />\n</p>\n";
 }
  
 function askapache_global_debug() {
     # http://www.php.net/manual/en/function.array-walk.php#100681
-    global $_GET,$_POST,$_ENV,$_SERVER;  $g=array('_ENV','_SERVER','_GET','_POST');
+    global $_GET, $_POST, $_ENV, $_SERVER;
+    $g = array('_ENV','_SERVER','_GET','_POST');
     array_walk_recursive($g, create_function('$n','global $$n;if( !!$$n&&ob_start()&&(print "[ $"."$n ]\n")&&array_walk($$n,
     create_function(\'$v,$k\', \'echo "[$k] => $v\n";\'))) echo "<"."p"."r"."e>".htmlspecialchars(ob_get_clean())."<"."/"."pr"."e>";') );
 }

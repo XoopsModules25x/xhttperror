@@ -1,33 +1,23 @@
 <?php
-/**
- * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
- * ****************************************************************************
- *  XHTTPERROR - MODULE FOR XOOPS
- *  Copyright (c) 2007 - 2012
- *  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *
- *  You may not change or alter any portion of this comment or credits
- *  of supporting developers from this source code or any supporting
- *  source code which is considered copyrighted (c) material of the
- *  original comment or credit authors.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
- *
- *  $Rev$:     Revision of last commit
- *  $Author$:  Author of last commit
- *  $Date$:    Date of last commit
- * ****************************************************************************
- */
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+/**
+ * Xhttperror module
+ *
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         module_skeleton
+ * @since           1.01
+ * @author          Xoops Development Team
+ * @version         svn:$id$
+ */
 function xhttperror_checkModuleAdmin() {
     if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))){
         include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
@@ -40,6 +30,27 @@ function xhttperror_checkModuleAdmin() {
 
 
 
+/**
+ * Checks if a user is admin of Module_skeleton
+ *
+ * @return boolean
+ */
+function xhttperror_userIsAdmin()
+{
+    global $xoopsUser;
+    $xhttperror = XhttperrorXhttperror::getInstance();
+
+    static $xhttperror_isAdmin;
+    if (isset($xhttperror_isAdmin)) {
+        return $xhttperror_isAdmin;
+    }
+
+    $xhttperror_isAdmin = (!is_object($xoopsUser)) ? false : $xoopsUser->isAdmin($xhttperror->getModule()->getVar('mid'));
+    return $xhttperror_isAdmin;
+}
+
+
+/*
 function xhttperror_CleanVars(&$global, $key, $default = '', $type = 'int') {
     switch ($type) {
         case 'array':
@@ -60,29 +71,4 @@ function xhttperror_CleanVars(&$global, $key, $default = '', $type = 'int') {
     }
     return $ret;
 }
-
-
-
-function xhttperror_meta_keywords($content) {
-	global $xoopsTpl, $xoTheme;
-	$myts =& MyTextSanitizer::getInstance();
-	$content= $myts->undoHtmlSpecialChars($myts->displayTbox($content));
-	if(isset($xoTheme) && is_object($xoTheme)) {
-		$xoTheme->addMeta( 'meta', 'keywords', strip_tags($content));
-	} else {	// Compatibility for old Xoops versions
-		$xoopsTpl->assign('xoops_meta_keywords', strip_tags($content));
-	}
-}
-
-
-
-function xhttperror_meta_description($content) {
-	global $xoopsTpl, $xoTheme;
-	$myts =& MyTextSanitizer::getInstance();
-	$content= $myts->undoHtmlSpecialChars($myts->displayTarea($content));
-	if(isset($xoTheme) && is_object($xoTheme)) {
-		$xoTheme->addMeta( 'meta', 'description', strip_tags($content));
-	} else {	// Compatibility for old Xoops versions
-		$xoopsTpl->assign('xoops_meta_description', strip_tags($content));
-	}
-}
+*/

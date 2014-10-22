@@ -1,18 +1,18 @@
 <form action="reports.php" method="post" id="reportform">
 <table>
     <tr>
-        <th colspan="9"><{$smarty.const._AM_XHTTPERR_REPORTS}></th>
+        <th colspan="9"><{$smarty.const._AM_XHTTPERROR_REPORTS}></th>
     </tr>
     <tr>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_ID}></th>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_USER}></th>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_STATUSCODE}></th>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_DATE}></th>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_REFERER}></th>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_USERAGENT}></th>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_REMOTEADDR}></th>
-        <th><{$smarty.const._AM_XHTTPERR_REPORT_REQUESTEDURI}></th>
-        <th><{$smarty.const._AM_XHTTPERR_ACTION}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_ID}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_USER}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_STATUSCODE}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_DATE}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_REFERER}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_USERAGENT}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_REMOTEADDR}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_REPORT_REQUESTEDURI}></th>
+        <th><{$smarty.const._AM_XHTTPERROR_ACTION}></th>
     </tr>
 <{foreach from=$reports item='report'}>
     <tr class="<{cycle values='odd, even'}>">

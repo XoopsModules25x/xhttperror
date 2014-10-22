@@ -34,7 +34,7 @@ $redirect_uri   text        Redirect to
 <div align="center">
 <form method="get" action="/search.php">
 <div style="width: 50%;">
-    <{$smarty.const._MD_XHTTPERR_SEARCH}>
+    <{$smarty.const._MD_XHTTPERROR_SEARCH}>
     <input type="text" name="query" size="30" />
     <input type="hidden" name="action" value="results" />
     <input type="submit" value="Search" />

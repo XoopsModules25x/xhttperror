@@ -1,44 +1,46 @@
 <?php
-/**
- * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
- * ****************************************************************************
- *  XHTTPERROR - MODULE FOR XOOPS
- *  Copyright (c) 2007 - 2012
- *  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *
- *  You may not change or alter any portion of this comment or credits
- *  of supporting developers from this source code or any supporting
- *  source code which is considered copyrighted (c) material of the
- *  original comment or credit authors.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
- *
- *  $Rev$:     Revision of last commit
- *  $Author$:  Author of last commit
- *  $Date$:    Date of last commit
- * ****************************************************************************
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+/**
+ * Xhttperror module
+ *
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         module_skeleton
+ * @since           1.00
+ * @author          Xoops Development Team
+ * @version         svn:$id$
+ */
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+include_once dirname(dirname(__FILE__)) . '/include/common.php';
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    die('XOOPS root path not defined');
-}
-
+/**
+ * Class XhttperrorReport
+ */
 class XhttperrorReport extends XoopsObject
 { 
+    /**
+     * @var XhttperrorXhttperror
+     * @access private
+     */
+    private $xhttperror = null;
 
-    // constructor
-    function __construct()
+    /**
+     * constructor
+     */
+    public function __construct()
     {
+        $this->xhttperror = XhttperrorXhttperror::getInstance();
+        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
         $this->XoopsObject();
+        //
         $this->initVar('report_id', XOBJ_DTYPE_INT, null, false, 5);
         $this->initVar('report_uid', XOBJ_DTYPE_INT, null, true); // user id
         $this->initVar('report_statuscode', XOBJ_DTYPE_TXTBOX, null, false);
@@ -50,10 +52,23 @@ class XhttperrorReport extends XoopsObject
     }
 }
 
+/**
+ * Class XhttperrorReportHandler
+ */
 class XhttperrorReportHandler extends XoopsPersistableObjectHandler
 {
-    function __construct(&$db) 
+    /**
+     * @var XhttperrorXhttperror
+     * @access private
+     */
+    private $xhttperror = null;
+
+    /**
+     * constructor
+     */
+    public function __construct($db)
     {
         parent::__construct($db, 'xhttperror_reports', 'xhttperrorreport', 'report_id', 'report_date');
+        $this->xhttperror = XhttperrorXhttperror::getInstance();
     }
 }

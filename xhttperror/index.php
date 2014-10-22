@@ -1,79 +1,92 @@
 <?php
-// inludes and stuff
-include_once('header.php');
-include XOOPS_ROOT_PATH . '/header.php';
-//include_once('include/functions.php');
-$myts =& MyTextSanitizer::getInstance();
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
 
-// load classes
-$errorHandler =& xoops_getModuleHandler('error', 'xhttperror');
-$reportHandler =& xoops_getModuleHandler('report', 'xhttperror');
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+/**
+ * Xhttperror module
+ *
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         xhttperror
+ * @since           1.00
+ * @author          Xoops Development Team
+ * @version         svn:$id$
+ */
 
-$xoopsOption['template_main'] = 'xhttperror_index.html';
+$currentFile = basename(__FILE__);
+include dirname(__FILE__) . '/header.php';
+
+$myts = MyTextSanitizer::getInstance();
+
+$xoopsOption['template_main'] = "{$xhttperror->getModule()->dirname()}_index.tpl";
+include_once XOOPS_ROOT_PATH . '/header.php';
 
 if (!isset($_GET['error'])) {
     $xoopsTpl->assign('message', "No error defined.");
 } else {
     // Save error info to database
     // We may want to turn this off on busy sites.
-    if ($xoopsModuleConfig['error_reporting'] == false) {
-        if (!$xoopsUser OR ($xoopsUser->isAdmin($xoopsModule->mid()) AND $xoopsModuleConfig['ignore_admin'] != true)) {
+    if ($xhttperror->getConfig('error_reporting') == false) {
+        if (!$xoopsUser || ($xoopsUser->isAdmin($xhttperror->getModule()->mid())&& $xhttperror->getConfig('ignore_admin') != true)) {
             // create report
             $serverVars = array();
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
             $serverVars['REMOTE_ADDR']  = xoops_getenv('REMOTE_ADDR');
             //$serverVars[''] =
             $referer                    = xoops_getenv('HTTP_REFERER');
-            $useragent                  = xoops_getenv('HTTP_USER_AGENT');
-            $remoteaddr	                = xoops_getenv('REMOTE_ADDR');
-            $requesteduri               = xoops_getenv('REQUEST_URI');
-
+            $userAgent                  = xoops_getenv('HTTP_USER_AGENT');
+            $remoteAddr	                = xoops_getenv('REMOTE_ADDR');
+            $requestedUri               = xoops_getenv('REQUEST_URI');
             if(empty($xoopsUser)){
                 $uid = 0; // anonymous
             } else {
                 $uid = $xoopsUser->getVar('uid');
             }
-            $report = $reportHandler->create();
-            $report->setVar('report_uid', $uid);
-            $report->setVar('report_statuscode', $_GET['error']);
-            $report->setVar('report_date', time());
-            $report->setVar('report_referer', $referer);
-            $report->setVar('report_useragent', $useragent);
-            $report->setVar('report_remoteaddr', $remoteaddr);
-            $report->setVar('report_requesteduri', $requesteduri);
-            if($reportHandler->insert($report)) {
+            $reportObj = $xhttperror->getHandler('report')->create();
+            $reportObj->setVar('report_uid', $uid);
+            $reportObj->setVar('report_statuscode', $_GET['error']);
+            $reportObj->setVar('report_date', time());
+            $reportObj->setVar('report_referer', $referer);
+            $reportObj->setVar('report_useragent', $userAgent);
+            $reportObj->setVar('report_remoteaddr', $remoteAddr);
+            $reportObj->setVar('report_requesteduri', $requestedUri);
+            if($xhttperror->getHandler('report')->insert($reportObj)) {
                 // NOP
             } else {
                 // NOP
             }
         }
     }
-
     $criteria = new CriteriaCompo();
     $criteria->add(new Criteria('error_statuscode', $_GET['error']));
     $criteria->add(new Criteria('error_showme', true));
-    if ($errors = $errorHandler->getObjects ($criteria)) {
-        $error = $errors[0];
-        $id = $error->getVar('error_id');
-        $title = $myts->displayTarea($error->getVar('error_title'));
-        //$text = $error->getVar('error_text', 'n');
+    if ($errorObjs = $xhttperror->getHandler('error')->getObjects($criteria)) {
+        $errorObj = $errorObjs[0];
+        $id = $errorObj->getVar('error_id');
+        $title = $myts->displayTarea($errorObj->getVar('error_title'));
+        //$text = $errorObj->getVar('error_text', 'n');
         // displayTarea ($text, $html=0, $smiley=1, $xcode=1, $image=1, $br=1)
-        $text = $myts->displayTarea($error->getVar('error_text', 'n'), $error->getVar('error_text_html'), $error->getVar('error_text_smiley'), 1, 1, $error->getVar('error_text_breaks'));
+        $text = $myts->displayTarea($errorObj->getVar('error_text', 'n'), $errorObj->getVar('error_text_html'), $errorObj->getVar('error_text_smiley'), 1, 1, $errorObj->getVar('error_text_breaks'));
         
         // Add custom title to page title - "<{$xoops_pagetitle}>" - titleaspagetitle
-        if ($xoopsModuleConfig['title_as_page_title'] == 1) {
-            $xoopsTpl->assign('xoops_pagetitle', $xoopsModule->getVar('name').' - '. $title); // module name - article title
+        if ($xhttperror->getConfig('title_as_page_title') == 1) {
+            $xoopsTpl->assign('xoops_pagetitle', $xhttperror->getModule()->getVar('name').' - '. $title); // module name - article title
         }
-        if ($xoopsModuleConfig['title_as_page_title'] == 2) {
-            $xoopsTpl->assign('xoops_pagetitle', $title.' - '. $xoopsModule->getVar('name')); // article title -  module name
+        if ($xhttperror->getConfig('title_as_page_title') == 2) {
+            $xoopsTpl->assign('xoops_pagetitle', $title.' - '. $xhttperror->getModule()->getVar('name')); // article title -  module name
         }
-        
         $xoopsTpl->assign('title', $title);
         $xoopsTpl->assign('text', $text);
         $xoopsTpl->assign('showsearch', true); // IN PROGRESS: True if show search form in error page
-        $xoopsTpl->assign('redirect', $error->getVar('error_redirect'));
-        $xoopsTpl->assign('redirect_time', (int)$error->getVar('error_redirect_time') * 1000);
-        $xoopsTpl->assign('redirect_uri', $error->getVar('error_redirect_uri'));
+        $xoopsTpl->assign('redirect', $errorObj->getVar('error_redirect'));
+        $xoopsTpl->assign('redirect_time', (int) $errorObj->getVar('error_redirect_time') * 1000);
+        $xoopsTpl->assign('redirect_uri', $errorObj->getVar('error_redirect_uri'));
     }
 }
-include XOOPS_ROOT_PATH.'/footer.php';
+include XOOPS_ROOT_PATH . '/footer.php';
