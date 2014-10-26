@@ -1,80 +1,92 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 /**
- * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
- * ****************************************************************************
- *  XHTTPERROR - MODULE FOR XOOPS
- *  Copyright (c) 2007 - 2012
- *  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
+ * xhttperror module
  *
- *  You may not change or alter any portion of this comment or credits
- *  of supporting developers from this source code or any supporting
- *  source code which is considered copyrighted (c) material of the
- *  original comment or credit authors.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
- *
- *  $Rev$:     Revision of last commit
- *  $Author$:  Author of last commit
- *  $Date$:    Date of last commit
- * ****************************************************************************
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         xhttperror
+ * @since           1.00
+ * @author          Xoops Development Team
+ * @version         svn:$id$
  */
 
 $currentFile = basename(__FILE__);
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list_reports';
-switch($op ) {
+$op = XhttperrorRequest::getString('op', 'list_reports');
+switch($op) {
     default:
-    case 'list_reports' :
+    case 'list_reports':
         // render start here
         xoops_cp_header();
         // render submenu
         $modcreate_admin = new ModuleAdmin();
-        echo $modcreate_admin->addNavigation('reports.php');
-
+        echo $modcreate_admin->addNavigation($currentFile);
+        //
         $reportCount = $xhttperror->getHandler('report')->getCount();
         if($reportCount > 0) {
+            $start = XhttperrorRequest::getInt('start', 0);
             $criteria = new CriteriaCompo();
             $criteria->setSort('report_date');
             $criteria->setOrder('ASC');
+            $criteria->setStart($start);
             $criteria->setLimit($xhttperror->getConfig('reports_perpage'));
-            $reportObjs = $xhttperror->getHandler('report')->getObjects($criteria, true, false);
-            foreach ($reportObjs as $key => $reportObj) {
-                $reportObjs[$key]['report_user'] = XoopsUserUtility::getUnameFromId($reportObj['report_uid'], false, true);
-                $reportObjs[$key]['report_date'] = formatTimeStamp($reportObj['report_date'], _DATESTRING);
+            $reports = $xhttperror->getHandler('report')->getObjects($criteria, true, false); // as array
+            foreach ($reports as $key => $report) {
+                $report['report_owner_uname'] = XoopsUserUtility::getUnameFromId($report['report_uid']);
+                $report['report_date_formatted'] = XoopsLocal::formatTimestamp($report['report_date'], 'l');
+                $GLOBALS['xoopsTpl']->append('reports', $report);
             }
-            $GLOBALS['xoopsTpl']->assign('reports', $reportObjs);
-            $GLOBALS['xoopsTpl']->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML() );
-            $GLOBALS['xoopsTpl']->display("db:{$xhttperror->getModule()->dirname()}_admin_reports_list.html");
+            $GLOBALS['xoopsTpl']->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
+            include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+            $pagenav = new XoopsPageNav($reportCount, $xhttperror->getConfig('reports_perpage'), $start, 'start');
+            $GLOBALS['xoopsTpl']->assign('reports_pagenav', $pagenav->renderNav());
+            //
+            $GLOBALS['xoopsTpl']->display("db:{$xhttperror->getModule()->dirname()}_admin_reports_list.tpl");
         } else {
-            echo _AM_XHTTPERROR_REPORT_NOREPORTS;
+            echo _CO_XHTTPERROR_WARNING_NOREPORTS;
         }
-        include "admin_footer.php";
+        include __DIR__ . '/admin_footer.php';
         break;
+
     case 'delete_report' :
-        $reportObj = $xhttperror->getHandler('report')->get($_REQUEST['report_id']);
-        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
-            if ( !$GLOBALS['xoopsSecurity']->check()  ) {
+        $report_id = XhttperrorRequest::getInt('report_id', 0);
+        $reportObj = $xhttperror->getHandler('report')->get($report_id);
+        if (!$reportObj) {
+            // ERROR
+            redirect_header($currentFile, 3, _CO_XHTTPERROR_ERROR_NOREPORT);
+            exit();
+        }
+        if (XhttperrorRequest::getBool('ok', false, 'POST') == true) {
+            if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ( $xhttperror->getHandler('report')->delete($reportObj)) {
-                redirect_header($currentFile, 3, _AM_XHTTPERROR_DELETEDSUCCESS );
+            if ($xhttperror->getHandler('report')->delete($reportObj)) {
+                redirect_header($currentFile, 3, _CO_XHTTPERROR_REPORT_DELETED);
             } else {
+                // ERROR
+                xoops_cp_header();
                 echo $reportObj->getHtmlErrors();
+                xoops_cp_footer();
+                exit();
             }
         } else {
-            // render start here
             xoops_cp_header();
-            xoops_confirm(array('ok' => 1, 'report_id' => $_REQUEST['report_id'], 'op' => 'delete_report'), $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERROR_REPORT_RUSUREDEL, $reportObj->getVar('report_id')));
+            xoops_confirm(
+                array('ok' => true, 'op' => 'delete_report', 'report_id' => $report_id),
+                $_SERVER['REQUEST_URI'],
+                _CO_XHTTPERROR_REPORT_DELETE_AREUSURE,
+                _DELETE
+            );
             xoops_cp_footer();
         }
         break;

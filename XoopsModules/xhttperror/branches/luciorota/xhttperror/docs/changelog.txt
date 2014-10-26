@@ -1,0 +1,17 @@
+xHttpError History
+
+Key:
++ Added feature.
+- Removed.
+! Bug fix.
+o General comment.
+
+version 1.01 (Released: 2014/10/24)
+===================================
+o Upgraded to Xoops 2.5.7 coding standard.
+o Refactory all language definitions
+! store wrong requested uri in reports (REDIRECT_URL, REDIRECT_QUERY_STRING)
+
+version 1.00 (Released: 2012/08/06)
+===================================
+o First public release.

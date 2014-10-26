@@ -9,17 +9,18 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 /**
- * Xhttperror module
+ * xhttperror module
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         module_skeleton
+ * @package         xhttperror
  * @since           1.00
  * @author          Xoops Development Team
  * @version         svn:$id$
  */
+
 defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
-include_once dirname(dirname(__FILE__)) . '/include/common.php';
+include_once dirname(__DIR__) . '/include/common.php';
 
 /**
  * Class XhttperrorReport

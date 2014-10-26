@@ -19,7 +19,7 @@
  *                  other free or open source software licenses.
  *                  See COPYRIGHT.php for copyright notices and details.
  * @package         xhttperror
- * @since           1.1
+ * @since           1.01
  * @author          Lucio Rota <lucio.rota@gmail.com>
  * @author          trabis <lusopoemas@gmail.com>
  * @version         svn:$id$

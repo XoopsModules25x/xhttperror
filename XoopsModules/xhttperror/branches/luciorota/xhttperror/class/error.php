@@ -9,7 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 /**
- * Xhttperror module
+ * xhttperror module
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -18,12 +18,13 @@
  * @author          Xoops Development Team
  * @version         svn:$id$
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
-include_once dirname(dirname(__FILE__)) . '/include/common.php';
 
-define('XHTTPERR_REDIRECT_NO', 0);
-define('XHTTPERR_REDIRECT_URI', 1);
-define('XHTTPERR_REDIRECT_PREVIOUS', 2);
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+include_once dirname(__DIR__) . '/include/common.php';
+
+define('_XHTTPERROR_REDIRECT_NO', 0);
+define('_XHTTPERROR_REDIRECT_URI', 1);
+define('_XHTTPERROR_REDIRECT_PREVIOUS', 2);
 
 /**
  * Class XhttperrorError
@@ -53,7 +54,7 @@ class XhttperrorError extends XoopsObject
         $this->initVar('error_text_smiley', XOBJ_DTYPE_INT, true, false); // default: true
         $this->initVar('error_text_breaks', XOBJ_DTYPE_INT, false, false); // default: false
         $this->initVar("error_showme", XOBJ_DTYPE_INT, true, false); // default: true
-        $this->initVar("error_redirect", XOBJ_DTYPE_INT, XHTTPERR_REDIRECT_NO, false); // default: XHTTPERR_REDIRECT_NO
+        $this->initVar("error_redirect", XOBJ_DTYPE_INT, XHTTPERROR_REDIRECT_NO, false); // default: XHTTPERROR_REDIRECT_NO
         $this->initVar("error_redirect_time", XOBJ_DTYPE_INT, 3, false); // default: 3 seconds
         $this->initVar("error_redirect_message", XOBJ_DTYPE_TXTBOX, '', false); // IN PROGRESS
         $this->initVar("error_redirect_uri", XOBJ_DTYPE_URL, XOOPS_URL, false); // default XOOPS_URL
@@ -66,7 +67,7 @@ class XhttperrorError extends XoopsObject
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $title = $this->isNew() ? sprintf(_AM_XHTTPERROR_ERROR_ADD) : sprintf(_AM_XHTTPERROR_ERROR_EDIT);
+        $title = $this->isNew() ? _CO_XHTTPERROR_BUTTON_ERROR_ADD : _CO_XHTTPERROR_BUTTON_ERROR_EDIT;
         //
         $form = new XoopsThemeForm($title, 'form_error', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
@@ -112,9 +113,9 @@ class XhttperrorError extends XoopsObject
         $form->addElement(new XoopsFormLabel(_AM_XHTTPERROR_ERROR_REDIRECT_OPTIONS, '', ''));
         // error: error_reditrect
             $errorRedirect = new XoopsFormSelect (_AM_XHTTPERROR_ERROR_REDIRECT, 'error_redirect', $this->getVar('error_redirect'), 1, false);
-            $errorRedirect->addOption (XHTTPERR_REDIRECT_NO, _AM_XHTTPERROR_ERROR_REDIRECT_OPTION_NO);
-            $errorRedirect->addOption (XHTTPERR_REDIRECT_URI, _AM_XHTTPERROR_ERROR_REDIRECT_OPTION_URI);
-            $errorRedirect->addOption (XHTTPERR_REDIRECT_PREVIOUS, _AM_XHTTPERROR_ERROR_REDIRECT_OPTION_PREVIOUS);
+            $errorRedirect->addOption (XHTTPERROR_REDIRECT_NO, _AM_XHTTPERROR_ERROR_REDIRECT_OPTION_NO);
+            $errorRedirect->addOption (XHTTPERROR_REDIRECT_URI, _AM_XHTTPERROR_ERROR_REDIRECT_OPTION_URI);
+            $errorRedirect->addOption (XHTTPERROR_REDIRECT_PREVIOUS, _AM_XHTTPERROR_ERROR_REDIRECT_OPTION_PREVIOUS);
             //$errorRedirect = new XoopsFormRadioYN(, _YES, _NO);
             $errorRedirect->setDescription(_AM_XHTTPERROR_ERROR_REDIRECT_DESC);
         $form->addElement($errorRedirect);
@@ -147,7 +148,7 @@ class XhttperrorError extends XoopsObject
             $form->addElement(new XoopsFormHidden('error_id', $this->getVar('error_id')));
         }
         // form: button tray
-            $button_tray = new XoopsFormElementTray(_AM_XHTTPERROR_ACTION, '' ,'');
+            $button_tray = new XoopsFormElementTray(_CO_XHTTPERROR_ACTIONS, '' ,'');
             $button_tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
             $button_tray->addElement(new XoopsFormButton('', 'reset', _RESET, 'reset'));
                 $cancel_button = new XoopsFormButton('', 'cancel', _CANCEL, 'button');

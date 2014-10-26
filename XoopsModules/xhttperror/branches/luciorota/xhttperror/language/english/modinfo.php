@@ -1,8 +1,13 @@
 <?php
+// $Id:$
+// _LANGCODE: en
+// _CHARSET : UTF-8
+// Translator: XOOPS Translation Team
+
 define("_MI_XHTTPERROR_NAME","xHttpError");
 define("_MI_XHTTPERROR_DESC","A XOOPS module to manage http errors.");
 
-// config options
+// config settings
 define("_MI_XHTTPERROR_FORM_EDITOR","[Editor] Choose an editor for categories description");
 define("_MI_XHTTPERROR_FORM_EDITOR_DESC","<ul><li><b>dhtmltextarea:</b> default Xoops editor</li><li><b>textarea:</b> standard html textarea</li><li><b>tinymce:</b> enhanced WYSIWYG editor</li><li>...</li></ul>");
 define("_MI_XHTTPERROR_IGNOREADMIN","Ignore admins");
@@ -17,7 +22,10 @@ define("_MI_XHTTPERROR_PAGETTL3","Yes: &lt;error&gt; - &lt;module name&gt;");
 define("_MI_XHTTPERROR_NUMREPS","Number of reports");
 define("_MI_XHTTPERROR_NUMREPS_DESC","The numbers of reports to show.");
 
-// Admin menu
+// help
+define("_MI_XHTTPERROR_HELP_HELP","Help");
+define("_MI_XHTTPERROR_HELP_EXTRA_INFO","Extra informations");
+
 // admin/menu.php
 define("_MI_XHTTPERROR_ADMENU_INDEX","Index");
 define("_MI_XHTTPERROR_ADMENU_INDEX_DESC","");

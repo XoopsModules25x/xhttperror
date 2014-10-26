@@ -15,7 +15,7 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package         Class
  * @subpackage      Utils
- * @since           1.1
+ * @since           1.01
  * @author          Lucio Rota <lucio.rota@gmail.com>
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id:$

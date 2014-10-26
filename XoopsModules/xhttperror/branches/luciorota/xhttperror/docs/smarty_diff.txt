@@ -1,0 +1,2 @@
+Module Name      : xHttpError
+Module developer : Lucio Rota lucio.rota@gmail.com
