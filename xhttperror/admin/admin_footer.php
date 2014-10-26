@@ -8,6 +8,16 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+/**
+ * Xhttperror module
+ *
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         xhttperror
+ * @since           1.00
+ * @author          Xoops Development Team
+ * @version         svn:$id$
+ */
 
 echo "<div class='adminfooter'>\n";
 echo "    <div style='text-align: center;'>\n";

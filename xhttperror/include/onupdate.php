@@ -1,35 +1,30 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 /**
- * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
- * ****************************************************************************
- *  XHTTPERROR - MODULE FOR XOOPS
- *  Copyright (c) 2007 - 2012
- *  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
+ * xhttperror module
  *
- *  You may not change or alter any portion of this comment or credits
- *  of supporting developers from this source code or any supporting
- *  source code which is considered copyrighted (c) material of the
- *  original comment or credit authors.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
- *
- *  $Rev$:     Revision of last commit
- *  $Author$:  Author of last commit
- *  $Date$:    Date of last commit
- * ****************************************************************************
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         xhttperror
+ * @since           1.00
+ * @author          Xoops Development Team
+ * @version         svn:$id$
  */
 
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-
+/**
+ * @param object            $xoopsModule
+ * @param int               $oldVersion
+ * @return bool             FALSE if failed
+ */
 function xoops_module_update_xhttperror(&$xoopsModule, $oldVersion = null) {
+    // NOP
     return true;
 }

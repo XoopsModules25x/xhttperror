@@ -7,15 +7,15 @@ CREATE TABLE `xhttperror_errors` (
     `error_title`               varchar(250) default NULL,
     `error_statuscode`          varchar(5) NOT NULL default '000',
     `error_text`                text,
-    `error_text_html`         int(1) NOT NULL default 1,
-    `error_text_smiley`       int(1) NOT NULL default 1,
-    `error_text_breaks`       int(1) NOT NULL default 0, 
+    `error_text_html`           int(1) NOT NULL default 1,
+    `error_text_smiley`         int(1) NOT NULL default 1,
+    `error_text_breaks`         int(1) NOT NULL default 0,
     `error_showme`              int(1) NOT NULL default 1,
     `error_redirect`            int(1) NOT NULL default 0,
     `error_redirect_time`       int(2) NOT NULL default 3,
     `error_redirect_message`    varchar(250),
     `error_redirect_uri`        varchar(250),
-    PRIMARY KEY  (`error_id`)
+    PRIMARY KEY (`error_id`)
 ) ENGINE=MyISAM;
 
 -- 
@@ -31,5 +31,5 @@ CREATE TABLE `xhttperror_reports` (
     `report_useragent`          varchar(250) default NULL,
     `report_remoteaddr`         varchar(250) default NULL,
     `report_requesteduri`       varchar(250) default NULL,
-    PRIMARY KEY  (`report_id`)
+    PRIMARY KEY (`report_id`)
 ) ENGINE=MyISAM;

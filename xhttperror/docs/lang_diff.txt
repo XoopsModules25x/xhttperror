@@ -1,0 +1,9 @@
+Module Name      : xHttpError
+Module developer : Rota Lucio lucio.rota@gmail.com
+
+version 1.01
+============
+o Refactory all language definitions
+
+version 1.00
+============

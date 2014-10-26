@@ -9,18 +9,18 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 /**
- * Module_skeleton module
+ * xhttperror module
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         module_skeleton
+ * @package         xhttperror
  * @since           1.00
  * @author          Xoops Development Team
  * @version         svn:$id$
  */
 
 $currentFile = basename(__FILE__);
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 define('_RED', '#FF0000'); // Red
 define('_GREEN', '#00AA00'); // Green
@@ -35,9 +35,9 @@ $reportCount = $xhttperror->getHandler('report')->getCount();
 $indexAdmin->addInfoBox(_AM_XHTTPERROR_INTRO);
 $indexAdmin->addInfoBoxLine(_AM_XHTTPERROR_INTRO, _AM_XHTTPERROR_INFO);
     if( file_exists(XOOPS_ROOT_PATH . "/.htaccess")) {
-    $htaccessCheck = _AM_XHTTPERROR_FILECHK . XOOPS_ROOT_PATH ."/.htaccess " . "<br />" . _AM_XHTTPERROR_FILEEXISTS;
+    $htaccessCheck = _AM_XHTTPERROR_FILECHK . XOOPS_ROOT_PATH . "/.htaccess " . "<br />" . _AM_XHTTPERROR_FILEEXISTS;
 } else {
-    $htaccessCheck = _AM_XHTTPERROR_FILECHK . XOOPS_ROOT_PATH ."/.htaccess " . "<br />" . _AM_XHTTPERROR_FILENOEXIST;
+    $htaccessCheck = _AM_XHTTPERROR_FILECHK . XOOPS_ROOT_PATH . "/.htaccess " . "<br />" . _AM_XHTTPERROR_FILENOEXIST;
 }
 $indexAdmin->addInfoBoxLine(_AM_XHTTPERROR_INTRO, $htaccessCheck);
 $indexAdmin->addInfoBoxLine(_AM_XHTTPERROR_INTRO, _AM_XHTTPERROR_ADDCODE);
@@ -46,15 +46,15 @@ if ($errorCount == 0) {
 } else {
     // get errors
     $criteria = new CriteriaCompo();
-    $errors = $xhttperror->getHandler('error')->getObjects($criteria);
-    foreach ($errors as $error) {
-        $msg_id = $error->getVar('error_id');
-        $error_statuscode = $error->getVar('error_statuscode');
-        $hmtl = "ErrorDocument " . $error_statuscode . " " . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/index.php?error=" . $error_statuscode . "";
+    $errorObjs = $xhttperror->getHandler('error')->getObjects($criteria);
+    foreach ($errorObjs as $errorObj) {
+        $error_id = $errorObj->getVar('error_id');
+        $error_statuscode = $errorObj->getVar('error_statuscode');
+        $hmtl = "ErrorDocument " . $error_statuscode . " " . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/error.php?error=" . $error_statuscode . "";
         $indexAdmin->addInfoBoxLine(_AM_XHTTPERROR_INTRO, $hmtl);
     }
 }
-echo $indexAdmin->addNavigation('index.php');
+echo $indexAdmin->addNavigation($currentFile);
 echo $indexAdmin->renderIndex();
 
-include 'admin_footer.php';
+include __DIR__ . '/admin_footer.php';

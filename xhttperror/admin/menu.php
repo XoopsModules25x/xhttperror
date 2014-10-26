@@ -13,7 +13,7 @@
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package          xhttperror
+ * @package         xhttperror
  * @since           1.00
  * @author          Xoops Development Team
  * @version         svn:$id$

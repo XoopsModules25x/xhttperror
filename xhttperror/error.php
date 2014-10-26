@@ -20,12 +20,15 @@
  */
 
 $currentFile = basename(__FILE__);
-include dirname(__FILE__) . '/header.php';
+include __DIR__ . '/header.php';
 
 $myts = MyTextSanitizer::getInstance();
 
-$xoopsOption['template_main'] = "{$xhttperror->getModule()->dirname()}_index.tpl";
+$xoopsOption['template_main'] = "{$xhttperror->getModule()->dirname()}_error.tpl";
 include_once XOOPS_ROOT_PATH . '/header.php';
+
+$uid = (is_object($xoopsUser) && isset($xoopsUser)) ? $xoopsUser->uid() : 0;
+$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(0 => XOOPS_GROUP_ANONYMOUS);
 
 if (!isset($_GET['error'])) {
     $xoopsTpl->assign('message', "No error defined.");
@@ -33,22 +36,25 @@ if (!isset($_GET['error'])) {
     // Save error info to database
     // We may want to turn this off on busy sites.
     if ($xhttperror->getConfig('error_reporting') == false) {
-        if (!$xoopsUser || ($xoopsUser->isAdmin($xhttperror->getModule()->mid())&& $xhttperror->getConfig('ignore_admin') != true)) {
+        if (!(is_object($xoopsUser) && isset($xoopsUser)) || ($xoopsUser->isAdmin($xhttperror->getModule()->mid()) && $xhttperror->getConfig('ignore_admin') != true)) {
             // create report
             $serverVars = array();
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
-            $serverVars['REMOTE_ADDR']  = xoops_getenv('REMOTE_ADDR');
+            $serverVars['REMOTE_ADDR'] = xoops_getenv('REMOTE_ADDR');
             //$serverVars[''] =
-            $referer                    = xoops_getenv('HTTP_REFERER');
-            $userAgent                  = xoops_getenv('HTTP_USER_AGENT');
-            $remoteAddr	                = xoops_getenv('REMOTE_ADDR');
-            $requestedUri               = xoops_getenv('REQUEST_URI');
-            if(empty($xoopsUser)){
-                $uid = 0; // anonymous
-            } else {
-                $uid = $xoopsUser->getVar('uid');
+            $referer = xoops_getenv('HTTP_REFERER');
+            $userAgent = xoops_getenv('HTTP_USER_AGENT');
+            $remoteAddr	= xoops_getenv('REMOTE_ADDR');
+            $requestedUri = '';
+            if (isset($_SERVER['REDIRECT_URL'])) {
+                $requestedUri .= $_SERVER['REDIRECT_URL'];
             }
+            if (isset($_SERVER['REDIRECT_QUERY_STRING'])) {
+                $requestedUri .= '?' . $_SERVER['REDIRECT_QUERY_STRING'];
+            }
+            // create error object
             $reportObj = $xhttperror->getHandler('report')->create();
+            //
             $reportObj->setVar('report_uid', $uid);
             $reportObj->setVar('report_statuscode', $_GET['error']);
             $reportObj->setVar('report_date', time());
@@ -56,10 +62,15 @@ if (!isset($_GET['error'])) {
             $reportObj->setVar('report_useragent', $userAgent);
             $reportObj->setVar('report_remoteaddr', $remoteAddr);
             $reportObj->setVar('report_requesteduri', $requestedUri);
+            // store error object
             if($xhttperror->getHandler('report')->insert($reportObj)) {
                 // NOP
             } else {
-                // NOP
+                // ERROR
+                xoops_cp_header();
+                echo $reportObj->getHtmlErrors();
+                xoops_cp_footer();
+                exit();
             }
         }
     }
