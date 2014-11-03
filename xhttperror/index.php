@@ -24,7 +24,7 @@ include __DIR__ . '/header.php';
 
 $myts = MyTextSanitizer::getInstance();
 
-$xoopsOption['template_main'] = "{$xhttperror->getModule()->dirname()}_error.tpl";
+$xoopsOption['template_main'] = "{$xhttperror->getModule()->dirname()}_index.tpl";
 include_once XOOPS_ROOT_PATH . '/header.php';
 
 $uid = (is_object($xoopsUser) && isset($xoopsUser)) ? $xoopsUser->uid() : 0;
