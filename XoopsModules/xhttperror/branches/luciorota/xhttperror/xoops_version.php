@@ -113,7 +113,7 @@ $modversion['hasMain'] = false;
 // Templates
 $i                                          = 0;
 ++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_error.tpl';
+$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_index.tpl';
 $modversion['templates'][$i]['description'] = '';
 // Admin templates
 ++$i;

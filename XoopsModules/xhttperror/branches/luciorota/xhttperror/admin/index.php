@@ -50,7 +50,7 @@ if ($errorCount == 0) {
     foreach ($errorObjs as $errorObj) {
         $error_id = $errorObj->getVar('error_id');
         $error_statuscode = $errorObj->getVar('error_statuscode');
-        $hmtl = "ErrorDocument " . $error_statuscode . " " . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/error.php?error=" . $error_statuscode . "";
+        $hmtl = "ErrorDocument " . $error_statuscode . " " . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/index.php?error=" . $error_statuscode . "";
         $indexAdmin->addInfoBoxLine(_AM_XHTTPERROR_INTRO, $hmtl);
     }
 }
