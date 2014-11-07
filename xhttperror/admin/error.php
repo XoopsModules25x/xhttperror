@@ -78,7 +78,7 @@ switch($op ) {
         }
         $error_id = XhttperrorRequest::getInt('error_id', 0, 'POST');
         $isNewError = ($error_id == 0) ? true : false;
-        $errorObj = $module_skeleton->getHandler('error')->get($error_id);
+        $errorObj = $xhttperror->getHandler('error')->get($error_id);
         // Check statuscode
         if (isset($_REQUEST['error_statuscode'])) {
             $criteria = new CriteriaCompo();
