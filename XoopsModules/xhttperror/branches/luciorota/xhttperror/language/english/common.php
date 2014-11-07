@@ -10,7 +10,9 @@ define('_CO_XHTTPERROR_ACTION_DISABLED', "Disabled");
 //
 define('_CO_XHTTPERROR_ERROR_STORED', "Error code saved");
 define('_CO_XHTTPERROR_ERROR_DELETED', "Error code deleted");
+define('_CO_XHTTPERROR_ERRORS_DELETED', "Error code deleted");
 define('_CO_XHTTPERROR_ERROR_DELETE_AREUSURE', "Warning: are you sure to delete this error code?");
+define('_CO_XHTTPERROR_ERRORS_DELETE_AREUSURE', "Warning: are you sure to delete this error codes?");
 define('_CO_XHTTPERROR_REPORT_STORED', "Report saved");
 define('_CO_XHTTPERROR_REPORT_DELETED', "Report deleted");
 define('_CO_XHTTPERROR_REPORT_DELETE_AREUSURE', "Warning: are you sure to delete this report?");
@@ -21,6 +23,7 @@ define('_CO_XHTTPERROR_WARNING_NOREPORTS', "Warning: no reports");
 // errors
 define('_CO_XHTTPERROR_ERROR_NOERROR', "Error: non-existent error code");
 define('_CO_XHTTPERROR_ERROR_NOREPORT', "Error: non-existent report");
+define('_CO_XHTTPERROR_ERROR_DELETEREPORTS', "Error: reports not deleted");
 
 
 
@@ -30,6 +33,7 @@ define('_CO_XHTTPERROR_BUTTON_MOVE', "Move");
 define('_CO_XHTTPERROR_BUTTON_EDIT', "Edit");
 define('_CO_XHTTPERROR_BUTTON_ADD', "Add");
 define('_CO_XHTTPERROR_BUTTON_DELETE', "Delete");
+define('_CO_XHTTPERROR_BUTTON_DELETE_SELECTED', "Delete selected");
 define('_CO_XHTTPERROR_BUTTON_FILTER', "Filter");
 define('_CO_XHTTPERROR_BUTTON_SEARCH', "Search");
 define('_CO_XHTTPERROR_BUTTON_REORDER', "Reorder");

@@ -27,7 +27,7 @@
             &nbsp;
             <a href="error.php?op=delete_error&amp;error_id=<{$error.error_id}>" title="<{$smarty.const._DELETE}>"><{$smarty.const._DELETE}></a>
             &nbsp;
-            <a href="../error.php?error=<{$error.error_statuscode}>" title="<{$smarty.const._CO_XHTTPERROR_BUTTON_TEST}>"><{$smarty.const._CO_XHTTPERROR_BUTTON_TEST}></a>
+            <a href="../index.php?error=<{$error.error_statuscode}>" title="<{$smarty.const._CO_XHTTPERROR_BUTTON_TEST}>"><{$smarty.const._CO_XHTTPERROR_BUTTON_TEST}></a>
         </td>
     </tr>
 <{/foreach}>

@@ -58,6 +58,38 @@ switch($op) {
         include __DIR__ . '/admin_footer.php';
         break;
 
+    case 'apply_actions':
+        $action         = XhttperrorRequest::getString('actions_action');
+        $report_ids     = XhttperrorRequest::getArray('report_ids', unserialize(XhttperrorRequest::getString('serialize_report_ids')));
+        $reportCriteria = new Criteria('report_id', '(' . implode(',', $report_ids) . ')', 'IN');
+        switch ($action) {
+            case 'delete_reports':
+                if (XhttperrorRequest::getBool('ok', false, 'POST') == true) {
+                    // delete subscriber (subscr), subscriptions (catsubscrs) and mailinglist
+                    if ($xhttperror->getHandler('report')->deleteAll($reportCriteria, true, true)) {
+                        redirect_header($currentFile, 3, _CO_XHTTPERROR_ERRORS_DELETED);
+                    } else {
+                        // error
+                        redirect_header($currentFile, 3, _CO_XHTTPERROR_ERROR_DELETEREPORTS);
+                        exit();
+                    }
+                } else {
+                    xoops_cp_header();
+                    xoops_confirm(
+                        array('ok' => true, 'op' => 'apply_actions', 'actions_action' => $action, 'serialize_report_ids' => serialize($report_ids)),
+                        $_SERVER['REQUEST_URI'],
+                        _CO_XHTTPERROR_ERRORS_DELETE_AREUSURE,
+                        _DELETE
+                    );
+                    xoops_cp_footer();
+                }
+                break;
+            default:
+                // NOP
+                break;
+        }
+        break;
+
     case 'delete_report' :
         $report_id = XhttperrorRequest::getInt('report_id', 0);
         $reportObj = $xhttperror->getHandler('report')->get($report_id);
