@@ -59,7 +59,7 @@ switch($op ) {
         $modcreate_admin->addItemButton(_CO_XHTTPERROR_BUTTON_ERRORS_LIST, '' . $currentFile . '?op=list_errors', 'list');
         echo $modcreate_admin->renderButton();
         //
-        $error_id = XhttperrorRequest::getInt('error_id', 0);
+        $error_id = XoopsRequest::getInt('error_id', 0);
         $errorObj = $xhttperror->getHandler('error')->get($error_id);
         if (!$errorObj) {
             // ERROR
@@ -76,7 +76,7 @@ switch($op ) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $error_id = XhttperrorRequest::getInt('error_id', 0, 'POST');
+        $error_id = XoopsRequest::getInt('error_id', 0, 'POST');
         $isNewError = ($error_id == 0) ? true : false;
         $errorObj = $xhttperror->getHandler('error')->get($error_id);
         // Check statuscode
@@ -89,9 +89,9 @@ switch($op ) {
                 $errorObj->setVar('error_statuscode', $_REQUEST['error_statuscode']);
             }
         }
-        $error_title = XhttperrorRequest::getString('error_title', '', 'POST');
-        $error_text = XhttperrorRequest::getString('error_text', '', 'POST');
-        $error_text_html = XhttperrorRequest::getString('error_text_html', '', 'POST');
+        $error_title = XoopsRequest::getString('error_title', '', 'POST');
+        $error_text = XoopsRequest::getString('error_text', '', 'POST');
+        $error_text_html = XoopsRequest::getString('error_text_html', '', 'POST');
         //
         $errorObj->setVar('error_title', $error_title);
         $errorObj->setVar('error_text', $error_text);
@@ -117,14 +117,14 @@ switch($op ) {
         break;
 
     case 'delete_error':
-        $error_id = XhttperrorRequest::getInt('error_id', 0);
+        $error_id = XoopsRequest::getInt('error_id', 0);
         $errorObj = $xhttperror->getHandler('error')->get($error_id);
         if (!$errorObj) {
             // ERROR
             redirect_header($currentFile, 3, _CO_XHTTPERROR_ERROR_NOERROR);
             exit();
         }
-        if (XhttperrorRequest::getBool('ok', false, 'POST') == true) {
+        if (XoopsRequest::getBool('ok', false, 'POST') == true) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }

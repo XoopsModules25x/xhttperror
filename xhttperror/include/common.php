@@ -37,7 +37,6 @@ include_once XHTTPERROR_ROOT_PATH . '/include/constants.php';
 
 include_once XHTTPERROR_ROOT_PATH . '/class/session.php'; // XhttperrorSession class
 include_once XHTTPERROR_ROOT_PATH . '/class/xhttperror.php'; // XhttperrorXhttperror class
-include_once XHTTPERROR_ROOT_PATH . '/class/request.php'; // XhttperrorRequest class
 
 xoops_load('XoopsUserUtility');
 xoops_load('XoopsLocal');
