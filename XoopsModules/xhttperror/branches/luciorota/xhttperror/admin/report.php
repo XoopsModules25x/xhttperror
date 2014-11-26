@@ -22,7 +22,7 @@
 $currentFile = basename(__FILE__);
 include_once __DIR__ . '/admin_header.php';
 
-$op = XhttperrorRequest::getString('op', 'list_reports');
+$op = XoopsRequest::getString('op', 'list_reports');
 switch($op) {
     default:
     case 'list_reports':
@@ -34,7 +34,7 @@ switch($op) {
         //
         $reportCount = $xhttperror->getHandler('report')->getCount();
         if($reportCount > 0) {
-            $start = XhttperrorRequest::getInt('start', 0);
+            $start = XoopsRequest::getInt('start', 0);
             $criteria = new CriteriaCompo();
             $criteria->setSort('report_date');
             $criteria->setOrder('ASC');
@@ -59,12 +59,12 @@ switch($op) {
         break;
 
     case 'apply_actions':
-        $action         = XhttperrorRequest::getString('actions_action');
-        $report_ids     = XhttperrorRequest::getArray('report_ids', unserialize(XhttperrorRequest::getString('serialize_report_ids')));
+        $action         = XoopsRequest::getString('actions_action');
+        $report_ids     = XoopsRequest::getArray('report_ids', unserialize(XoopsRequest::getString('serialize_report_ids')));
         $reportCriteria = new Criteria('report_id', '(' . implode(',', $report_ids) . ')', 'IN');
         switch ($action) {
             case 'delete_reports':
-                if (XhttperrorRequest::getBool('ok', false, 'POST') == true) {
+                if (XoopsRequest::getBool('ok', false, 'POST') == true) {
                     // delete subscriber (subscr), subscriptions (catsubscrs) and mailinglist
                     if ($xhttperror->getHandler('report')->deleteAll($reportCriteria, true, true)) {
                         redirect_header($currentFile, 3, _CO_XHTTPERROR_ERRORS_DELETED);
@@ -91,14 +91,14 @@ switch($op) {
         break;
 
     case 'delete_report' :
-        $report_id = XhttperrorRequest::getInt('report_id', 0);
+        $report_id = XoopsRequest::getInt('report_id', 0);
         $reportObj = $xhttperror->getHandler('report')->get($report_id);
         if (!$reportObj) {
             // ERROR
             redirect_header($currentFile, 3, _CO_XHTTPERROR_ERROR_NOREPORT);
             exit();
         }
-        if (XhttperrorRequest::getBool('ok', false, 'POST') == true) {
+        if (XoopsRequest::getBool('ok', false, 'POST') == true) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
