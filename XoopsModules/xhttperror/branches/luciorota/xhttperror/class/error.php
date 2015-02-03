@@ -22,9 +22,9 @@
 defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 include_once dirname(__DIR__) . '/include/common.php';
 
-define('_XHTTPERROR_REDIRECT_NO', 0);
-define('_XHTTPERROR_REDIRECT_URI', 1);
-define('_XHTTPERROR_REDIRECT_PREVIOUS', 2);
+define('XHTTPERROR_REDIRECT_NO', 0);
+define('XHTTPERROR_REDIRECT_URI', 1);
+define('XHTTPERROR_REDIRECT_PREVIOUS', 2);
 
 /**
  * Class XhttperrorError

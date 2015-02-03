@@ -21,6 +21,20 @@
 
 defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
+// common Xoops stuff
+xoops_load('XoopsRequest');
+xoops_load('XoopsUserUtility');
+xoops_load('XoopsLocal');
+
+// MyTextSanitizer object
+$myts = MyTextSanitizer::getInstance();
+
+// Load Xoops handlers
+$module_handler = xoops_gethandler('module');
+$member_handler = xoops_gethandler('member');
+$notification_handler = xoops_gethandler('notification');
+$groupperm_handler = xoops_gethandler('groupperm');
+
 // This must contain the name of the folder in which reside Xhttperror
 define("XHTTPERROR_DIRNAME", basename(dirname(dirname(__FILE__))));
 define("XHTTPERROR_URL", XOOPS_URL . '/modules/' . XHTTPERROR_DIRNAME);
@@ -35,13 +49,8 @@ xoops_loadLanguage('common', XHTTPERROR_DIRNAME);
 include_once XHTTPERROR_ROOT_PATH . '/include/functions.php';
 include_once XHTTPERROR_ROOT_PATH . '/include/constants.php';
 
-include_once XHTTPERROR_ROOT_PATH . '/class/session.php'; // XhttperrorSession class
 include_once XHTTPERROR_ROOT_PATH . '/class/xhttperror.php'; // XhttperrorXhttperror class
-
-xoops_load('XoopsUserUtility');
-xoops_load('XoopsLocal');
-// MyTextSanitizer object
-$myts = MyTextSanitizer::getInstance();
+include_once XHTTPERROR_ROOT_PATH . '/class/common/session.php'; // XhttperrorSession class
 
 $debug = false;
 $xhttperror = XhttperrorXhttperror::getInstance($debug);
@@ -54,9 +63,3 @@ if (is_object($xhttperror->getModule())) {
     // Find if the user is admin of the module
     $xhttperror_isAdmin = xhttperror_userIsAdmin();
 }
-
-// Load Xoops handlers
-$module_handler = xoops_gethandler('module');
-$member_handler = xoops_gethandler('member');
-$notification_handler = xoops_gethandler('notification');
-$groupperm_handler = xoops_gethandler('groupperm');

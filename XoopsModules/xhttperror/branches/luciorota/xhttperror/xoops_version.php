@@ -40,8 +40,8 @@ $modversion['official']         = false;
 include_once XOOPS_ROOT_PATH . '/modules/' . $modversion['dirname'] . '/include/constants.php';
 
 // About
-$modversion['module_status']        = 'RC1';
-$modversion['release_date']         = '2014/11/26'; // YYYY/mm/dd
+$modversion['module_status']        = 'Beta';
+$modversion['release_date']         = '2015/02/03'; // YYYY/mm/dd
 $modversion['module_website_url']   = 'http://www.xoops.org/';
 $modversion['module_website_name']  = 'XOOPS';
 $modversion['min_php']              = '5.3.7';
