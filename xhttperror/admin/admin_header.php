@@ -69,7 +69,7 @@ if ( file_exists($pathDir . '/moduleadmin.php')){
 	//return false;
 }
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 // Get user groups
 $groupPermHandler =& xoops_gethandler('groupperm');

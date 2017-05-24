@@ -3,7 +3,7 @@
 include_once('header.php');
 include XOOPS_ROOT_PATH . '/header.php';
 //include_once('include/functions.php');
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 // load classes
 $errorHandler =& xoops_getModuleHandler('error', 'xhttperror');
