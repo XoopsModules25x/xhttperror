@@ -1,7 +1,6 @@
-   
 /**
  * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
+ *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
  * ****************************************************************************
  *  XHTTPERROR - MODULE FOR XOOPS
  *  Copyright (c) 2007 - 2012
@@ -26,9 +25,9 @@
  * ****************************************************************************
  */
 
-$(document).ready(function(){
-	$( "button, input:button, input:submit, input:file, input:reset" ).css("color","inherit").button();
-	$( ".check" ).css("color","#fff").button();
-	$( ".radio" ).css("color","#fff").buttonset();
-	$( ".toolbar" ).css("color","#000").buttonset();       
+$(document).ready(function () {
+    $("button, input:button, input:submit, input:file, input:reset").css("color", "inherit").button();
+    $(".check").css("color", "#fff").button();
+    $(".radio").css("color", "#fff").buttonset();
+    $(".toolbar").css("color", "#000").buttonset();
 });

@@ -1,7 +1,7 @@
 <?php
 /**
  * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
+ *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
  * ****************************************************************************
  *  XHTTPERROR - MODULE FOR XOOPS
  *  Copyright (c) 2007 - 2012
@@ -17,10 +17,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
+ * @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
+ * @license    GNU General Public License v3.0
+ * @package    xhttperror
+ * @author     Rota Lucio ( lucio.rota@gmail.com )
  *
  *  $Rev$:     Revision of last commit
  *  $Author$:  Author of last commit
@@ -28,7 +28,7 @@
  * ****************************************************************************
  */
 
-require('../../mainfile.php');
+require_once __DIR__ . '/../../mainfile.php';
 
-include_once ("include/functions.php");
-include_once (XOOPS_ROOT_PATH . "/class/xoopsformloader.php");
+require_once __DIR__ . '/include/functions.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

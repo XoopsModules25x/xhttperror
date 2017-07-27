@@ -1,7 +1,7 @@
 <?php
 /**
  * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
+ *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
  * ****************************************************************************
  *  XHTTPERROR - MODULE FOR XOOPS
  *  Copyright (c) 2007 - 2012
@@ -17,10 +17,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
+ * @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
+ * @license    GNU General Public License v3.0
+ * @package    xhttperror
+ * @author     Rota Lucio ( lucio.rota@gmail.com )
  *
  *  $Rev$:     Revision of last commit
  *  $Author$:  Author of last commit
@@ -28,72 +28,60 @@
  * ****************************************************************************
  */
 
-include_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mainfile.php';
-$dirname = basename(dirname(dirname( __FILE__ ) ));
+require_once __DIR__ . '/../../../include/cp_header.php';
+//require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-// Include xoops admin header
-include_once XOOPS_ROOT_PATH . '/include/cp_header.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include_once XOOPS_ROOT_PATH . '/class/tree.php';
-include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-xoops_load ('XoopsUserUtility');
+require_once XOOPS_ROOT_PATH . '/class/tree.php';
+require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+xoops_load('XoopsUserUtility');
+//require_once __DIR__ . '/../class/utility.php';
+//require_once __DIR__ . '/../include/common.php';
+require_once __DIR__ . '/../include/config.php';
+require_once __DIR__ . '/../include/functions.php';
 
-$module_handler =& xoops_gethandler('module');
-$xoopsModule = & $module_handler->getByDirname($dirname); 
-$moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
-$pathImageIcon = XOOPS_URL .'/'. $moduleInfo->getInfo('icons16');
-$pathImageAdmin = XOOPS_URL .'/'. $moduleInfo->getInfo('icons32');
-$pathImageModule = XOOPS_URL . '/modules/'. $GLOBALS['xoopsModule']->getVar('dirname') .'/images';
+$moduleDirName = basename(dirname(__DIR__));
 
-// Include module functions
-include_once XOOPS_ROOT_PATH . "/modules/{$dirname}/include/config.php";
-include_once XOOPS_ROOT_PATH . "/modules/{$dirname}/include/functions.php";
-
-
-
-// Check and load moduleadmin classes
-$pathDir = $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin');
-$globalLanguage = $GLOBALS['xoopsConfig']['language'];
-if ( file_exists($pathDir . '/language/' . $globalLanguage . '/main.php')){
-	include_once $pathDir . '/language/' . $globalLanguage . '/main.php';        
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
-	include_once $pathDir . '/language/english/main.php';        
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
-if ( file_exists($pathDir . '/moduleadmin.php')){
-	include_once $pathDir . '/moduleadmin.php';
-	//return true;
-} else {
-	xoops_cp_header();
-	echo xoops_error(_AM_XADDRESSES_NOFRAMEWORKS);
-	xoops_cp_footer();
-	//return false;
-}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+// Load language files
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
 
 $myts = MyTextSanitizer::getInstance();
 
-// Get user groups
-$groupPermHandler =& xoops_gethandler('groupperm');
-if ($xoopsUser) {
-    $moduleperm_handler =& xoops_gethandler('groupperm');
-    if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar( 'mid' ), $xoopsUser->getGroups())) {
-        redirect_header(XOOPS_URL, 1, _NOPERM);
-        exit();
-    }
-} else {
-    redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
-    exit();
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
 }
 
-if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-	include_once(XOOPS_ROOT_PATH."/class/template.php");
-	$xoopsTpl = new XoopsTpl();
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler   = xoops_getHandler('module');
+$xoopsModule     = $moduleHandler->getByDirname($dirname);
+$moduleInfo      = $moduleHandler->get($xoopsModule->getVar('mid'));
+$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathImageModule = XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/images';
+
+// Get user groups
+$groupPermHandler = xoops_getHandler('groupperm');
+if ($xoopsUser) {
+    $modulepermHandler = xoops_getHandler('groupperm');
+    if (!$modulepermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+        redirect_header(XOOPS_URL, 1, _NOPERM);
+    }
+} else {
+    redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 
 $xoopsTpl->assign('pathImageIcon', $pathImageIcon);
 $xoopsTpl->assign('pathImageAdmin', $pathImageAdmin);
 //xoops_cp_header();
-
-//Load module languages
-xoops_loadLanguage('admin', $xoopsModule->getVar("dirname"));
-xoops_loadLanguage('modinfo', $xoopsModule->getVar("dirname"));
-xoops_loadLanguage('main', $xoopsModule->getVar("dirname"));

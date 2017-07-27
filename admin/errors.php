@@ -1,7 +1,7 @@
 <?php
 /**
  * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
+ *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
  * ****************************************************************************
  *  XHTTPERROR - MODULE FOR XOOPS
  *  Copyright (c) 2007 - 2012
@@ -17,10 +17,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
+ * @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
+ * @license    GNU General Public License v3.0
+ * @package    xhttperror
+ * @author     Rota Lucio ( lucio.rota@gmail.com )
  *
  *  $Rev$:     Revision of last commit
  *  $Author$:  Author of last commit
@@ -29,85 +29,79 @@
  */
 
 $currentFile = basename(__FILE__);
-include 'admin_header.php';
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['error_id']) ? "edit_error" : 'list_errors');
+require_once __DIR__ . '/admin_header.php';
+$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['error_id']) ? 'edit_error' : 'list_errors');
 
 // load classes
-$errorHandler =& xoops_getModuleHandler('error', 'xhttperror');
-$reportHandler =& xoops_getModuleHandler('report', 'xhttperror');
+$errorHandler  = xoops_getModuleHandler('error', 'xhttperror');
+$reportHandler = xoops_getModuleHandler('report', 'xhttperror');
 
 // count errors
 $countErrors = $errorHandler->getCount();
 
-
-switch($op ) {
+switch ($op) {
     default:
-    case 'list_errors' :
+    case 'list_errors':
         // render start here
         xoops_cp_header();
         // render submenu
-        $modcreate_admin = new ModuleAdmin();
-        echo $modcreate_admin->addNavigation('errors.php');
-        $modcreate_admin->addItemButton(_AM_XHTTPERR_ERROR_ADD, '' . $currentFile . '?op=edit_error', 'add');
-        echo $modcreate_admin->renderButton();
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
+        $adminObject->addItemButton(_AM_XHTTPERR_ERROR_ADD, '' . $currentFile . '?op=edit_error', 'add');
+        $adminObject->displayButton('left');
 
-        if($countErrors > 0) {
+        if ($countErrors > 0) {
             $criteria = new CriteriaCompo();
             $criteria->setSort('error_statuscode');
             $criteria->setOrder('ASC');
             $errors = $errorHandler->getObjects($criteria, true, false);
 
             $GLOBALS['xoopsTpl']->assign('errors', $errors);
-            $GLOBALS['xoopsTpl']->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML() );
-            $GLOBALS['xoopsTpl']->display('db:xhttperror_admin_errors_list.html');
+            $GLOBALS['xoopsTpl']->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
+            $GLOBALS['xoopsTpl']->display('db:xhttperror_admin_errors_list.tpl');
         } else {
             echo _AM_XHTTPERR_ERROR_NOERRORS;
         }
-        
-        include "admin_footer.php";
+
+        require_once __DIR__ . '/admin_footer.php';
         break;
 
-
-
-    case 'edit_error' :
-    case 'new_error' :
+    case 'edit_error':
+    case 'new_error':
         // render start here
         xoops_cp_header();
         // render submenu
-        $modcreate_admin = new ModuleAdmin();
-        echo $modcreate_admin->addNavigation('errors.php');
-        $modcreate_admin->addItemButton(_AM_XHTTPERR_ERROR_LIST, '' . $currentFile . '?op=list_errors', 'list');
-        echo $modcreate_admin->renderButton();
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
+        $adminObject->addItemButton(_AM_XHTTPERR_ERROR_LIST, '' . $currentFile . '?op=list_errors', 'list');
+        $adminObject->displayButton('left');
 
         if (isset($_REQUEST['error_id'])) {
             $error = $errorHandler->get($_REQUEST['error_id']);
         } else {
             $error = $errorHandler->create();
-        
         }
         $form = $error->getForm();
         $form->display();
-        
-        include "admin_footer.php";
+
+        require_once __DIR__ . '/admin_footer.php';
         break;
 
-
-
-    case 'save_error' :
-        if ( !$GLOBALS['xoopsSecurity']->check()  ) {
-            redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors() ));
+    case 'save_error':
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if ( isset($_REQUEST['error_id'])  ) {
-            $error =& $errorHandler->get($_REQUEST['error_id']);
+        if (isset($_REQUEST['error_id'])) {
+            $error = $errorHandler->get($_REQUEST['error_id']);
         } else {
-            $error =& $errorHandler->create();
+            $error = $errorHandler->create();
         }
         // Check statuscode
-        if ( isset($_REQUEST['error_statuscode'])  ) {
+        if (isset($_REQUEST['error_statuscode'])) {
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('error_statuscode', $_REQUEST['error_statuscode']));
             if ($errorHandler->getCount($criteria) > 0) {
-                redirect_header($currentFile, 3, _AM_XHTTPERR_STATUSCODE_EXISTS );
+                redirect_header($currentFile, 3, _AM_XHTTPERR_STATUSCODE_EXISTS);
             } else {
                 $error->setVar('error_statuscode', $_REQUEST['error_statuscode']);
             }
@@ -121,34 +115,32 @@ switch($op ) {
         $error->setVar('error_redirect', $_REQUEST['error_redirect']);
         $error->setVar('error_redirect_time', (int)$_REQUEST['error_redirect_time']);
         /* IN PROGRESS
-        $error->setVar('error_redirect_message', (int)$_REQUEST['error_redirect_message']);
+        $error->setVar('error_redirect_message', (int) $_REQUEST['error_redirect_message']);
         */
         $error->setVar('error_redirect_uri', $_REQUEST['error_redirect_uri']);
 
-        if ( $errorHandler->insert($error)  ) {
-            redirect_header($currentFile, 3, _AM_XHTTPERR_SAVEDSUCCESS );
+        if ($errorHandler->insert($error)) {
+            redirect_header($currentFile, 3, _AM_XHTTPERR_SAVEDSUCCESS);
         } else {
-            redirect_header($currentFile, 3, _AM_XHTTPERR_NOTSAVED );
+            redirect_header($currentFile, 3, _AM_XHTTPERR_NOTSAVED);
         }
         break;
 
-
-
-    case 'delete_error' :
+    case 'delete_error':
         $error =& $errorHandler->get($_REQUEST['error_id']);
-        if ( isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1 ) {
-            if ( !$GLOBALS['xoopsSecurity']->check()  ) {
-                redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors() ));
+        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
+            if (!$GLOBALS['xoopsSecurity']->check()) {
+                redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ( $errorHandler->delete($error) ) {
-                redirect_header($currentFile, 3, _AM_XHTTPERR_DELETEDSUCCESS );
+            if ($errorHandler->delete($error)) {
+                redirect_header($currentFile, 3, _AM_XHTTPERR_DELETEDSUCCESS);
             } else {
                 echo $error->getHtmlErrors();
             }
         } else {
             // render start here
             xoops_cp_header();
-            xoops_confirm(array('ok' => 1, 'error_id' => $_REQUEST['error_id'], 'op' => 'delete_error'), $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_ERROR_RUSUREDEL, $error->getVar('error_title') ));
+            xoops_confirm(array('ok' => 1, 'error_id' => $_REQUEST['error_id'], 'op' => 'delete_error'), $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_ERROR_RUSUREDEL, $error->getVar('error_title')));
             xoops_cp_footer();
         }
         break;

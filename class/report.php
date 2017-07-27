@@ -1,7 +1,7 @@
 <?php
 /**
  * ****************************************************************************
- *  - A Project by Developers TEAM For Xoops - ( http://www.xoops.org )
+ *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
  * ****************************************************************************
  *  XHTTPERROR - MODULE FOR XOOPS
  *  Copyright (c) 2007 - 2012
@@ -17,10 +17,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------------
- *  @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
- *  @license    GNU General Public License v3.0 
- *  @package    xhttperror
- *  @author     Rota Lucio ( lucio.rota@gmail.com )
+ * @copyright  Rota Lucio ( http://luciorota.altervista.org/xoops/ )
+ * @license    GNU General Public License v3.0
+ * @package    xhttperror
+ * @author     Rota Lucio ( lucio.rota@gmail.com )
  *
  *  $Rev$:     Revision of last commit
  *  $Author$:  Author of last commit
@@ -28,17 +28,14 @@
  * ****************************************************************************
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    die('XOOPS root path not defined');
-}
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 class XhttperrorReport extends XoopsObject
-{ 
-
+{
     // constructor
-    function __construct()
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('report_id', XOBJ_DTYPE_INT, null, false, 5);
         $this->initVar('report_uid', XOBJ_DTYPE_INT, null, true); // user id
         $this->initVar('report_statuscode', XOBJ_DTYPE_TXTBOX, null, false);
@@ -52,7 +49,7 @@ class XhttperrorReport extends XoopsObject
 
 class XhttperrorReportHandler extends XoopsPersistableObjectHandler
 {
-    function __construct(&$db) 
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'xhttperror_reports', 'xhttperrorreport', 'report_id', 'report_date');
     }
