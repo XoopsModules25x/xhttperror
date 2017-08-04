@@ -15,10 +15,10 @@ If you wish to translate this module to your language, please first of all:
  3) Consider obtaining the latest development version...
  4) Bear in mind that the files may change constantly during its development.
 
-To translate this module to your language, go to the "languages" folder, copy 
-the  folder called "english" (along with any files it contains) and rename it to 
-the name of your language. Make sure that you use the English version of its 
+To translate this module to your language, go to the "languages" folder, copy
+the  folder called "english" (along with any files it contains) and rename it to
+the name of your language. Make sure that you use the English version of its
 name and, don't use capital letters and don't use any spaces.
- 
+
 Edit the files contained within your new language files  - it should (in theory)
 be fairly obvious as to what you need to change.

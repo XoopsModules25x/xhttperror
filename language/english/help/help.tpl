@@ -1,8 +1,6 @@
 <div id="help-template" class="outer">
-    <h1 class="head">Help: <a class="ui-corner-all tooltip" href="<{$xoops_url}>/modules/xhttperror/admin/index.php"
-                              title="Back to the Administration of xHttpError"> xHttpError <img
-            src="<{xoAdminIcons home.png}>" alt="Back to the Administration of xHttpError"></a></h1>
-    <!-- -----Help Content ---------- -->
+    <{include file=$smarty.const._MI_XHTTPERR_HELP_HEADER}>
+
     <h4 class="odd">DESCRIPTION</h4>
     <p class="even">The xHttpError module is for managing server Status Codes.</p>
     <h4 class="odd">INSTALL/UNINSTALL</h4>

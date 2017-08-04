@@ -101,6 +101,14 @@ $modversion['hasSearch'] = false;
 // Comments
 $modversion['hasComments'] = false;
 
+// ------------------- Help files ------------------- //
+$modversion['helpsection'] = array(
+    ['name' => _MI_XHTTPERR_OVERVIEW, 'link' => 'page=help'],
+    ['name' => _MI_XHTTPERR_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => _MI_XHTTPERR_LICENSE, 'link' => 'page=license'],
+    ['name' => _MI_XHTTPERR_SUPPORT, 'link' => 'page=support'],
+);
+
 // Templates
 $i = 0;
 ++$i;

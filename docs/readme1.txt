@@ -6,6 +6,6 @@ Distribution files marked "beta" (they will have "beta" in the filename!) are
 still in testing and should only be used on production sites with caution.
 
 Please see the text file docs/UPDATE.txt for more information on updating
-xHttpError and if you need to run an update script. If you are installing 
-xHttpError for the first time, or re-installing afresh, you need not worry 
+xHttpError and if you need to run an update script. If you are installing
+xHttpError for the first time, or re-installing afresh, you need not worry
 about this.
