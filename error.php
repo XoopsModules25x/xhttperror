@@ -7,7 +7,7 @@ error_reporting(0);
 
 function print_error_page()
 {
-    $status_reason = array(
+    $status_reason = [
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',
@@ -59,9 +59,9 @@ function print_error_page()
         506 => 'Variant Also Negotiates',
         507 => 'Insufficient Storage',
         510 => 'Not Extended'
-    );
+    ];
 
-    $status_msg = array(
+    $status_msg = [
         400 => 'Your browser sent a request that this server could not understand.',
         401 => 'This server could not verify that you are authorized to access the document requested.',
         402 => 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
@@ -94,7 +94,7 @@ function print_error_page()
         506 => 'A variant for the requested resource <code>%U%</code> is itself a negotiable resource. This indicates a configuration error.',
         507 => 'The method could not be performed.  There is insufficient free space left in your storage allocation.',
         510 => 'A mandatory extension policy in the request is not accepted by the server for this resource.'
-    );
+    ];
 
     // Get the Status Code
     if (isset($_SERVER['REDIRECT_STATUS']) && ($_SERVER['REDIRECT_STATUS'] != 200)) {
@@ -119,7 +119,7 @@ function print_error_page()
     }
 
     // Check for valid protocols or else issue 505
-    if (!in_array($_SERVER['SERVER_PROTOCOL'], array('HTTP/1.0', 'HTTP/1.1', 'HTTP/0.9'))) {
+    if (!in_array($_SERVER['SERVER_PROTOCOL'], ['HTTP/1.0', 'HTTP/1.1', 'HTTP/0.9'])) {
         $sc = 505;
     }
 
@@ -136,7 +136,7 @@ function print_error_page()
     }
 
     // A very small footprint for certain types of 4xx class errors and all 5xx class errors
-    if (in_array($sc, array(400, 403, 405)) || (floor($sc / 100) == 5)) {
+    if (in_array($sc, [400, 403, 405]) || (floor($sc / 100) == 5)) {
         @header('Connection: close', 1);
         if ($sc == 405) {
             @header('Allow: GET,HEAD,POST,OPTIONS', 1, 405);
@@ -151,7 +151,7 @@ function askapache_global_debug()
 {
     # http://www.php.net/manual/en/function.array-walk.php#100681
     global $_GET, $_POST, $_ENV, $_SERVER;
-    $g = array('_ENV', '_SERVER', '_GET', '_POST');
+    $g = ['_ENV', '_SERVER', '_GET', '_POST'];
     array_walk_recursive($g, create_function('$n', 'global $$n;if( !!$$n&&ob_start()&&(print "[ $"."$n ]\n")&&array_walk($$n,
     create_function(\'$v,$k\', \'echo "[$k] => $v\n";\'))) echo "<"."p"."r"."e>".htmlspecialchars(ob_get_clean())."<"."/"."pr"."e>";'));
 }

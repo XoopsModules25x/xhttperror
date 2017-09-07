@@ -140,7 +140,7 @@ switch ($op) {
         } else {
             // render start here
             xoops_cp_header();
-            xoops_confirm(array('ok' => 1, 'error_id' => $_REQUEST['error_id'], 'op' => 'delete_error'), $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_ERROR_RUSUREDEL, $error->getVar('error_title')));
+            xoops_confirm(['ok' => 1, 'error_id' => $_REQUEST['error_id'], 'op' => 'delete_error'], $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_ERROR_RUSUREDEL, $error->getVar('error_title')));
             xoops_cp_footer();
         }
         break;

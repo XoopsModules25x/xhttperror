@@ -31,7 +31,7 @@
 use Xmf\Module\Admin;
 use Xmf\Module\Helper;
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 //$path = dirname(dirname(dirname(__DIR__)));
 //require_once $path . '/mainfile.php';
@@ -47,7 +47,7 @@ $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 xoops_loadLanguage('modinfo', $moduleDirName);
 
-$adminmenu = array();
+$adminmenu = [];
 $i         = 1;
 ++$i;
 $adminmenu[$i]['name']  = 'Index';

@@ -81,7 +81,7 @@ switch ($op) {
         } else {
             // render start here
             xoops_cp_header();
-            xoops_confirm(array('ok' => 1, 'report_id' => $_REQUEST['report_id'], 'op' => 'delete_report'), $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, $report->getVar('report_id')));
+            xoops_confirm(['ok' => 1, 'report_id' => $_REQUEST['report_id'], 'op' => 'delete_report'], $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, $report->getVar('report_id')));
             xoops_cp_footer();
         }
         break;

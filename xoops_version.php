@@ -29,9 +29,9 @@
  * ****************************************************************************
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-$dirname = basename(__DIR__);
-require_once XOOPS_ROOT_PATH . "/modules/{$dirname}/include/functions.php";
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+$moduleDirName = basename(__DIR__);
+require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php";
 xoops_load('XoopsLists');
 
 $modversion['version']             = '1.11';
@@ -47,19 +47,19 @@ $modversion['credits']             = 'Andrew Mills <a href"=emailto:ajmills@siri
 $modversion['help']                = 'page=help';
 $modversion['license']             = 'GNU General Public License v3.0';
 $modversion['license_url']         = 'http://www.gnu.org/licenses/gpl-3.0.txt';
-$modversion['dirname']             = "{$dirname}";
+$modversion['dirname']             = "{$moduleDirName}";
 $modversion['release_info']        = 'in progress';
 $modversion['release_file']        = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/docs/changelog.txt';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array('mysql' => '5.5');
+$modversion['min_db']              = ['mysql' => '5.5'];
 $modversion['image']               = 'assets/images/logoModule.png';
 $modversion['official']            = 0; //1 indicates supported by Xoops CORE Dev Team, 0 means 3rd party supported
 
 //$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
-$modversion['modicons16'] = "modules/{$dirname}/assets/images/icons/16x16";
-$modversion['modicons32'] = "modules/{$dirname}/assets/images/icons/32x32";
+$modversion['modicons16'] = "modules/{$moduleDirName}/assets/images/icons/16x16";
+$modversion['modicons32'] = "modules/{$moduleDirName}/assets/images/icons/32x32";
 
 // About
 $modversion['demo_site_url']       = '';
@@ -102,12 +102,12 @@ $modversion['hasSearch'] = false;
 $modversion['hasComments'] = false;
 
 // ------------------- Help files ------------------- //
-$modversion['helpsection'] = array(
+$modversion['helpsection'] = [
     ['name' => _MI_XHTTPERR_OVERVIEW, 'link' => 'page=help'],
     ['name' => _MI_XHTTPERR_DISCLAIMER, 'link' => 'page=disclaimer'],
     ['name' => _MI_XHTTPERR_LICENSE, 'link' => 'page=license'],
     ['name' => _MI_XHTTPERR_SUPPORT, 'link' => 'page=support'],
-);
+];
 
 // Templates
 $i = 0;
@@ -159,11 +159,11 @@ $modversion['config'][$i]['description'] = '_MI_XHTTPERR_PAGETTL_DESC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = '1';
-$modversion['config'][$i]['options']     = array(
+$modversion['config'][$i]['options']     = [
     '_MI_XHTTPERR_PAGETTL1' => '0',
     '_MI_XHTTPERR_PAGETTL2' => '1',
     '_MI_XHTTPERR_PAGETTL3' => '2'
-);
+];
 // Reports per page
 ++$i;
 $modversion['config'][$i]['name']        = 'reports_per_page';

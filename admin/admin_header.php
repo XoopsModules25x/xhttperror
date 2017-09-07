@@ -63,13 +63,13 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
     $xoopsTpl = new XoopsTpl();
 }
 
-/** @var XoopsModuleHandler $moduleHandler */
-$moduleHandler   = xoops_getHandler('module');
-$xoopsModule     = $moduleHandler->getByDirname($dirname);
-$moduleInfo      = $moduleHandler->get($xoopsModule->getVar('mid'));
+///** @var XoopsModuleHandler $moduleHandler */
+//$moduleHandler   = xoops_getHandler('module');
+//$xoopsModule     = $moduleHandler->getByDirname($dirname);
+$moduleInfo      = $moduleHelper->getModule()->mid();
 $pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 32);
-$pathImageModule = XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/images';
+$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathImageModule =  $moduleHelper->url('assets/images');
 
 // Get user groups
 $groupPermHandler = xoops_getHandler('groupperm');
@@ -82,6 +82,6 @@ if ($xoopsUser) {
     redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 
-$xoopsTpl->assign('pathImageIcon', $pathImageIcon);
-$xoopsTpl->assign('pathImageAdmin', $pathImageAdmin);
+$xoopsTpl->assign('pathImageIcon', $pathIcon16);
+$xoopsTpl->assign('pathImageAdmin', $pathImageModule);
 //xoops_cp_header();

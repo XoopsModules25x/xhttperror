@@ -28,7 +28,7 @@
  * ****************************************************************************
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 define('XHTTPERR_REDIRECT_NO', 0);
 define('XHTTPERR_REDIRECT_URI', 1);
@@ -82,7 +82,7 @@ class XhttperrorError extends XoopsObject
         $form->addElement($errorStatuscode, true);
         unset($errorStatuscode);
         // Text
-        $editor_configs           = array();
+        $editor_configs           = [];
         $editor_configs['name']   = 'error_text';
         $editor_configs['value']  = $this->getVar('error_text', 'e');
         $editor_configs['rows']   = 10;

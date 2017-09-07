@@ -46,16 +46,16 @@ $countReports = $reportHandler->getCount();
 if (xhttperror_checkModuleAdmin()) {
     $adminObject = \Xmf\Module\Admin::getInstance();
     $adminObject->addInfoBox(_AM_XHTTPERR_INTRO);
-    $adminObject->addInfoBoxLine(_AM_XHTTPERR_INTRO, _AM_XHTTPERR_INFO);
+    $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_INFO), '');
     if (file_exists(XOOPS_ROOT_PATH . '/.htaccess')) {
         $htaccessCheck = _AM_XHTTPERR_FILECHK . XOOPS_ROOT_PATH . '/.htaccess ' . '<br>' . _AM_XHTTPERR_FILEEXISTS;
     } else {
         $htaccessCheck = _AM_XHTTPERR_FILECHK . XOOPS_ROOT_PATH . '/.htaccess ' . '<br>' . _AM_XHTTPERR_FILENOEXIST;
     }
-    $adminObject->addInfoBoxLine(_AM_XHTTPERR_INTRO, $htaccessCheck);
-    $adminObject->addInfoBoxLine(_AM_XHTTPERR_INTRO, _AM_XHTTPERR_ADDCODE);
+    $adminObject->addInfoBoxLine(sprintf($htaccessCheck), '');
+    $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_ADDCODE), '');
     if ($countErrors == 0) {
-        $adminObject->addInfoBoxLine(_AM_XHTTPERR_INTRO, _AM_XHTTPERR_NOCODE);
+        $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_NOCODE), '');
     } else {
         // get errors
         $criteria = new CriteriaCompo();
@@ -64,7 +64,7 @@ if (xhttperror_checkModuleAdmin()) {
             $msg_id           = $error->getVar('error_id');
             $error_statuscode = $error->getVar('error_statuscode');
             $hmtl             = 'ErrorDocument ' . $error_statuscode . ' ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?error=' . $error_statuscode . '';
-            $adminObject->addInfoBoxLine(_AM_XHTTPERR_INTRO, $hmtl);
+            $adminObject->addInfoBoxLine(sprintf($hmtl), '');
         }
     }
     $adminObject->displayNavigation(basename(__FILE__));

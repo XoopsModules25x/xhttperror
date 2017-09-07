@@ -64,8 +64,10 @@ function xoops_module_install_xhttperror(XoopsObject $xoopsModule)
     $error        = $errorHandler->create();
     $error->setVar('error_title', 'Error 404 - Document Not Found');
     $error->setVar('error_statuscode', '404');
-    $error->setVar('error_text',
-                   '<p style="font-weight: bold; text-align: center">The page you requested could not be found.</p><p>You may not be able to find the requested page because:</p><ul><li>The page no longer exists.</li><li>The address/page name was mis-typed.</li><li>You followed an incorrect, or out of date link on another site.</li><li>You followed an out of date search engine listing, or personal bookmark/favourite.</li></ul><p>Please try visiting the <a href="/">home page</a>, or use the search function below to find the page you were after.</p>');
+    $error->setVar(
+        'error_text',
+                   '<p style="font-weight: bold; text-align: center">The page you requested could not be found.</p><p>You may not be able to find the requested page because:</p><ul><li>The page no longer exists.</li><li>The address/page name was mis-typed.</li><li>You followed an incorrect, or out of date link on another site.</li><li>You followed an out of date search engine listing, or personal bookmark/favourite.</li></ul><p>Please try visiting the <a href="/">home page</a>, or use the search function below to find the page you were after.</p>'
+    );
     $error->setVar('error_showme', true);
     $error->setVar('error_redirect', false);
     $error->setVar('error_redirect_time', 3);

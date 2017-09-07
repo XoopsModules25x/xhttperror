@@ -1,6 +1,4 @@
-xHttpError History
-
-Key:
+<h5>Key:</h5>
 + Added feature.
 - Removed.
 ! Bug fix.

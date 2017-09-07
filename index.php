@@ -19,7 +19,7 @@ if (!isset($_GET['error'])) {
     if ($xoopsModuleConfig['error_reporting'] === false) {
         if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && $xoopsModuleConfig['ignore_admin'] !== true)) {
             // create report
-            $serverVars                 = array();
+            $serverVars                 = [];
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
             $serverVars['REMOTE_ADDR']  = xoops_getenv('REMOTE_ADDR');
             //$serverVars[''] =
