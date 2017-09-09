@@ -47,30 +47,36 @@ $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 xoops_loadLanguage('modinfo', $moduleDirName);
 
-$adminmenu = [];
-$i         = 1;
-++$i;
-$adminmenu[$i]['name']  = 'Index';
-$adminmenu[$i]['title'] = _MI_XHTTPERR_ADMENU_INDEX;
-$adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['desc']  = _MI_XHTTPERR_ADMENU_INDEX_DESC;
-$adminmenu[$i]['icon']  = "../../{$pathModIcon32}/house.png";
-++$i;
-$adminmenu[$i]['name']  = 'Errors';
-$adminmenu[$i]['title'] = _MI_XHTTPERR_ADMENU_ERRORS;
-$adminmenu[$i]['link']  = 'admin/errors.php';
-$adminmenu[$i]['desc']  = _MI_XHTTPERR_ADMENU_ERRORS_DESC;
-$adminmenu[$i]['icon']  = "../../{$pathModIcon32}/error.png";
-++$i;
-$adminmenu[$i]['name']  = 'Reports';
-$adminmenu[$i]['title'] = _MI_XHTTPERR_ADMENU_REPORTS;
-$adminmenu[$i]['link']  = 'admin/reports.php';
-$adminmenu[$i]['desc']  = _MI_XHTTPERR_ADMENU_REPORTS_DESC;
-$adminmenu[$i]['icon']  = "../../{$pathModIcon32}/report_error.png";
-++$i;
-$adminmenu[$i]['name']  = 'About';
-$adminmenu[$i]['title'] = _MI_XHTTPERR_ADMENU_ABOUT;
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['desc']  = _MI_XHTTPERR_ADMENU_ABOUT_DESC;
-$adminmenu[$i]['icon']  = "../../{$pathModIcon32}/information.png";
-unset($i);
+$adminmenu[] = [
+    'name'  => 'Index',
+    'title' => _MI_XHTTPERR_ADMENU_INDEX,
+    'link'  => 'admin/index.php',
+    'desc'  => _MI_XHTTPERR_ADMENU_INDEX_DESC,
+    'icon'  => "../../{$pathModIcon32}/house.png",
+];
+
+$adminmenu[] = [
+    'name'  => 'Errors',
+    'title' => _MI_XHTTPERR_ADMENU_ERRORS,
+    'link'  => 'admin/errors.php',
+    'desc'  => _MI_XHTTPERR_ADMENU_ERRORS_DESC,
+    'icon'  => "../../{$pathModIcon32}/error.png",
+];
+
+$adminmenu[] = [
+    'name'  => 'Reports',
+    'title' => _MI_XHTTPERR_ADMENU_REPORTS,
+    'link'  => 'admin/reports.php',
+    'desc'  => _MI_XHTTPERR_ADMENU_REPORTS_DESC,
+    'icon'  => "../../{$pathModIcon32}/report_error.png",
+];
+
+$adminmenu[] = [
+    'name'  => 'About',
+    'title' => _MI_XHTTPERR_ADMENU_ABOUT,
+    'link'  => 'admin/about.php',
+    'desc'  => _MI_XHTTPERR_ADMENU_ABOUT_DESC,
+    'icon'  => "../../{$pathModIcon32}/information.png",
+];
+
+
