@@ -58,7 +58,7 @@ class XhttperrorError extends XoopsObject
     {
         global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
 
-        if ($action === false) {
+        if (false === $action) {
             $action = $_SERVER['REQUEST_URI'];
         }
         $title = $this->isNew() ? sprintf(_AM_XHTTPERR_ERROR_ADD) : sprintf(_AM_XHTTPERR_ERROR_EDIT);

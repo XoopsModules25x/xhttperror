@@ -54,7 +54,7 @@ if (xhttperror_checkModuleAdmin()) {
     }
     $adminObject->addInfoBoxLine(sprintf($htaccessCheck), '');
     $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_ADDCODE), '');
-    if ($countErrors == 0) {
+    if (0 == $countErrors) {
         $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_NOCODE), '');
     } else {
         // get errors
