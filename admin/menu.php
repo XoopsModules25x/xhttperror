@@ -28,24 +28,15 @@
  * ****************************************************************************
  */
 
-use Xmf\Module\Admin;
-use Xmf\Module\Helper;
+use XoopsModules\Xhttperror;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+require_once __DIR__ . '/../class/Helper.php';
+//require_once __DIR__ . '/../include/common.php';
+$helper = Xhttperror\Helper::getInstance();
 
-//$path = dirname(dirname(dirname(__DIR__)));
-//require_once $path . '/mainfile.php';
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
-$moduleDirName = basename(dirname(__DIR__));
-
-if (false !== ($moduleHelper = Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Helper::getHelper('system');
-}
-$pathIcon32    = Admin::menuIconPath('');
-$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
-
-xoops_loadLanguage('modinfo', $moduleDirName);
 
 $adminmenu[] = [
     'name'  => 'Index',
@@ -78,5 +69,3 @@ $adminmenu[] = [
     'desc'  => _MI_XHTTPERR_ADMENU_ABOUT_DESC,
     'icon'  => "../../{$pathModIcon32}/information.png",
 ];
-
-

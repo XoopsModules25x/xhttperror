@@ -58,7 +58,7 @@ function xhttperror_CleanVars(&$global, $key, $default = '', $type = 'int')
             $ret = isset($global[$key]) ? filter_var($global[$key], FILTER_SANITIZE_NUMBER_INT) : $default;
             break;
     }
-    if ($ret === false) {
+    if (false === $ret) {
         return $default;
     }
 
@@ -68,7 +68,7 @@ function xhttperror_CleanVars(&$global, $key, $default = '', $type = 'int')
 function xhttperror_meta_keywords($content)
 {
     global $xoopsTpl, $xoTheme;
-    $myts    = MyTextSanitizer::getInstance();
+    $myts    = \MyTextSanitizer::getInstance();
     $content = $myts->undoHtmlSpecialChars($myts->displayTbox($content));
     if (isset($xoTheme) && is_object($xoTheme)) {
         $xoTheme->addMeta('meta', 'keywords', strip_tags($content));
@@ -80,7 +80,7 @@ function xhttperror_meta_keywords($content)
 function xhttperror_meta_description($content)
 {
     global $xoopsTpl, $xoTheme;
-    $myts    = MyTextSanitizer::getInstance();
+    $myts    = \MyTextSanitizer::getInstance();
     $content = $myts->undoHtmlSpecialChars($myts->displayTarea($content));
     if (isset($xoTheme) && is_object($xoTheme)) {
         $xoTheme->addMeta('meta', 'description', strip_tags($content));

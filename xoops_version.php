@@ -30,6 +30,9 @@
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
+require_once __DIR__ . '/preloads/autoloader.php';
+
 $moduleDirName = basename(__DIR__);
 require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php";
 xoops_load('XoopsLists');

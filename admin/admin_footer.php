@@ -30,8 +30,8 @@
 
 global $pathImageAdmin;
 
-echo "<div align=\"center\">";
-echo "<a href=\"https://xoops.org\" target=\"_blank\">";
+echo '<div align="center">';
+echo '<a href="https://xoops.org" target="_blank">';
 echo '<img src=' . $pathImageAdmin . '/xoopsmicrobutton.gif' . ' ' . " alt='XOOPS' title='XOOPS'>";
 echo '</a>';
 echo '</div>';

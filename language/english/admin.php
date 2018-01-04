@@ -15,10 +15,10 @@ define('_AM_XHTTPERR_INTRO', '&nbsp;Info&nbsp;');
 define('_AM_XHTTPERR_INFO', '<p><strong>Please note:</strong> This module requires that the server supports .htaccess files (and that .htaccess files are allowed for your account), or some way for you to add custom error message redirects.</p>');
 
 define('_AM_XHTTPERR_FILECHK', 'Checking for the <b>.htaccess</b> file: ');
-define('_AM_XHTTPERR_FILEEXISTS', "<p style=\"color: green; font-weight: bold;\">OK</p>");
-define('_AM_XHTTPERR_FILENOEXIST', "<p style=\"color: red; font-weight: bold;\">the .htaccess does not exist - please add this file with the lines added below (please note the full stop at the start - this is part of the filename).</p>");
+define('_AM_XHTTPERR_FILEEXISTS', '<p style="color: green; font-weight: bold;">OK</p>');
+define('_AM_XHTTPERR_FILENOEXIST', '<p style="color: red; font-weight: bold;">the .htaccess does not exist - please add this file with the lines added below (please note the full stop at the start - this is part of the filename).</p>');
 define('_AM_XHTTPERR_ADDCODE', '<p>You will need to manually add the following lines to the <b>.htaccess</b> file in your XOOPS root directory for the error codes to work.</p>');
-define('_AM_XHTTPERR_NOCODE', "<p style=\"color: red; font-weight: bold;\">There are currently no error codes defined.</p>");
+define('_AM_XHTTPERR_NOCODE', '<p style="color: red; font-weight: bold;">There are currently no error codes defined.</p>');
 
 // admin/errors.php
 // class/error.php
@@ -82,7 +82,7 @@ define('_AM_XHTTPERR_REPORT_REQUESTEDURI', 'Page requested');
 define('_AM_XHTTPERR_REPORT_RUSUREDEL', 'Are you sure to delete this report (ID=%s)?');
 
 // Error NoFrameworks
-define('_AM_XHTTPERR_NOFRAMEWORKS', "Error: You don&#39;t use the Frameworks \"admin module\". Please install this Frameworks");
+define('_AM_XHTTPERR_NOFRAMEWORKS', 'Error: You don&#39;t use the Frameworks "admin module". Please install this Frameworks');
 define('_AM_XHTTPERR_MAINTAINEDBY', 'is maintained by the');
 
 //1.11

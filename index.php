@@ -3,7 +3,7 @@
 require_once __DIR__ . '/header.php';
 include XOOPS_ROOT_PATH . '/header.php';
 //include_once('include/functions.php');
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 // load classes
 $errorHandler  = xoops_getModuleHandler('error', 'xhttperror');
@@ -16,8 +16,8 @@ if (!isset($_GET['error'])) {
 } else {
     // Save error info to database
     // We may want to turn this off on busy sites.
-    if ($xoopsModuleConfig['error_reporting'] === false) {
-        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && $xoopsModuleConfig['ignore_admin'] !== true)) {
+    if (false === $xoopsModuleConfig['error_reporting']) {
+        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && true !== $xoopsModuleConfig['ignore_admin'])) {
             // create report
             $serverVars                 = [];
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
@@ -61,10 +61,10 @@ if (!isset($_GET['error'])) {
         $text = $myts->displayTarea($error->getVar('error_text', 'n'), $error->getVar('error_text_html'), $error->getVar('error_text_smiley'), 1, 1, $error->getVar('error_text_breaks'));
 
         // Add custom title to page title - "<{$xoops_pagetitle}>" - titleaspagetitle
-        if ($xoopsModuleConfig['title_as_page_title'] == 1) {
+        if (1 == $xoopsModuleConfig['title_as_page_title']) {
             $xoopsTpl->assign('xoops_pagetitle', $xoopsModule->getVar('name') . ' - ' . $title); // module name - article title
         }
-        if ($xoopsModuleConfig['title_as_page_title'] == 2) {
+        if (2 == $xoopsModuleConfig['title_as_page_title']) {
             $xoopsTpl->assign('xoops_pagetitle', $title . ' - ' . $xoopsModule->getVar('name')); // article title -  module name
         }
 

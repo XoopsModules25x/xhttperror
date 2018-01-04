@@ -12,8 +12,8 @@ define('_MI_XHTTPERR_REPORTING_DESC', 'Busy sites may want to turn off error rep
 define('_MI_XHTTPERR_PAGETTL', 'Page title');
 define('_MI_XHTTPERR_PAGETTLDSC', "Put the error title in the page's title");
 define('_MI_XHTTPERR_PAGETTL1', 'None');
-define('_MI_XHTTPERR_PAGETTL2', 'Yes: &lt;module name&gt; - &lt;error&gt;');
-define('_MI_XHTTPERR_PAGETTL3', 'Yes: &lt;error&gt; - &lt;module name&gt;');
+define('_MI_XHTTPERR_PAGETTL2', 'Yes: &lt;module name> - &lt;error>');
+define('_MI_XHTTPERR_PAGETTL3', 'Yes: &lt;error> - &lt;module name>');
 define('_MI_XHTTPERR_NUMREPS', 'Number of reports');
 define('_MI_XHTTPERR_NUMREPS_DESC', 'The numbers of reports to show.');
 

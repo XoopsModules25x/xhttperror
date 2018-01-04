@@ -97,9 +97,9 @@ function print_error_page()
     ];
 
     // Get the Status Code
-    if (isset($_SERVER['REDIRECT_STATUS']) && ($_SERVER['REDIRECT_STATUS'] != 200)) {
+    if (isset($_SERVER['REDIRECT_STATUS']) && (200 != $_SERVER['REDIRECT_STATUS'])) {
         $sc = $_SERVER['REDIRECT_STATUS'];
-    } elseif (isset($_SERVER['REDIRECT_REDIRECT_STATUS']) && ($_SERVER['REDIRECT_REDIRECT_STATUS'] != 200)) {
+    } elseif (isset($_SERVER['REDIRECT_REDIRECT_STATUS']) && (200 != $_SERVER['REDIRECT_REDIRECT_STATUS'])) {
         $sc = $_SERVER['REDIRECT_REDIRECT_STATUS'];
     }
     $sc = (!isset($_GET['error']) ? 404 : $_GET['error']);
@@ -107,8 +107,8 @@ function print_error_page()
     $sc = abs((int)$sc);
 
     // Redirect to server home if called directly or if status is under 400
-    if (((isset($_SERVER['REDIRECT_STATUS']) && $_SERVER['REDIRECT_STATUS'] == 200) && (floor($sc / 100) == 3))
-        || (!isset($_GET['error']) && $_SERVER['REDIRECT_STATUS'] == 200)) {
+    if (((isset($_SERVER['REDIRECT_STATUS']) && 200 == $_SERVER['REDIRECT_STATUS']) && (3 == floor($sc / 100)))
+        || (!isset($_GET['error']) && 200 == $_SERVER['REDIRECT_STATUS'])) {
         @header("Location: http://{$_SERVER['SERVER_NAME']}", 1, 302);
         die();
     }
@@ -131,14 +131,14 @@ function print_error_page()
 
     // issue optimized headers (optimized for your server)
     @header("{$_SERVER['SERVER_PROTOCOL']} {$sc} {$reason}", 1, $sc);
-    if (@php_sapi_name() !== 'cgi-fcgi') {
+    if ('cgi-fcgi' !== @php_sapi_name()) {
         @header("Status: {$sc} {$reason}", 1, $sc);
     }
 
     // A very small footprint for certain types of 4xx class errors and all 5xx class errors
-    if (in_array($sc, [400, 403, 405]) || (floor($sc / 100) == 5)) {
+    if (in_array($sc, [400, 403, 405]) || (5 == floor($sc / 100))) {
         @header('Connection: close', 1);
-        if ($sc == 405) {
+        if (405 == $sc) {
             @header('Allow: GET,HEAD,POST,OPTIONS', 1, 405);
         }
     }
