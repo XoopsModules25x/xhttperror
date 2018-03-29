@@ -30,7 +30,7 @@
 
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 
-function xoops_module_update_xhttperror(XoopsObject $xoopsModule, $oldVersion = null)
+function xoops_module_update_xhttperror(\XoopsObject $xoopsModule, $oldVersion = null)
 {
     return true;
 }

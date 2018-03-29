@@ -1,4 +1,9 @@
 <?php
+
+use XoopsModules\Xhttperror;
+/** @var Xhttperror\Helper $helper */
+$helper = Xhttperror\Helper::getInstance();
+
 // inludes and stuff
 require_once __DIR__ . '/header.php';
 include XOOPS_ROOT_PATH . '/header.php';
@@ -16,8 +21,8 @@ if (!isset($_GET['error'])) {
 } else {
     // Save error info to database
     // We may want to turn this off on busy sites.
-    if (false === $xoopsModuleConfig['error_reporting']) {
-        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && true !== $xoopsModuleConfig['ignore_admin'])) {
+    if (false === $helper->getConfig('error_reporting')) {
+        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && true !== $helper->getConfig('ignore_admin'))) {
             // create report
             $serverVars                 = [];
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
@@ -49,9 +54,9 @@ if (!isset($_GET['error'])) {
         }
     }
 
-    $criteria = new CriteriaCompo();
-    $criteria->add(new Criteria('error_statuscode', $_GET['error']));
-    $criteria->add(new Criteria('error_showme', true));
+    $criteria = new \CriteriaCompo();
+    $criteria->add(new \Criteria('error_statuscode', $_GET['error']));
+    $criteria->add(new \Criteria('error_showme', true));
     if ($errors = $errorHandler->getObjects($criteria)) {
         $error = $errors[0];
         $id    = $error->getVar('error_id');
@@ -61,10 +66,10 @@ if (!isset($_GET['error'])) {
         $text = $myts->displayTarea($error->getVar('error_text', 'n'), $error->getVar('error_text_html'), $error->getVar('error_text_smiley'), 1, 1, $error->getVar('error_text_breaks'));
 
         // Add custom title to page title - "<{$xoops_pagetitle}>" - titleaspagetitle
-        if (1 == $xoopsModuleConfig['title_as_page_title']) {
+        if (1 == $helper->getConfig('title_as_page_title')) {
             $xoopsTpl->assign('xoops_pagetitle', $xoopsModule->getVar('name') . ' - ' . $title); // module name - article title
         }
-        if (2 == $xoopsModuleConfig['title_as_page_title']) {
+        if (2 == $helper->getConfig('title_as_page_title')) {
             $xoopsTpl->assign('xoops_pagetitle', $title . ' - ' . $xoopsModule->getVar('name')); // article title -  module name
         }
 

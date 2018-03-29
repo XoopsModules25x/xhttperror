@@ -30,7 +30,7 @@
 
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 
-function xoops_module_pre_install_xhttperror(XoopsModule $module)
+function xoops_module_pre_install_xhttperror(\XoopsModule $module)
 {
     // Check if this XOOPS version is supported
     $minSupportedVersion = explode('.', '2.5.5');
@@ -52,7 +52,7 @@ function xoops_module_pre_install_xhttperror(XoopsModule $module)
     return false;
 }
 
-function xoops_module_install_xhttperror(XoopsObject $module)
+function xoops_module_install_xhttperror(\XoopsObject $module)
 {
     xoops_loadLanguage('modinfo', $module->getVar('dirname'));
     require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';

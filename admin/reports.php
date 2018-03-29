@@ -48,7 +48,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
 
         if ($countReports > 0) {
-            $criteria = new CriteriaCompo();
+            $criteria = new \CriteriaCompo();
             $criteria->setSort('report_date');
             $criteria->setOrder('ASC');
             $criteria->setLimit($GLOBALS['xoopsModuleConfig']['reports_per_page']);

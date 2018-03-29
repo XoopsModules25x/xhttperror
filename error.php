@@ -104,7 +104,7 @@ function print_error_page()
     }
     $sc = (!isset($_GET['error']) ? 404 : $_GET['error']);
 
-    $sc = abs((int)$sc);
+    $sc = abs($sc);
 
     // Redirect to server home if called directly or if status is under 400
     if (((isset($_SERVER['REDIRECT_STATUS']) && 200 == $_SERVER['REDIRECT_STATUS']) && (3 == floor($sc / 100)))
@@ -127,7 +127,7 @@ function print_error_page()
     $reason = (isset($status_reason[$sc]) ? $status_reason[$sc] : '');
 
     // Get the status message
-    $msg = (isset($status_msg[$sc]) ? str_replace('%U%', htmlspecialchars(strip_tags(stripslashes($_SERVER['REQUEST_URI']))), $status_msg[$sc]) : 'Error');
+    $msg = (isset($status_msg[$sc]) ? str_replace('%U%', htmlspecialchars(strip_tags(stripslashes($_SERVER['REQUEST_URI'])), ENT_QUOTES | ENT_HTML5), $status_msg[$sc]) : 'Error');
 
     // issue optimized headers (optimized for your server)
     @header("{$_SERVER['SERVER_PROTOCOL']} {$sc} {$reason}", 1, $sc);

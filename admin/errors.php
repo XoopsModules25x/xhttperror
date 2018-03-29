@@ -51,7 +51,7 @@ switch ($op) {
         $adminObject->displayButton('left');
 
         if ($countErrors > 0) {
-            $criteria = new CriteriaCompo();
+            $criteria = new \CriteriaCompo();
             $criteria->setSort('error_statuscode');
             $criteria->setOrder('ASC');
             $errors = $errorHandler->getObjects($criteria, true, false);
@@ -98,8 +98,8 @@ switch ($op) {
         }
         // Check statuscode
         if (isset($_REQUEST['error_statuscode'])) {
-            $criteria = new CriteriaCompo();
-            $criteria->add(new Criteria('error_statuscode', $_REQUEST['error_statuscode']));
+            $criteria = new \CriteriaCompo();
+            $criteria->add(new \Criteria('error_statuscode', $_REQUEST['error_statuscode']));
             if ($errorHandler->getCount($criteria) > 0) {
                 redirect_header($currentFile, 3, _AM_XHTTPERR_STATUSCODE_EXISTS);
             } else {

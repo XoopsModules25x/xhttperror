@@ -29,7 +29,7 @@
  * ****************************************************************************
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 require_once __DIR__ . '/preloads/autoloader.php';
 
@@ -50,7 +50,7 @@ $modversion['credits']             = 'Andrew Mills <a href"=emailto:ajmills@siri
 $modversion['help']                = 'page=help';
 $modversion['license']             = 'GNU General Public License v3.0';
 $modversion['license_url']         = 'http://www.gnu.org/licenses/gpl-3.0.txt';
-$modversion['dirname']             = "{$moduleDirName}";
+$modversion['dirname']             = ($moduleDirName);
 $modversion['release_info']        = 'in progress';
 $modversion['release_file']        = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/docs/changelog.txt';
 $modversion['min_php']             = '5.5';

@@ -28,7 +28,7 @@
  * ****************************************************************************
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 define('XHTTPERROR_PATH', XOOPS_ROOT_PATH . '/modules/xhttperror');
 define('XHTTPERROR_URL', XOOPS_URL . '/modules/xhttperror');
 

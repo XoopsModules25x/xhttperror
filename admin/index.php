@@ -58,7 +58,7 @@ if (xhttperror_checkModuleAdmin()) {
         $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_NOCODE), '');
     } else {
         // get errors
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $errors   = $errorHandler->getObjects($criteria);
         foreach ($errors as $error) {
             $msg_id           = $error->getVar('error_id');
