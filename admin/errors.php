@@ -113,7 +113,7 @@ switch ($op) {
         $error->setVar('error_text_breaks', $_REQUEST['error_text_breaks']);
         $error->setVar('error_showme', $_REQUEST['error_showme']);
         $error->setVar('error_redirect', $_REQUEST['error_redirect']);
-        $error->setVar('error_redirect_time', (int)$_REQUEST['error_redirect_time']);
+        $error->setVar('error_redirect_time', \Xmf\Request::getInt('error_redirect_time', 0, 'REQUEST'));
         /* IN PROGRESS
         $error->setVar('error_redirect_message', (int) $_REQUEST['error_redirect_message']);
         */
