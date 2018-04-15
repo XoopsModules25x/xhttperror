@@ -30,7 +30,7 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-class XhttperrorReport extends XoopsObject
+class XhttperrorReport extends \XoopsObject
 {
     // constructor
     public function __construct()
@@ -47,7 +47,7 @@ class XhttperrorReport extends XoopsObject
     }
 }
 
-class XhttperrorReportHandler extends XoopsPersistableObjectHandler
+class XhttperrorReportHandler extends \XoopsPersistableObjectHandler
 {
     public function __construct(\XoopsDatabase $db)
     {

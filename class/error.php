@@ -34,7 +34,7 @@ define('XHTTPERR_REDIRECT_NO', 0);
 define('XHTTPERR_REDIRECT_URI', 1);
 define('XHTTPERR_REDIRECT_PREVIOUS', 2);
 
-class XhttperrorError extends XoopsObject
+class XhttperrorError extends \XoopsObject
 {
     // constructor
     public function __construct()
@@ -158,7 +158,7 @@ class XhttperrorError extends XoopsObject
     }
 }
 
-class XhttperrorErrorHandler extends XoopsPersistableObjectHandler
+class XhttperrorErrorHandler extends \XoopsPersistableObjectHandler
 {
     public function __construct(\XoopsDatabase $db)
     {

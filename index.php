@@ -1,12 +1,14 @@
 <?php
 
 use XoopsModules\Xhttperror;
-/** @var Xhttperror\Helper $helper */
-$helper = Xhttperror\Helper::getInstance();
 
 // inludes and stuff
 require_once __DIR__ . '/header.php';
 include XOOPS_ROOT_PATH . '/header.php';
+
+/** @var Xhttperror\Helper $helper */
+$helper = Xhttperror\Helper::getInstance();
+
 //include_once('include/functions.php');
 $myts = \MyTextSanitizer::getInstance();
 

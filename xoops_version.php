@@ -136,7 +136,7 @@ $modversion['config'][$i]['description'] = '_MI_XHTTPERR_FORM_EDITOR_DESC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'text';
 $modversion['config'][$i]['default']     = 'dhtmltextarea';
-$modversion['config'][$i]['options']     = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor');
+$modversion['config'][$i]['options']     = \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor');
 $modversion['config'][$i]['category']    = 'global';
 // Ignore error reports for admins
 ++$i;

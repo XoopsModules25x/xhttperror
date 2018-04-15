@@ -30,16 +30,16 @@
 
 use XoopsModules\Xhttperror;
 
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
 require_once XOOPS_ROOT_PATH . '/class/tree.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 xoops_load('XoopsUserUtility');
-// require_once __DIR__ . '/../class/Utility.php';
-//require_once __DIR__ . '/../include/common.php';
-require_once __DIR__ . '/../include/config.php';
-require_once __DIR__ . '/../include/functions.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+//require_once  dirname(__DIR__) . '/include/common.php';
+require_once  dirname(__DIR__) . '/include/config.php';
+require_once  dirname(__DIR__) . '/include/functions.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $helper = Xhttperror\Helper::getInstance();
@@ -72,8 +72,8 @@ $pathImageModule =  $helper->url('assets/images');
 // Get user groups
 $groupPermHandler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
-    $modulepermHandler = xoops_getHandler('groupperm');
-    if (!$modulepermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+    $grouppermHandler = xoops_getHandler('groupperm');
+    if (!$grouppermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
     }
 } else {

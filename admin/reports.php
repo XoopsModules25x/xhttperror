@@ -54,7 +54,7 @@ switch ($op) {
             $criteria->setLimit($GLOBALS['xoopsModuleConfig']['reports_per_page']);
             $reports = $reportHandler->getObjects($criteria, true, false);
             foreach ($reports as $key => $report) {
-                $reports[$key]['report_user'] = XoopsUserUtility::getUnameFromId($report['report_uid'], false, true);
+                $reports[$key]['report_user'] = \XoopsUserUtility::getUnameFromId($report['report_uid'], false, true);
                 $reports[$key]['report_date'] = formatTimestamp($report['report_date'], _DATESTRING);
             }
 
