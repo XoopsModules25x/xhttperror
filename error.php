@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 @set_time_limit(5);
 @ini_set('memory_limit', '64M');
@@ -58,7 +59,7 @@ function print_error_page()
         505 => 'HTTP Version Not Supported',
         506 => 'Variant Also Negotiates',
         507 => 'Insufficient Storage',
-        510 => 'Not Extended'
+        510 => 'Not Extended',
     ];
 
     $status_msg = [
@@ -93,16 +94,16 @@ function print_error_page()
         505 => 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
         506 => 'A variant for the requested resource <code>%U%</code> is itself a negotiable resource. This indicates a configuration error.',
         507 => 'The method could not be performed.  There is insufficient free space left in your storage allocation.',
-        510 => 'A mandatory extension policy in the request is not accepted by the server for this resource.'
+        510 => 'A mandatory extension policy in the request is not accepted by the server for this resource.',
     ];
 
     // Get the Status Code
-    if (isset($_SERVER['REDIRECT_STATUS']) && (200 != $_SERVER['REDIRECT_STATUS'])) {
+    if (\Xmf\Request::hasVar('REDIRECT_STATUS', 'SERVER') && (200 != $_SERVER['REDIRECT_STATUS'])) {
         $sc = $_SERVER['REDIRECT_STATUS'];
-    } elseif (isset($_SERVER['REDIRECT_REDIRECT_STATUS']) && (200 != $_SERVER['REDIRECT_REDIRECT_STATUS'])) {
+    } elseif (\Xmf\Request::hasVar('REDIRECT_REDIRECT_STATUS', 'SERVER') && (200 != $_SERVER['REDIRECT_REDIRECT_STATUS'])) {
         $sc = $_SERVER['REDIRECT_REDIRECT_STATUS'];
     }
-    $sc = (!isset($_GET['error']) ? 404 : $_GET['error']);
+    $sc = ($_GET['error'] ?? 404);
 
     $sc = abs($sc);
 
@@ -110,7 +111,7 @@ function print_error_page()
     if (((isset($_SERVER['REDIRECT_STATUS']) && 200 == $_SERVER['REDIRECT_STATUS']) && (3 == floor($sc / 100)))
         || (!isset($_GET['error']) && 200 == $_SERVER['REDIRECT_STATUS'])) {
         @header("Location: http://{$_SERVER['SERVER_NAME']}", 1, 302);
-        die();
+        exit();
     }
 
     // Check range of code or issue 500
@@ -124,7 +125,7 @@ function print_error_page()
     }
 
     // Get the status reason
-    $reason = (isset($status_reason[$sc]) ? $status_reason[$sc] : '');
+    $reason = ($status_reason[$sc] ?? '');
 
     // Get the status message
     $msg = (isset($status_msg[$sc]) ? str_replace('%U%', htmlspecialchars(strip_tags(stripslashes($_SERVER['REQUEST_URI'])), ENT_QUOTES | ENT_HTML5), $status_msg[$sc]) : 'Error');
@@ -143,7 +144,7 @@ function print_error_page()
         }
     }
 
-    echo "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html>";
+    echo "<!DOCTYPE HTML>\n<html>";
     echo "<head>\n<title>{$sc} {$reason}</title>\n<h1>{$reason}</h1>\n<p>{$msg}<br>\n</p>\n";
 }
 
@@ -152,8 +153,14 @@ function askapache_global_debug()
     # http://www.php.net/manual/en/function.array-walk.php#100681
     global $_GET, $_POST, $_ENV, $_SERVER;
     $g = ['_ENV', '_SERVER', '_GET', '_POST'];
-    array_walk_recursive($g, create_function('$n', 'global $$n;if( !!$$n&&ob_start()&&(print "[ $"."$n ]\n")&&array_walk($$n,
-    create_function(\'$v,$k\', \'echo "[$k] => $v\n";\'))) echo "<"."p"."r"."e>".htmlspecialchars(ob_get_clean())."<"."/"."pr"."e>";'));
+    array_walk_recursive(
+        $g,
+        create_function(
+            '$n',
+            'global $$n;if( !!$$n&&ob_start()&&(print "[ $"."$n ]\n")&&array_walk($$n,
+    create_function(\'$v,$k\', \'echo "[$k] => $v\n";\'))) echo "<"."p"."r"."e>".htmlspecialchars(ob_get_clean())."<"."/"."pr"."e>";'
+        )
+    );
 }
 
 print_error_page();

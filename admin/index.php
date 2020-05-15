@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -27,7 +28,6 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
-
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
@@ -35,8 +35,8 @@ define('_RED', '#FF0000'); // Red
 define('_GREEN', '#00AA00'); // Green
 
 // load classes
-$errorHandler  = xoops_getModuleHandler('error', 'xhttperror');
-$reportHandler = xoops_getModuleHandler('report', 'xhttperror');
+$errorHandler  = $helper->getHandler('Error');
+$reportHandler = $helper->getHandler('Report');
 
 // count errors
 $countErrors = $errorHandler->getCount();

@@ -28,15 +28,9 @@
  * ****************************************************************************
  */
 
-global $pathImageAdmin;
+$pathIcon32 = Xmf\Module\Admin::iconUrl('', 32);
 
-echo '<div align="center">';
-echo '<a href="https://xoops.org" target="_blank">';
-echo '<img src=' . $pathImageAdmin . '/xoopsmicrobutton.gif' . ' ' . " alt='XOOPS' title='XOOPS'>";
-echo '</a>';
-echo '</div>';
-echo "<div class='center small italic pad5'>";
-echo '<strong>' . $xoopsModule->getVar('name') . '</strong> ' . _AM_XHTTPERR_MAINTAINEDBY . " <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a>";
-echo '</div>';
+echo "<div class='adminfooter'>\n" . "  <div style='text-align: center;'>\n" . "    <a href='https://xoops.org' rel='external'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a>\n" . "  </div>\n" . '  ' . _AM_MODULEADMIN_ADMIN_FOOTER . "\n" . '</div>';
 
 xoops_cp_footer();
+

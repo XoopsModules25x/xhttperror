@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -27,14 +28,13 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
-
 $currentFile = basename(__FILE__);
 require_once __DIR__ . '/admin_header.php';
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['error_id']) ? 'edit_error' : 'list_errors');
+$op = $_REQUEST['op'] ?? (isset($_REQUEST['error_id']) ? 'edit_error' : 'list_errors');
 
 // load classes
-$errorHandler  = xoops_getModuleHandler('error', 'xhttperror');
-$reportHandler = xoops_getModuleHandler('report', 'xhttperror');
+$errorHandler  = $helper->getHandler('Error');
+$reportHandler = $helper->getHandler('Report');
 
 // count errors
 $countErrors = $errorHandler->getCount();
@@ -65,7 +65,6 @@ switch ($op) {
 
         require_once __DIR__ . '/admin_footer.php';
         break;
-
     case 'edit_error':
     case 'new_error':
         // render start here
@@ -76,7 +75,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_XHTTPERR_ERROR_LIST, '' . $currentFile . '?op=list_errors', 'list');
         $adminObject->displayButton('left');
 
-        if (isset($_REQUEST['error_id'])) {
+        if (\Xmf\Request::hasVar('error_id', 'REQUEST')) {
             $error = $errorHandler->get($_REQUEST['error_id']);
         } else {
             $error = $errorHandler->create();
@@ -86,18 +85,17 @@ switch ($op) {
 
         require_once __DIR__ . '/admin_footer.php';
         break;
-
     case 'save_error':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (isset($_REQUEST['error_id'])) {
+        if (\Xmf\Request::hasVar('error_id', 'REQUEST')) {
             $error = $errorHandler->get($_REQUEST['error_id']);
         } else {
             $error = $errorHandler->create();
         }
         // Check statuscode
-        if (isset($_REQUEST['error_statuscode'])) {
+        if (\Xmf\Request::hasVar('error_statuscode', 'REQUEST')) {
             $criteria = new \CriteriaCompo();
             $criteria->add(new \Criteria('error_statuscode', $_REQUEST['error_statuscode']));
             if ($errorHandler->getCount($criteria) > 0) {
@@ -125,10 +123,9 @@ switch ($op) {
             redirect_header($currentFile, 3, _AM_XHTTPERR_NOTSAVED);
         }
         break;
-
     case 'delete_error':
-        $error =& $errorHandler->get($_REQUEST['error_id']);
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        $error = $errorHandler->get($_REQUEST['error_id']);
+        if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }

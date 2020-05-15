@@ -32,11 +32,15 @@ use XoopsModules\Xhttperror;
 
 // require_once  dirname(__DIR__) . '/class/Helper.php';
 //require_once  dirname(__DIR__) . '/include/common.php';
+/** @var Xhttperror\Helper $helper */
 $helper = Xhttperror\Helper::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('feedback');
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
-
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
 
 $adminmenu[] = [
     'name'  => 'Index',

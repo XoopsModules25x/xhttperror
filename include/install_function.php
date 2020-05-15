@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -27,14 +28,17 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
+defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-
+/**
+ * @param \XoopsModule $module
+ * @return bool
+ */
 function xoops_module_pre_install_xhttperror(\XoopsModule $module)
 {
     // Check if this XOOPS version is supported
-    $minSupportedVersion = explode('.', '2.5.5');
-    $currentVersion      = explode('.', substr(XOOPS_VERSION, 6));
+    $minSupportedVersion = explode('.', '2.5.10');
+    $currentVersion      = explode('.', mb_substr(XOOPS_VERSION, 6));
     if ($currentVersion[0] > $minSupportedVersion[0]) {
         return true;
     } elseif ($currentVersion[0] == $minSupportedVersion[0]) {
@@ -52,6 +56,10 @@ function xoops_module_pre_install_xhttperror(\XoopsModule $module)
     return false;
 }
 
+/**
+ * @param \XoopsObject $module
+ * @return bool|string
+ */
 function xoops_module_install_xhttperror(\XoopsObject $module)
 {
     xoops_loadLanguage('modinfo', $module->getVar('dirname'));
@@ -60,13 +68,15 @@ function xoops_module_install_xhttperror(\XoopsObject $module)
     $ret = true;
     $msg = '';
     // load classes
-    $errorHandler = xoops_getModuleHandler('error', 'xhttperror');
+    /** @var \XoopsModules\Xhttperror\Helper $helper */
+    $helper       = \XoopsModules\Xhttperror\Helper::getInstance();
+    $errorHandler = $helper->getHandler('Error');
     $error        = $errorHandler->create();
     $error->setVar('error_title', 'Error 404 - Document Not Found');
     $error->setVar('error_statuscode', '404');
     $error->setVar(
         'error_text',
-                   '<p style="font-weight: bold; text-align: center">The page you requested could not be found.</p><p>You may not be able to find the requested page because:</p><ul><li>The page no longer exists.</li><li>The address/page name was mis-typed.</li><li>You followed an incorrect, or out of date link on another site.</li><li>You followed an out of date search engine listing, or personal bookmark/favourite.</li></ul><p>Please try visiting the <a href="/">home page</a>, or use the search function below to find the page you were after.</p>'
+        '<p style="font-weight: bold; text-align: center">The page you requested could not be found.</p><p>You may not be able to find the requested page because:</p><ul><li>The page no longer exists.</li><li>The address/page name was mis-typed.</li><li>You followed an incorrect, or out of date link on another site.</li><li>You followed an out of date search engine listing, or personal bookmark/favourite.</li></ul><p>Please try visiting the <a href="/">home page</a>, or use the search function below to find the page you were after.</p>'
     );
     $error->setVar('error_showme', true);
     $error->setVar('error_redirect', false);
@@ -102,7 +112,7 @@ function xoops_module_install_xhttperror(\XoopsObject $module)
     unset($error);
     if (empty($msg)) {
         return $ret;
-    } else {
-        return $msg;
     }
+
+    return $msg;
 }

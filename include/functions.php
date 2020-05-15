@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -27,21 +28,26 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
-
 function xhttperror_checkModuleAdmin()
 {
     if (file_exists($GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
         require_once $GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
 
         return true;
-    } else {
-        echo xoops_error("Error: You don't use the Frameworks \"admin module\". Please install this Frameworks");
-
-        return false;
     }
+    echo xoops_error("Error: You don't use the Frameworks \"admin module\". Please install this Frameworks");
+
+    return false;
 }
 
-function xhttperror_CleanVars(&$global, $key, $default = '', $type = 'int')
+/**
+ * @param        $global
+ * @param        $key
+ * @param string $default
+ * @param string $type
+ * @return false|int|mixed|string
+ */
+function xhttperror_CleanVars($global, $key, $default = '', $type = 'int')
 {
     switch ($type) {
         case 'array':
@@ -51,7 +57,11 @@ function xhttperror_CleanVars(&$global, $key, $default = '', $type = 'int')
             $ret = isset($global[$key]) ? strtotime($global[$key]) : $default;
             break;
         case 'string':
-            $ret = isset($global[$key]) ? filter_var($global[$key], FILTER_SANITIZE_MAGIC_QUOTES) : $default;
+            if (defined('FILTER_SANITIZE_ADD_SLASHES')) {
+                $ret = isset($global[$key]) ? filter_var($global[$key], FILTER_SANITIZE_ADD_SLASHES) : $default;
+            } else {
+                $ret = isset($global[$key]) ? filter_var($global[$key], FILTER_SANITIZE_MAGIC_QUOTES) : $default;
+            }
             break;
         case 'int':
         default:
@@ -65,6 +75,9 @@ function xhttperror_CleanVars(&$global, $key, $default = '', $type = 'int')
     return $ret;
 }
 
+/**
+ * @param $content
+ */
 function xhttperror_meta_keywords($content)
 {
     global $xoopsTpl, $xoTheme;
@@ -77,6 +90,9 @@ function xhttperror_meta_keywords($content)
     }
 }
 
+/**
+ * @param $content
+ */
 function xhttperror_meta_description($content)
 {
     global $xoopsTpl, $xoTheme;

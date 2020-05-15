@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xhttperror;
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -28,12 +31,14 @@
  * ****************************************************************************
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
-define('XHTTPERROR_PATH', XOOPS_ROOT_PATH . '/modules/xhttperror');
-define('XHTTPERROR_URL', XOOPS_URL . '/modules/xhttperror');
-
-// module information
-$mod_img       = XHTTPERROR_URL . '/assets/images/xhttperror_slogo.png';
-$mod_copyright = "<a href='http://luciorota.altervista.org/xoops/' title='luciorota.altervista.org/xoops' target='_blank'>";
-$mod_copyright .= "<img src='" . $mod_img . "' alt='luciorota.altervista.org/xoops'>";
-$mod_copyright .= '</a>';
+class ErrorHandler extends \XoopsPersistableObjectHandler
+{
+    /**
+     * ErrorHandler constructor.
+     * @param \XoopsDatabase|null $db
+     */
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        parent::__construct($db, 'xhttperror_errors', Error::class, 'error_id', 'error_title');
+    }
+}

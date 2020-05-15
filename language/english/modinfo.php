@@ -1,4 +1,5 @@
 <?php
+
 define('_MI_XHTTPERR_NAME', 'xHttpError');
 define('_MI_XHTTPERR_DESC', 'A XOOPS module to manage http errors.');
 
@@ -31,7 +32,7 @@ define('_MI_XHTTPERR_ADMENU_ABOUT_DESC', '');
 //1.11
 //Help
 define('_MI_XHTTPERR_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_XHTTPERR_HELP_HEADER', __DIR__.'/help/helpheader.tpl');
+define('_MI_XHTTPERR_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_XHTTPERR_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_XHTTPERR_OVERVIEW', 'Overview');
 

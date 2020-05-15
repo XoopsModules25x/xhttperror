@@ -1,4 +1,5 @@
 <?php
+
 define('_AM_XHTTPERR_ACTION', 'Action');
 define('_AM_XHTTPERR_ACTION_TEST', 'Test');
 define('_AM_XHTTPERR_ACTION_EDIT_DESC', 'Click to edit');

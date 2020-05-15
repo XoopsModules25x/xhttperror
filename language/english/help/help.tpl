@@ -23,16 +23,16 @@
         WITHOUT trailing slash (<{$xoops_url}>)</p>
     <br>
     <p>Detailed instructions on installing modules are available in the <a
-            href="https://www.gitbook.com/book/xoops/xoops-operations-guide/" target="_blank"
-            title="XOOPS Operations Manual">XOOPS
-        Operations Manual</a></p>
+                href="https://xoops.gitbook.io/xoops-operations-guide/" target="_blank"
+                title="XOOPS Operations Manual">XOOPS
+            Operations Manual</a></p>
     <br>
     <p>Follow this link for more informationd about status codes</p>
     <ul>
         <li><a href="http://www.iana.org/assignments/http-status-codes/http-status-codes.xml">IANA: Hypertext Transfer
-            Protocol (HTTP) Status Code Registry</a></li>
+                Protocol (HTTP) Status Code Registry</a></li>
         <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">Hypertext Transfer Protocol -- HTTP/1.1,
-            Status Code Definitions</a></li>
+                Status Code Definitions</a></li>
     </ul>
     <h4 class="odd">OPERATING INSTRUCTIONS</h4>
     <p class="even">To set up this module you need to:</p>

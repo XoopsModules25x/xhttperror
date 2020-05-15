@@ -29,8 +29,6 @@
  * ****************************************************************************
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
@@ -39,7 +37,7 @@ xoops_load('XoopsLists');
 
 $modversion['version']             = '1.11';
 $modversion['module_status']       = 'Beta 1'; //"Stable";
-$modversion['release_date']        = '2014/04/23'; // 'Y/m/d'
+$modversion['release_date']        = '2020/05/14'; // 'Y/m/d'
 $modversion['name']                = _MI_XHTTPERR_NAME;
 $modversion['description']         = _MI_XHTTPERR_DESC;
 $modversion['author']              = 'Rota Lucio';
@@ -49,13 +47,13 @@ $modversion['author_website_name'] = 'http://luciorota.altervista.org';
 $modversion['credits']             = 'Andrew Mills <a href"=emailto:ajmills@sirium.net">ajmillsATsiriumDOTnet</a>';
 $modversion['help']                = 'page=help';
 $modversion['license']             = 'GNU General Public License v3.0';
-$modversion['license_url']         = 'http://www.gnu.org/licenses/gpl-3.0.txt';
-$modversion['dirname']             = ($moduleDirName);
+$modversion['license_url']         = 'https://www.gnu.org/licenses/gpl-3.0.txt';
+$modversion['dirname']             = $moduleDirName;
 $modversion['release_info']        = 'in progress';
 $modversion['release_file']        = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/docs/changelog.txt';
-$modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.9';
-$modversion['min_admin']           = '1.1';
+$modversion['min_php']             = '7.1';
+$modversion['min_xoops']           = '2.5.10';
+$modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.5'];
 $modversion['image']               = 'assets/images/logoModule.png';
 $modversion['official']            = 0; //1 indicates supported by Xoops CORE Dev Team, 0 means 3rd party supported
@@ -165,7 +163,7 @@ $modversion['config'][$i]['default']     = '1';
 $modversion['config'][$i]['options']     = [
     '_MI_XHTTPERR_PAGETTL1' => '0',
     '_MI_XHTTPERR_PAGETTL2' => '1',
-    '_MI_XHTTPERR_PAGETTL3' => '2'
+    '_MI_XHTTPERR_PAGETTL3' => '2',
 ];
 // Reports per page
 ++$i;

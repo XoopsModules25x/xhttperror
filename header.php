@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -27,8 +28,7 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
-
-require_once  dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 require_once __DIR__ . '/include/functions.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

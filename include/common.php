@@ -11,18 +11,27 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
- * @author     XOOPS Development Team
+ * @author       XOOPS Development Team
  */
 
 use XoopsModules\Xhttperror;
-include  dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName = basename(dirname(__DIR__));
-$moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
+
+//define('XHTTPERROR_PATH', XOOPS_ROOT_PATH . '/modules/xhttperror');
+//define('XHTTPERROR_URL', XOOPS_URL . '/modules/xhttperror');
+
+// module information
+//$mod_img       = XHTTPERROR_URL . '/assets/images/xhttperror_slogo.png';
+//$mod_copyright = "<a href='http://luciorota.altervista.org/xoops/' title='luciorota.altervista.org/xoops' target='_blank'>";
+//$mod_copyright .= "<img src='" . $mod_img . "' alt='luciorota.altervista.org/xoops'>";
+//$mod_copyright .= '</a>';
 
 /** @var \XoopsDatabase $db */
 /** @var Xhttperror\Helper $helper */
@@ -54,8 +63,8 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_CONSTANTS_DEFINED', 1);
 }
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 

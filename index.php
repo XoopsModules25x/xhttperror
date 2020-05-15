@@ -4,17 +4,17 @@ use XoopsModules\Xhttperror;
 
 // inludes and stuff
 require_once __DIR__ . '/header.php';
-include XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /** @var Xhttperror\Helper $helper */
 $helper = Xhttperror\Helper::getInstance();
 
-//include_once('include/functions.php');
+//require 'include/functions.php';
 $myts = \MyTextSanitizer::getInstance();
 
 // load classes
-$errorHandler  = xoops_getModuleHandler('error', 'xhttperror');
-$reportHandler = xoops_getModuleHandler('report', 'xhttperror');
+$errorHandler  = $helper->getHandler('Error');
+$reportHandler = $helper->getHandler('Report');
 
 $GLOBALS['xoopsOption']['template_main'] = 'xhttperror_index.tpl';
 
@@ -50,16 +50,16 @@ if (!isset($_GET['error'])) {
             $report->setVar('report_requesteduri', $requesteduri);
             if ($reportHandler->insert($report)) {
                 // NOP
-            } else {
-                // NOP
             }
+            // NOP
         }
     }
 
     $criteria = new \CriteriaCompo();
     $criteria->add(new \Criteria('error_statuscode', $_GET['error']));
     $criteria->add(new \Criteria('error_showme', true));
-    if ($errors = $errorHandler->getObjects($criteria)) {
+    $errors = $errorHandler->getObjects($criteria);
+    if ($errors) {
         $error = $errors[0];
         $id    = $error->getVar('error_id');
         $title = $myts->displayTarea($error->getVar('error_title'));
@@ -83,4 +83,4 @@ if (!isset($_GET['error'])) {
         $xoopsTpl->assign('redirect_uri', $error->getVar('error_redirect_uri'));
     }
 }
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

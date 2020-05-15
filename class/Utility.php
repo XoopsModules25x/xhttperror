@@ -1,19 +1,14 @@
-<?php namespace XoopsModules\Xhttperror;
+<?php
 
-use Xmf\Request;
+namespace XoopsModules\Xhttperror;
+
 use XoopsModules\Xhttperror;
 use XoopsModules\Xhttperror\Common;
 
 /**
  * Class Utility
  */
-class Utility
+class Utility extends Common\SysUtility
 {
-    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
-
-    use Common\ServerStats; // getServerStats Trait
-
-    use Common\FilesManagement; // Files Management Trait
-
     //--------------- Custom module methods -----------------------------
 }

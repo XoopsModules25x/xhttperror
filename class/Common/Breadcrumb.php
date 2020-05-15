@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xhttperror\Common;
+<?php
+
+namespace XoopsModules\Xhttperror\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -24,22 +26,18 @@
  * $breadcrumb->addLink( 'bread 3', 'index3.php' );
  * echo $breadcrumb->render();
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 /**
  * Class Breadcrumb
  */
 class Breadcrumb
 {
-    public $dirname;
+    public  $dirname;
     private $bread = [];
 
-    /**
-     *
-     */
     public function __construct()
     {
-        $this->dirname = basename(dirname(__DIR__));
+        $this->dirname = basename(dirname(dirname(__DIR__)));
     }
 
     /**
@@ -52,13 +50,12 @@ class Breadcrumb
     {
         $this->bread[] = [
             'link'  => $link,
-            'title' => $title
+            'title' => $title,
         ];
     }
 
     /**
      * Render Pedigree BreadCrumb
-     *
      */
     public function render()
     {

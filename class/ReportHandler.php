@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xhttperror;
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -27,30 +30,14 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
-class XhttperrorReport extends \XoopsObject
+class ReportHandler extends \XoopsPersistableObjectHandler
 {
-    // constructor
-    public function __construct()
+    /**
+     * ReportHandler constructor.
+     * @param \XoopsDatabase|null $db
+     */
+    public function __construct(\XoopsDatabase $db = null)
     {
-        parent::__construct();
-        $this->initVar('report_id', XOBJ_DTYPE_INT, null, false, 5);
-        $this->initVar('report_uid', XOBJ_DTYPE_INT, null, true); // user id
-        $this->initVar('report_statuscode', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('report_date', XOBJ_DTYPE_INT, time(), false);
-        $this->initVar('report_referer', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('report_useragent', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('report_remoteaddr', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('report_requesteduri', XOBJ_DTYPE_TXTBOX, null, false);
-    }
-}
-
-class XhttperrorReportHandler extends \XoopsPersistableObjectHandler
-{
-    public function __construct(\XoopsDatabase $db)
-    {
-        parent::__construct($db, 'xhttperror_reports', 'xhttperrorreport', 'report_id', 'report_date');
+        parent::__construct($db, 'xhttperror_reports', Report::class, 'report_id', 'report_date');
     }
 }

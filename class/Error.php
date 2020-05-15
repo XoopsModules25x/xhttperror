@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xhttperror;
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -28,13 +31,15 @@
  * ****************************************************************************
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 define('XHTTPERR_REDIRECT_NO', 0);
 define('XHTTPERR_REDIRECT_URI', 1);
 define('XHTTPERR_REDIRECT_PREVIOUS', 2);
 
-class XhttperrorError extends \XoopsObject
+/**
+ * Class Error
+ * @package XoopsModules\Xhttperror
+ */
+class Error extends \XoopsObject
 {
     // constructor
     public function __construct()
@@ -54,6 +59,10 @@ class XhttperrorError extends \XoopsObject
         $this->initVar('error_redirect_uri', XOBJ_DTYPE_URL, XOOPS_URL, false); // default XOOPS_URL
     }
 
+    /**
+     * @param bool $action
+     * @return \XoopsThemeForm
+     */
     public function getForm($action = false)
     {
         global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
@@ -146,22 +155,14 @@ class XhttperrorError extends \XoopsObject
             $form->addElement(new \XoopsFormHidden('error_id', $this->getVar('error_id')));
         }
         // Submit button
-        $button_tray = new \XoopsFormElementTray(_AM_XHTTPERR_ACTION, '', '');
-        $button_tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $button_tray->addElement(new \XoopsFormButton('', 'reset', _RESET, 'reset'));
+        $buttonTray = new \XoopsFormElementTray(_AM_XHTTPERR_ACTION, '', '');
+        $buttonTray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+        $buttonTray->addElement(new \XoopsFormButton('', 'reset', _RESET, 'reset'));
         $cancel_button = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
         $cancel_button->setExtra("onclick='javascript:history.back();'");
-        $button_tray->addElement($cancel_button);
-        $form->addElement($button_tray);
+        $buttonTray->addElement($cancel_button);
+        $form->addElement($buttonTray);
 
         return $form;
-    }
-}
-
-class XhttperrorErrorHandler extends \XoopsPersistableObjectHandler
-{
-    public function __construct(\XoopsDatabase $db)
-    {
-        parent::__construct($db, 'xhttperror_errors', 'xhttperrorerror', 'error_id', 'error_title');
     }
 }

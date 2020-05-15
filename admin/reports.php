@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -27,13 +28,12 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
-
 $currentFile = basename(__FILE__);
 require_once __DIR__ . '/admin_header.php';
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list_reports';
+$op = $_REQUEST['op'] ?? 'list_reports';
 
 // load classes
-$reportHandler = xoops_getModuleHandler('report', 'xhttperror');
+$reportHandler = $helper->getHandler('Report');
 
 // count reports
 $countReports = $reportHandler->getCount();
@@ -66,10 +66,9 @@ switch ($op) {
         }
         require_once __DIR__ . '/admin_footer.php';
         break;
-
     case 'delete_report':
-        $report =& $reportHandler->get($_REQUEST['report_id']);
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        $report = $reportHandler->get($_REQUEST['report_id']);
+        if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
