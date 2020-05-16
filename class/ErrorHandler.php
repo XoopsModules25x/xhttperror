@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Xhttperror;
 
@@ -30,14 +30,12 @@ namespace XoopsModules\Xhttperror;
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
-
 class ErrorHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * ErrorHandler constructor.
-     * @param \XoopsDatabase|null $db
      */
-    public function __construct(\XoopsDatabase $db = null)
+    public function __construct(?\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'xhttperror_errors', Error::class, 'error_id', 'error_title');
     }

@@ -1,9 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Xhttperror;
-
-use XoopsModules\Xhttperror;
-use XoopsModules\Xhttperror\Common;
 
 /**
  * Class Utility

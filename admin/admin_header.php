@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -46,11 +47,11 @@ require_once dirname(__DIR__) . '/include/functions.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 /** @var Xhttperror\Helper $helper */
-$helper      = Xhttperror\Helper::getInstance();
+$helper = Xhttperror\Helper::getInstance();
 $adminObject = \Xmf\Module\Admin::getInstance();
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 // Load language files
@@ -68,9 +69,9 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 ///** @var \XoopsModuleHandler $moduleHandler */
 //$moduleHandler   = xoops_getHandler('module');
 //$xoopsModule     = $moduleHandler->getByDirname($dirname);
-$moduleInfo      = $helper->getModule()->mid();
-$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$moduleInfo = $helper->getModule()->mid();
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 $pathImageModule = $helper->url('assets/images');
 
 // Get user groups

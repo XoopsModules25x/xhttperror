@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * ****************************************************************************
@@ -31,14 +31,13 @@
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
 /**
- * @param \XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_install_xhttperror(\XoopsModule $module)
 {
     // Check if this XOOPS version is supported
     $minSupportedVersion = explode('.', '2.5.10');
-    $currentVersion      = explode('.', mb_substr(XOOPS_VERSION, 6));
+    $currentVersion = explode('.', mb_substr(XOOPS_VERSION, 6));
     if ($currentVersion[0] > $minSupportedVersion[0]) {
         return true;
     } elseif ($currentVersion[0] == $minSupportedVersion[0]) {
@@ -57,7 +56,6 @@ function xoops_module_pre_install_xhttperror(\XoopsModule $module)
 }
 
 /**
- * @param \XoopsObject $module
  * @return bool|string
  */
 function xoops_module_install_xhttperror(\XoopsObject $module)
@@ -69,9 +67,9 @@ function xoops_module_install_xhttperror(\XoopsObject $module)
     $msg = '';
     // load classes
     /** @var \XoopsModules\Xhttperror\Helper $helper */
-    $helper       = \XoopsModules\Xhttperror\Helper::getInstance();
+    $helper = \XoopsModules\Xhttperror\Helper::getInstance();
     $errorHandler = $helper->getHandler('Error');
-    $error        = $errorHandler->create();
+    $error = $errorHandler->create();
     $error->setVar('error_title', 'Error 404 - Document Not Found');
     $error->setVar('error_statuscode', '404');
     $error->setVar(

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * ****************************************************************************
@@ -33,7 +33,7 @@ require_once __DIR__ . '/admin_header.php';
 $op = $_REQUEST['op'] ?? (isset($_REQUEST['error_id']) ? 'edit_error' : 'list_errors');
 
 // load classes
-$errorHandler  = $helper->getHandler('Error');
+$errorHandler = $helper->getHandler('Error');
 $reportHandler = $helper->getHandler('Report');
 
 // count errors

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Xhttperror\Common;
 
@@ -27,7 +27,7 @@ trait VersionChecks
      * @param null|string  $requiredVer
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerXoops(\XoopsModule $module = null, $requiredVer = null)
+    public static function checkVerXoops(?\XoopsModule $module = null, $requiredVer = null)
     {
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
@@ -55,11 +55,10 @@ trait VersionChecks
     /**
      * Verifies PHP version meets minimum requirements for this module
      * @static
-     * @param \XoopsModule|null $module
      *
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerPhp(\XoopsModule $module = null)
+    public static function checkVerPhp(?\XoopsModule $module = null)
     {
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
@@ -86,7 +85,6 @@ trait VersionChecks
     }
 
     /**
-     *
      * compares current module version with latest GitHub release
      * @static
      * @param \Xmf\Module\Helper $helper
@@ -114,7 +112,7 @@ trait VersionChecks
                 $curlReturn = curl_exec($curlHandle);
                 if (false === $curlReturn) {
                     trigger_error(curl_error($curlHandle));
-                } elseif (false !== strpos($curlReturn, 'Not Found')) {
+                } elseif (false !== mb_strpos($curlReturn, 'Not Found')) {
                     trigger_error('Repository Not Found: ' . $infoReleasesUrl);
                 } else {
                     $file              = json_decode($curlReturn, false);

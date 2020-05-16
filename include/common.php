@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -21,7 +22,7 @@ use XoopsModules\Xhttperror;
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirName = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 //define('XHTTPERROR_PATH', XOOPS_ROOT_PATH . '/modules/xhttperror');
@@ -36,8 +37,8 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 /** @var \XoopsDatabase $db */
 /** @var Xhttperror\Helper $helper */
 /** @var Xhttperror\Utility $utility */
-$db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = Xhttperror\Helper::getInstance();
+$db = \XoopsDatabaseFactory::getDatabaseConnection();
+$helper = Xhttperror\Helper::getInstance();
 $utility = new Xhttperror\Utility();
 //$configurator = new Xhttperror\Common\Configurator();
 
@@ -69,15 +70,15 @@ $pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 $icons = [
-    'edit'    => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _EDIT . "' align='middle'>",
-    'delete'  => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _DELETE . "' align='middle'>",
-    'clone'   => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _CLONE . "' align='middle'>",
+    'edit' => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _EDIT . "' align='middle'>",
+    'delete' => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _DELETE . "' align='middle'>",
+    'clone' => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _CLONE . "' align='middle'>",
     'preview' => "<img src='" . $pathIcon16 . "/view.png' alt='" . _PREVIEW . "' align='middle'>",
-    'print'   => "<img src='" . $pathIcon16 . "/printer.png' alt='" . _CLONE . "' align='middle'>",
-    'pdf'     => "<img src='" . $pathIcon16 . "/pdf.png' alt='" . _CLONE . "' align='middle'>",
-    'add'     => "<img src='" . $pathIcon16 . "/add.png' alt='" . _ADD . "' align='middle'>",
-    '0'       => "<img src='" . $pathIcon16 . "/0.png' alt='" . 0 . "' align='middle'>",
-    '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
+    'print' => "<img src='" . $pathIcon16 . "/printer.png' alt='" . _CLONE . "' align='middle'>",
+    'pdf' => "<img src='" . $pathIcon16 . "/pdf.png' alt='" . _CLONE . "' align='middle'>",
+    'add' => "<img src='" . $pathIcon16 . "/add.png' alt='" . _ADD . "' align='middle'>",
+    '0' => "<img src='" . $pathIcon16 . "/0.png' alt='" . 0 . "' align='middle'>",
+    '1' => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
 ];
 
 $debug = false;

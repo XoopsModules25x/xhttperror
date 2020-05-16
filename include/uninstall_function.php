@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * ****************************************************************************
@@ -31,7 +31,6 @@
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 
 /**
- * @param \XoopsObject $xoopsModule
  * @return bool
  */
 function xoops_module_pre_uninstall_xhttperror(\XoopsObject $xoopsModule)
@@ -41,7 +40,6 @@ function xoops_module_pre_uninstall_xhttperror(\XoopsObject $xoopsModule)
 }
 
 /**
- * @param \XoopsObject $xoopsModule
  * @return bool
  */
 function xoops_module_uninstall_xhttperror(\XoopsObject $xoopsModule)
