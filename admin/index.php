@@ -65,7 +65,6 @@ if (xhttperror_checkModuleAdmin()) {
             $error_statuscode = $error->getVar('error_statuscode');
             $html             = "ErrorDocument {$error_statuscode} " . XOOPS_URL . "/modules/{$GLOBALS['xoopsModule']->getVar('dirname')}/index.php?error={$error_statuscode}&REMOTE_ADDR=%%{REMOTE_ADDR}&REQUEST_URI=%%{REQUEST_URI}&HTTP_REFERER=%%{HTTP_REFERER}";
             $adminObject->addInfoBoxLine($html, '');
-
         }
     }
     $adminObject->displayNavigation(basename(__FILE__));
