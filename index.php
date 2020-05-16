@@ -23,8 +23,8 @@ if (!isset($_GET['error'])) {
 } else {
     // Save error info to database
     // We may want to turn this off on busy sites.
-    if (false === $helper->getConfig('error_reporting')) {
-        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && true !== $helper->getConfig('ignore_admin'))) {
+    if (false == $helper->getConfig('error_reporting')) {
+        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && true != $helper->getConfig('ignore_admin'))) {
             // create report
             $serverVars                 = [];
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
