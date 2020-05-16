@@ -48,11 +48,11 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
 
         if ($countReports > 0) {
-            $criteria = new \CriteriaCompo();
-            $criteria->setSort('report_date');
-            $criteria->setOrder('ASC');
-            $criteria->setLimit($GLOBALS['xoopsModuleConfig']['reports_per_page']);
-            $reports = $reportHandler->getObjects($criteria, true, false);
+            $reportCriteria = new \CriteriaCompo();
+            $reportCriteria->setSort('report_date');
+            $reportCriteria->setOrder('ASC');
+            $reportCriteria->setLimit($GLOBALS['xoopsModuleConfig']['reports_per_page']);
+            $reports = $reportHandler->getObjects($reportCriteria, true, false); // as array
             foreach ($reports as $key => $report) {
                 $reports[$key]['report_user'] = \XoopsUserUtility::getUnameFromId($report['report_uid'], false, true);
                 $reports[$key]['report_date'] = formatTimestamp($report['report_date'], _DATESTRING);
@@ -66,21 +66,30 @@ switch ($op) {
         }
         require_once __DIR__ . '/admin_footer.php';
         break;
+
     case 'delete_report':
-        $report = $reportHandler->get($_REQUEST['report_id']);
+        $reportObj = $reportHandler->get($_REQUEST['report_id']);
         if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($reportHandler->delete($report)) {
+            if ($reportHandler->delete($reportObj)) {
                 redirect_header($currentFile, 3, _AM_XHTTPERR_DELETEDSUCCESS);
             } else {
-                echo $report->getHtmlErrors();
+                echo $reportObj->getHtmlErrors();
             }
         } else {
             // render start here
             xoops_cp_header();
-            xoops_confirm(['ok' => 1, 'report_id' => $_REQUEST['report_id'], 'op' => 'delete_report'], $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, $report->getVar('report_id')));
+            xoops_confirm(
+                [
+                    'ok' => 1, 
+                    'report_id' => $_REQUEST['report_id'], 
+                    'op' => 'delete_report'
+                ], 
+                $_SERVER['REQUEST_URI'], 
+                sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, $reportObj->getVar('report_id'))
+            );
             xoops_cp_footer();
         }
         break;
