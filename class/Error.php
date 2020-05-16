@@ -74,13 +74,13 @@ class Error extends \XoopsObject
 
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-        $form = new \XoopsThemeForm($title, 'form_error', $action, 'post', true);
-        $form->setExtra('enctype="multipart/form-data"');
+        $formObj = new \XoopsThemeForm($title, 'form_error', $action, 'post', true);
+        $formObj->setExtra('enctype="multipart/form-data"');
 
         // Title
         $errorTitle = new \XoopsFormText(_AM_XHTTPERR_ERROR_TITLE, 'error_title', 40, 255, $this->getVar('error_title'));
         $errorTitle->setDescription(_AM_XHTTPERR_ERROR_TITLE_DESC);
-        $form->addElement($errorTitle, true);
+        $formObj->addElement($errorTitle, true);
         unset($errorTitle);
         // Error number
         if ($this->isNew()) {
@@ -88,7 +88,7 @@ class Error extends \XoopsObject
         } else {
             $errorStatuscode = new \XoopsFormLabel(_AM_XHTTPERR_ERROR_STATUSCODE, $this->getVar('error_statuscode'));
         }
-        $form->addElement($errorStatuscode, true);
+        $formObj->addElement($errorStatuscode, true);
         unset($errorStatuscode);
         // Text
         $editor_configs           = [];
@@ -101,22 +101,22 @@ class Error extends \XoopsObject
         $editor_configs['editor'] = $GLOBALS['xoopsModuleConfig']['text_editor'];
         $errorText                = new \XoopsFormEditor(_AM_XHTTPERR_ERROR_TEXT, 'error_text', $editor_configs);
         $errorText->setDescription(_AM_XHTTPERR_ERROR_TEXT_DESC);
-        $form->addElement($errorText);
+        $formObj->addElement($errorText);
         // Text options
         $errorTextOptions = new \XoopsFormElementTray(_AM_XHTTPERR_ERROR_TEXT_OPTIONS, '|', '');
         $errorTextOptions->addElement(new \XoopsFormRadioYN(_AM_XHTTPERR_ERROR_TEXT_HTML, 'error_text_html', $this->getVar('error_text_html'), _YES, _NO));
         $errorTextOptions->addElement(new \XoopsFormRadioYN(_AM_XHTTPERR_ERROR_TEXT_SMILEY, 'error_text_smiley', $this->getVar('error_text_smiley'), _YES, _NO));
         $errorTextOptions->addElement(new \XoopsFormRadioYN(_AM_XHTTPERR_ERROR_TEXT_BREAKS, 'error_text_breaks', $this->getVar('error_text_breaks'), _YES, _NO));
         $errorTextOptions->setDescription(_AM_XHTTPERR_ERROR_TEXT_OPTIONS_DESC);
-        $form->addElement($errorTextOptions);
+        $formObj->addElement($errorTextOptions);
         unset($errorTextOptions);
         // Showme
         $errorShowme = new \XoopsFormRadioYN(_AM_XHTTPERR_ERROR_STATUS, 'error_showme', $this->getVar('error_showme'), _YES, _NO);
         $errorShowme->setDescription(_AM_XHTTPERR_ERROR_STATUS_DESC);
-        $form->addElement($errorShowme);
+        $formObj->addElement($errorShowme);
         unset($errorShowme);
 
-        $form->addElement(new \XoopsFormLabel(_AM_XHTTPERR_ERROR_REDIRECT_OPTIONS, '', ''));
+        $formObj->addElement(new \XoopsFormLabel(_AM_XHTTPERR_ERROR_REDIRECT_OPTIONS, '', ''));
         // Redirect
         $errorRedirect = new \XoopsFormSelect(_AM_XHTTPERR_ERROR_REDIRECT, 'error_redirect', $this->getVar('error_redirect'), 1, false);
         $errorRedirect->addOption(XHTTPERR_REDIRECT_NO, _AM_XHTTPERR_ERROR_REDIRECT_OPTION_NO);
@@ -124,35 +124,35 @@ class Error extends \XoopsObject
         $errorRedirect->addOption(XHTTPERR_REDIRECT_PREVIOUS, _AM_XHTTPERR_ERROR_REDIRECT_OPTION_PREVIOUS);
         //$errorRedirect = new \XoopsFormRadioYN(, _YES, _NO);
         $errorRedirect->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_DESC);
-        $form->addElement($errorRedirect);
+        $formObj->addElement($errorRedirect);
         unset($errorRedirect);
         // Redirect time
         $errorRedirectTime = new \XoopsFormText(_AM_XHTTPERR_ERROR_REDIRECT_TIME, 'error_redirect_time', 2, 2, $this->getVar('error_redirect_time'));
         $errorRedirectTime->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_TIME_DESC);
-        $form->addElement($errorRedirectTime);
+        $formObj->addElement($errorRedirectTime);
         unset($errorRedirectTime);
         /* IN PROGRESS
         // Redirect message
             $errorRedirectMessage = new \XoopsFormText(_AM_XHTTPERR_ERROR_REDIRECT_MESSAGE, 'error_redirect_message', 40, 255, $this->getVar('error_redirect_message'));
             $errorRedirectMessage->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_MESSAGE_DESC);
-        $form->addElement($errorRedirectMessage, true);
+        $formObj->addElement($errorRedirectMessage, true);
         unset($errorRedirectMessage);
         */
         // Redirect uri
         $errorRedirectUri = new \XoopsFormText(_AM_XHTTPERR_ERROR_REDIRECT_URI, 'error_redirect_uri', 40, 255, $this->getVar('error_redirect_uri'));
         $errorRedirectUri->setDescription(_AM_XHTTPERR_ERROR_REDIRECT_URI_DESC);
-        $form->addElement($errorRedirectUri);
+        $formObj->addElement($errorRedirectUri);
         unset($errorRedirectUri);
 
         // Captcha
         xoops_load('xoopscaptcha');
-        $form->addElement(new \XoopsFormCaptcha(), true);
+        $formObj->addElement(new \XoopsFormCaptcha(), true);
         // Hidden Fields
-        $form->addElement(new \XoopsFormHidden('op', 'save_error'));
+        $formObj->addElement(new \XoopsFormHidden('op', 'save_error'));
         if ($this->isNew()) {
             // NOP
         } else {
-            $form->addElement(new \XoopsFormHidden('error_id', $this->getVar('error_id')));
+            $formObj->addElement(new \XoopsFormHidden('error_id', $this->getVar('error_id')));
         }
         // Submit button
         $buttonTray = new \XoopsFormElementTray(_AM_XHTTPERR_ACTION, '', '');
@@ -161,8 +161,8 @@ class Error extends \XoopsObject
         $cancel_button = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
         $cancel_button->setExtra("onclick='javascript:history.back();'");
         $buttonTray->addElement($cancel_button);
-        $form->addElement($buttonTray);
+        $formObj->addElement($buttonTray);
 
-        return $form;
+        return $formObj;
     }
 }
