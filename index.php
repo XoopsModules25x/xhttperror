@@ -30,10 +30,10 @@ if (!isset($_GET['error'])) {
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
             $serverVars['REMOTE_ADDR']  = xoops_getenv('REMOTE_ADDR');
             //$serverVars[''] =
-            $referer      = xoops_getenv('HTTP_REFERER');
+            $referer      = $_GET['HTTP_REFERER'] ?? xoops_getenv('HTTP_REFERER');
             $useragent    = xoops_getenv('HTTP_USER_AGENT');
-            $remoteaddr   = xoops_getenv('REMOTE_ADDR');
-            $requesteduri = xoops_getenv('REQUEST_URI');
+            $remoteaddr   = $_GET['REMOTE_ADDR'] ?? xoops_getenv('REMOTE_ADDR');
+            $requesteduri = $_GET['REQUEST_URI'] ?? xoops_getenv('REQUEST_URI');
 
             if (empty($xoopsUser)) {
                 $uid = 0; // anonymous
