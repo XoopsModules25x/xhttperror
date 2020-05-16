@@ -51,10 +51,10 @@ switch ($op) {
         $adminObject->displayButton('left');
 
         if ($countErrors > 0) {
-            $criteria = new \CriteriaCompo();
-            $criteria->setSort('error_statuscode');
-            $criteria->setOrder('ASC');
-            $errors = $errorHandler->getObjects($criteria, true, false);
+            $errorCriteria = new \CriteriaCompo();
+            $errorCriteria->setSort('error_statuscode');
+            $errorCriteria->setOrder('ASC');
+            $errors = $errorHandler->getObjects($errorCriteria, true, false); // as array
 
             $GLOBALS['xoopsTpl']->assign('errors', $errors);
             $GLOBALS['xoopsTpl']->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
@@ -65,6 +65,7 @@ switch ($op) {
 
         require_once __DIR__ . '/admin_footer.php';
         break;
+
     case 'edit_error':
     case 'new_error':
         // render start here
@@ -76,68 +77,78 @@ switch ($op) {
         $adminObject->displayButton('left');
 
         if (\Xmf\Request::hasVar('error_id', 'REQUEST')) {
-            $error = $errorHandler->get($_REQUEST['error_id']);
+            $errorObj = $errorHandler->get($_REQUEST['error_id']);
         } else {
-            $error = $errorHandler->create();
+            $errorObj = $errorHandler->create();
         }
-        $form = $error->getForm();
-        $form->display();
+        $formObj = $errorObj->getForm();
+        $formObj->display();
 
         require_once __DIR__ . '/admin_footer.php';
         break;
+
     case 'save_error':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         if (\Xmf\Request::hasVar('error_id', 'REQUEST')) {
-            $error = $errorHandler->get($_REQUEST['error_id']);
+            $errorObj = $errorHandler->get($_REQUEST['error_id']);
         } else {
-            $error = $errorHandler->create();
+            $errorObj = $errorHandler->create();
         }
         // Check statuscode
         if (\Xmf\Request::hasVar('error_statuscode', 'REQUEST')) {
-            $criteria = new \CriteriaCompo();
-            $criteria->add(new \Criteria('error_statuscode', $_REQUEST['error_statuscode']));
-            if ($errorHandler->getCount($criteria) > 0) {
+            $errorCriteria = new \CriteriaCompo();
+            $errorCriteria->add(new \Criteria('error_statuscode', $_REQUEST['error_statuscode']));
+            if ($errorHandler->getCount($errorCriteria) > 0) {
                 redirect_header($currentFile, 3, _AM_XHTTPERR_STATUSCODE_EXISTS);
             } else {
-                $error->setVar('error_statuscode', $_REQUEST['error_statuscode']);
+                $errorObj->setVar('error_statuscode', $_REQUEST['error_statuscode']);
             }
         }
-        $error->setVar('error_title', $_REQUEST['error_title']);
-        $error->setVar('error_text', $_REQUEST['error_text']);
-        $error->setVar('error_text_html', $_REQUEST['error_text_html']);
-        $error->setVar('error_text_smiley', $_REQUEST['error_text_smiley']);
-        $error->setVar('error_text_breaks', $_REQUEST['error_text_breaks']);
-        $error->setVar('error_showme', $_REQUEST['error_showme']);
-        $error->setVar('error_redirect', $_REQUEST['error_redirect']);
-        $error->setVar('error_redirect_time', \Xmf\Request::getInt('error_redirect_time', 0, 'REQUEST'));
+        $errorObj->setVar('error_title', $_REQUEST['error_title']);
+        $errorObj->setVar('error_text', $_REQUEST['error_text']);
+        $errorObj->setVar('error_text_html', $_REQUEST['error_text_html']);
+        $errorObj->setVar('error_text_smiley', $_REQUEST['error_text_smiley']);
+        $errorObj->setVar('error_text_breaks', $_REQUEST['error_text_breaks']);
+        $errorObj->setVar('error_showme', $_REQUEST['error_showme']);
+        $errorObj->setVar('error_redirect', $_REQUEST['error_redirect']);
+        $errorObj->setVar('error_redirect_time', \Xmf\Request::getInt('error_redirect_time', 0, 'REQUEST'));
         /* IN PROGRESS
-        $error->setVar('error_redirect_message', (int) $_REQUEST['error_redirect_message']);
+        $errorObj->setVar('error_redirect_message', (int) $_REQUEST['error_redirect_message']);
         */
-        $error->setVar('error_redirect_uri', $_REQUEST['error_redirect_uri']);
+        $errorObj->setVar('error_redirect_uri', $_REQUEST['error_redirect_uri']);
 
-        if ($errorHandler->insert($error)) {
+        if ($errorHandler->insert($errorObj)) {
             redirect_header($currentFile, 3, _AM_XHTTPERR_SAVEDSUCCESS);
         } else {
             redirect_header($currentFile, 3, _AM_XHTTPERR_NOTSAVED);
         }
         break;
+        
     case 'delete_error':
-        $error = $errorHandler->get($_REQUEST['error_id']);
+        $errorObj = $errorHandler->get($_REQUEST['error_id']);
         if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($errorHandler->delete($error)) {
+            if ($errorHandler->delete($errorObj)) {
                 redirect_header($currentFile, 3, _AM_XHTTPERR_DELETEDSUCCESS);
             } else {
-                echo $error->getHtmlErrors();
+                echo $errorObj->getHtmlErrors();
             }
         } else {
             // render start here
             xoops_cp_header();
-            xoops_confirm(['ok' => 1, 'error_id' => $_REQUEST['error_id'], 'op' => 'delete_error'], $_SERVER['REQUEST_URI'], sprintf(_AM_XHTTPERR_ERROR_RUSUREDEL, $error->getVar('error_title')));
+            xoops_confirm(
+                [
+                    'ok' => 1, 
+                    'error_id' => $_REQUEST['error_id'], 
+                    'op' => 'delete_error'
+                ], 
+                $_SERVER['REQUEST_URI'], 
+                sprintf(_AM_XHTTPERR_ERROR_RUSUREDEL, $errorObj->getVar('error_title'))
+            );
             xoops_cp_footer();
         }
         break;
