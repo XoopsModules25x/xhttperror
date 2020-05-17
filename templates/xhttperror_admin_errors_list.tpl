@@ -22,15 +22,15 @@
                         <{$smarty.const._AM_XHTTPERR_ERROR_STATUS_HIDE}>
                     <{/if}>
                 </td>
-                <td>
+                <td class="txtcenter">
                     <a href="errors.php?op=edit_error&amp;error_id=<{$error.error_id}>"
-                       title="<{$smarty.const._EDIT}>"><{$smarty.const._EDIT}></a>
+                       title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}>"/></a>
                     &nbsp;
                     <a href="errors.php?op=delete_error&amp;error_id=<{$error.error_id}>"
-                       title="<{$smarty.const._DELETE}>"><{$smarty.const._DELETE}></a>
+                       title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}>"></a>
                     &nbsp;
                     <a href="../index.php?error=<{$error.error_statuscode}>"
-                       title="<{$smarty.const._AM_XHTTPERR_ACTION_TEST}>"><{$smarty.const._AM_XHTTPERR_ACTION_TEST}></a>
+                       title="<{$smarty.const._AM_XHTTPERR_ACTION_TEST}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._AM_XHTTPERR_ACTION_TEST}>"/></a>
                 </td>
             </tr>
         <{/foreach}>
