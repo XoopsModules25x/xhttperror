@@ -39,6 +39,9 @@ $reportHandler = $helper->getHandler('Report');
 $countReports = $reportHandler->getCount();
 
 switch ($op) {
+    /*
+     * list reports
+     */
     default:
     case 'list_reports':
         // render start here
@@ -67,28 +70,76 @@ switch ($op) {
         require_once __DIR__ . '/admin_footer.php';
         break;
 
+    /*
+     * delete report
+     */
     case 'delete_report':
-        $reportObj = $reportHandler->get($_REQUEST['report_id']);
-        if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
+        /** @var int $report_id */
+        $report_id = \Xmf\Request::getInt('report_id', 0);
+        $reportObj = $reportHandler->get($report_id);
+        // check: confirm
+        if (true === \Xmf\Request::getBool('ok', false, 'POST')) {
+            // check: token
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
+            // db: delete report
             if ($reportHandler->delete($reportObj)) {
                 redirect_header($currentFile, 3, _AM_XHTTPERR_DELETEDSUCCESS);
             } else {
                 echo $reportObj->getHtmlErrors();
             }
         } else {
+            $hiddens = [];
+            $hiddens['ok'] = true;
+            $hiddens['op'] = $op;
+            $hiddens['report_id'] = $report_id;
             // render start here
             xoops_cp_header();
             xoops_confirm(
-                [
-                    'ok' => 1, 
-                    'report_id' => $_REQUEST['report_id'], 
-                    'op' => 'delete_report'
-                ], 
+                ['ok' => 1, 'report_id' => $_REQUEST['report_id'], 'op' => 'delete_report'], 
                 $_SERVER['REQUEST_URI'], 
-                sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, $reportObj->getVar('report_id'))
+                sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, $report->getVar('report_id'))
+            );
+            xoops_cp_footer();
+        }
+        break;
+        
+    /*
+     * delete reports
+     */
+    case 'delete_reports':
+        /** @var array $report_ids */
+        $report_ids = \Xmf\Request::getArray('report_ids', array());
+        // check: confirm
+        if (true === \Xmf\Request::getBool('ok', false, 'POST')) {
+            // check: token
+            if (!$GLOBALS['xoopsSecurity']->check()) {
+                redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+            }
+            // db: delete reports
+            $reportCriteria = new CriteriaCompo();
+            $reportCriteria->add(new Criteria('report_id', '(' . implode(',', $report_ids) . ')', 'IN'));
+            if ($reportHandler->deleteAll($reportCriteria, true)) {
+                redirect_header($currentFile, 3, _AM_XHTTPERR_DELETEDSUCCESS);
+            } else {
+                // ERROR
+                exit();
+            }
+        } else {
+            $hiddens = [];
+            $hiddens['ok'] = true;
+            $hiddens['op'] = $op;
+            foreach ($report_ids as $report_id => $value) {
+                $hiddens["report_ids['{$report_id}']"] = "{$report_id}";
+            }
+            // render start here
+            xoops_cp_header();
+            xoops_confirm(
+                $hiddens,
+                $_SERVER['REQUEST_URI'],
+                sprintf(_AM_XHTTPERR_REPORT_RUSUREDEL, implode(',', $report_ids)),
+                _DELETE
             );
             xoops_cp_footer();
         }
