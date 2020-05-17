@@ -4,6 +4,8 @@ use XoopsModules\Xhttperror;
 
 // inludes and stuff
 require_once __DIR__ . '/header.php';
+
+$GLOBALS['xoopsOption']['template_main'] = 'xhttperror_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /** @var Xhttperror\Helper $helper */
@@ -16,15 +18,13 @@ $myts = \MyTextSanitizer::getInstance();
 $errorHandler  = $helper->getHandler('Error');
 $reportHandler = $helper->getHandler('Report');
 
-$GLOBALS['xoopsOption']['template_main'] = 'xhttperror_index.tpl';
-
 if (!isset($_GET['error'])) {
     $xoopsTpl->assign('message', 'No error defined.');
 } else {
     // Save error info to database
     // We may want to turn this off on busy sites.
     if (false == $helper->getConfig('error_reporting')) {
-        if (!$xoopsUser || ($xoopsUser->isAdmin($GLOBAL['xoopsModule']->mid()) && true != $helper->getConfig('ignore_admin'))) {
+        if (!$xoopsUser || ($xoopsUser->isAdmin($GLOBALS['xoopsModule']->mid()) && true != $helper->getConfig('ignore_admin'))) {
             // create report
             $serverVars                 = [];
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
@@ -58,7 +58,7 @@ if (!isset($_GET['error'])) {
     $errorCriteria = new \CriteriaCompo();
     $errorCriteria->add(new \Criteria('error_statuscode', $_GET['error']));
     $errorCriteria->add(new \Criteria('error_showme', true));
-    $errors = $errorHandler->getObjects($errorCriteria);
+    $errorObjs = $errorHandler->getObjects($errorCriteria);
     if ($errorObjs) {
         $errorObj = $errorObjs[0];
         $id    = $errorObj->getVar('error_id');
@@ -69,18 +69,18 @@ if (!isset($_GET['error'])) {
 
         // Add custom title to page title - "<{$xoops_pagetitle}>" - titleaspagetitle
         if (1 == $helper->getConfig('title_as_page_title')) {
-            $xoopsTpl->assign('xoops_pagetitle', $GLOBAL['xoopsModule']->getVar('name') . ' - ' . $title); // module name - article title
+            $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', $GLOBALS['xoopsModule']->getVar('name') . ' - ' . $title); // module name - article title
         }
         if (2 == $helper->getConfig('title_as_page_title')) {
-            $xoopsTpl->assign('xoops_pagetitle', $title . ' - ' . $GLOBAL['xoopsModule']->getVar('name')); // article title -  module name
+            $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', $title . ' - ' . $GLOBALS['xoopsModule']->getVar('name')); // article title -  module name
         }
 
-        $xoopsTpl->assign('title', $title);
-        $xoopsTpl->assign('text', $text);
-        $xoopsTpl->assign('showsearch', true); // IN PROGRESS: True if show search form in error page
-        $xoopsTpl->assign('redirect', $errorObj->getVar('error_redirect'));
-        $xoopsTpl->assign('redirect_time', (int)$errorObj->getVar('error_redirect_time') * 1000);
-        $xoopsTpl->assign('redirect_uri', $errorObj->getVar('error_redirect_uri'));
+        $GLOBALS['xoopsTpl']->assign('title', $title);
+        $GLOBALS['xoopsTpl']->assign('text', $text);
+        $GLOBALS['xoopsTpl']->assign('showsearch', true); // IN PROGRESS: True if show search form in error page
+        $GLOBALS['xoopsTpl']->assign('redirect', $errorObj->getVar('error_redirect'));
+        $GLOBALS['xoopsTpl']->assign('redirect_time', (int)$errorObj->getVar('error_redirect_time') * 1000);
+        $GLOBALS['xoopsTpl']->assign('redirect_uri', $errorObj->getVar('error_redirect_uri'));
     }
 }
 require_once XOOPS_ROOT_PATH . '/footer.php';
