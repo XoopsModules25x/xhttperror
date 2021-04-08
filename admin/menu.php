@@ -45,33 +45,33 @@ if (is_object($helper->getModule())) {
 }
 
 $adminmenu[] = [
-    'name'  => 'Index',
+    'name' => 'Index',
     'title' => _MI_XHTTPERR_ADMENU_INDEX,
-    'link'  => 'admin/index.php',
-    'desc'  => _MI_XHTTPERR_ADMENU_INDEX_DESC,
-    'icon'  => "../../{$pathModIcon32}/house.png",
+    'link' => 'admin/index.php',
+    'desc' => _MI_XHTTPERR_ADMENU_INDEX_DESC,
+    'icon' => "../../{$pathModIcon32}/house.png",
 ];
 
 $adminmenu[] = [
-    'name'  => 'Errors',
+    'name' => 'Errors',
     'title' => _MI_XHTTPERR_ADMENU_ERRORS,
-    'link'  => 'admin/errors.php',
-    'desc'  => _MI_XHTTPERR_ADMENU_ERRORS_DESC,
-    'icon'  => "../../{$pathModIcon32}/error.png",
+    'link' => 'admin/errors.php',
+    'desc' => _MI_XHTTPERR_ADMENU_ERRORS_DESC,
+    'icon' => "../../{$pathModIcon32}/error.png",
 ];
 
 $adminmenu[] = [
-    'name'  => 'Reports',
+    'name' => 'Reports',
     'title' => _MI_XHTTPERR_ADMENU_REPORTS,
-    'link'  => 'admin/reports.php',
-    'desc'  => _MI_XHTTPERR_ADMENU_REPORTS_DESC,
-    'icon'  => "../../{$pathModIcon32}/report_error.png",
+    'link' => 'admin/reports.php',
+    'desc' => _MI_XHTTPERR_ADMENU_REPORTS_DESC,
+    'icon' => "../../{$pathModIcon32}/report_error.png",
 ];
 
 $adminmenu[] = [
-    'name'  => 'About',
+    'name' => 'About',
     'title' => _MI_XHTTPERR_ADMENU_ABOUT,
-    'link'  => 'admin/about.php',
-    'desc'  => _MI_XHTTPERR_ADMENU_ABOUT_DESC,
-    'icon'  => "../../{$pathModIcon32}/information.png",
+    'link' => 'admin/about.php',
+    'desc' => _MI_XHTTPERR_ADMENU_ABOUT_DESC,
+    'icon' => "../../{$pathModIcon32}/information.png",
 ];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * ****************************************************************************
@@ -31,7 +31,7 @@
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 
 /**
- * @param null $oldVersion
+ * @param null         $oldVersion
  * @return bool
  */
 function xoops_module_update_xhttperror(\XoopsObject $xoopsModule, $oldVersion = null)

@@ -43,6 +43,9 @@ $reportHandler = $helper->getHandler('Report');
 $countReports = $reportHandler->getCount();
 
 switch ($op) {
+    /*
+     * list reports
+     */
     default:
     case 'list_reports':
         // render start here
@@ -52,11 +55,11 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
 
         if ($countReports > 0) {
-            $criteria = new \CriteriaCompo();
-            $criteria->setSort('report_date');
-            $criteria->setOrder('ASC');
-            $criteria->setLimit($GLOBALS['xoopsModuleConfig']['reports_per_page']);
-            $reports = $reportHandler->getObjects($criteria, true, false);
+            $reportCriteria = new \CriteriaCompo();
+            $reportCriteria->setSort('report_date');
+            $reportCriteria->setOrder('ASC');
+            $reportCriteria->setLimit($GLOBALS['xoopsModuleConfig']['reports_per_page']);
+            $reports = $reportHandler->getObjects($reportCriteria, true, false); // as array
             foreach ($reports as $key => $report) {
                 $reports[$key]['report_user'] = \XoopsUserUtility::getUnameFromId($report['report_uid'], false, true);
                 $reports[$key]['report_date'] = formatTimestamp($report['report_date'], _DATESTRING);

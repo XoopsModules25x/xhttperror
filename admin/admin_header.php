@@ -36,7 +36,7 @@ include dirname(__DIR__) . '/preloads/autoloader.php';
 
 require dirname(__DIR__, 3) . '/include/cp_header.php';
 //require $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
-require dirname(__DIR__) . '/include/common.php';
+require  dirname(__DIR__) . '/include/common.php';
 
 require_once XOOPS_ROOT_PATH . '/class/tree.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';

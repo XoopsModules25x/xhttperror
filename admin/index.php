@@ -61,13 +61,13 @@ if (xhttperror_checkModuleAdmin()) {
         $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_NOCODE), '');
     } else {
         // get errors
-        $criteria = new \CriteriaCompo();
-        $errors   = $errorHandler->getObjects($criteria);
-        foreach ($errors as $error) {
-            $msg_id           = $error->getVar('error_id');
-            $error_statuscode = $error->getVar('error_statuscode');
-            $hmtl             = 'ErrorDocument ' . $error_statuscode . ' ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?error=' . $error_statuscode . '';
-            $adminObject->addInfoBoxLine(sprintf($hmtl), '');
+        $errorCriteria = new \CriteriaCompo();
+        $errorObjs   = $errorHandler->getObjects($errorCriteria);
+        foreach ($errorObjs as $errorObj) {
+            $msg_id           = $errorObj->getVar('error_id');
+            $error_statuscode = $errorObj->getVar('error_statuscode');
+            $html             = "ErrorDocument {$error_statuscode} " . XOOPS_URL . "/modules/{$GLOBALS['xoopsModule']->getVar('dirname')}/index.php?error={$error_statuscode}&REMOTE_ADDR=%%{REMOTE_ADDR}&REQUEST_URI=%%{REQUEST_URI}&HTTP_REFERER=%%{HTTP_REFERER}";
+            $adminObject->addInfoBoxLine($html, '');
         }
     }
     $adminObject->displayNavigation(basename(__FILE__));
