@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * ****************************************************************************
@@ -28,6 +28,9 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
+
+use Xmf\Module\Admin;
+
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
@@ -44,7 +47,7 @@ $countErrors = $errorHandler->getCount();
 $countReports = $reportHandler->getCount();
 
 if (xhttperror_checkModuleAdmin()) {
-    $adminObject = \Xmf\Module\Admin::getInstance();
+    $adminObject = Admin::getInstance();
     $adminObject->addInfoBox(_AM_XHTTPERR_INTRO);
     $adminObject->addInfoBoxLine(sprintf(_AM_XHTTPERR_INFO), '');
     if (file_exists(XOOPS_ROOT_PATH . '/.htaccess')) {
@@ -68,6 +71,23 @@ if (xhttperror_checkModuleAdmin()) {
         }
     }
     $adminObject->displayNavigation(basename(__FILE__));
+
+    //------------- Test Data Buttons ----------------------------
+    if ($helper->getConfig('displaySampleButton')) {
+        TestdataButtons::loadButtonConfig($adminObject);
+        $adminObject->displayButton('left', '');;
+    }
+    $op = Request::getString('op', 0, 'GET');
+    switch ($op) {
+        case 'hide_buttons':
+            TestdataButtons::hideButtons();
+            break;
+        case 'show_buttons':
+            TestdataButtons::showButtons();
+            break;
+    }
+    //------------- End Test Data Buttons ----------------------------
+
     $adminObject->displayIndex();
 }
 require_once __DIR__ . '/admin_footer.php';

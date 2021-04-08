@@ -28,10 +28,12 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
+
+use XoopsModules\Xhttperror\Helper;
+
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
 /**
- * @param \XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_install_xhttperror(\XoopsModule $module)
@@ -57,7 +59,6 @@ function xoops_module_pre_install_xhttperror(\XoopsModule $module)
 }
 
 /**
- * @param \XoopsObject $module
  * @return bool|string
  */
 function xoops_module_install_xhttperror(\XoopsObject $module)
@@ -69,7 +70,7 @@ function xoops_module_install_xhttperror(\XoopsObject $module)
     $msg = '';
     // load classes
     /** @var \XoopsModules\Xhttperror\Helper $helper */
-    $helper       = \XoopsModules\Xhttperror\Helper::getInstance();
+    $helper       = Helper::getInstance();
     $errorHandler = $helper->getHandler('Error');
     $error        = $errorHandler->create();
     $error->setVar('error_title', 'Error 404 - Document Not Found');

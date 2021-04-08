@@ -12,6 +12,31 @@ namespace XoopsModules\Xhttperror\Common;
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use XoopsModule;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -27,12 +52,12 @@ trait VersionChecks
      * @param null|string  $requiredVer
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerXoops(\XoopsModule $module = null, $requiredVer = null)
+    public static function checkVerXoops(?XoopsModule $module = null, $requiredVer = null)
     {
-        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         if (null === $module) {
-            $module = \XoopsModule::getByDirname($moduleDirName);
+            $module = XoopsModule::getByDirname($moduleDirName);
         }
         xoops_loadLanguage('admin', $moduleDirName);
         xoops_loadLanguage('common', $moduleDirName);
@@ -55,16 +80,15 @@ trait VersionChecks
     /**
      * Verifies PHP version meets minimum requirements for this module
      * @static
-     * @param \XoopsModule|null $module
      *
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerPhp(\XoopsModule $module = null)
+    public static function checkVerPhp(?XoopsModule $module = null)
     {
-        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         if (null === $module) {
-            $module = \XoopsModule::getByDirname($moduleDirName);
+            $module = XoopsModule::getByDirname($moduleDirName);
         }
         xoops_loadLanguage('admin', $moduleDirName);
         xoops_loadLanguage('common', $moduleDirName);
@@ -86,7 +110,6 @@ trait VersionChecks
     }
 
     /**
-     *
      * compares current module version with latest GitHub release
      * @static
      * @param \Xmf\Module\Helper $helper
@@ -98,7 +121,7 @@ trait VersionChecks
 
     public static function checkVerModule($helper, $source = 'github', $default = 'master')
     {
-        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         $update             = '';
         $repository         = 'XoopsModules25x/' . $moduleDirName;
@@ -114,7 +137,7 @@ trait VersionChecks
                 $curlReturn = curl_exec($curlHandle);
                 if (false === $curlReturn) {
                     trigger_error(curl_error($curlHandle));
-                } elseif (false !== strpos($curlReturn, 'Not Found')) {
+                } elseif (false !== mb_strpos($curlReturn, 'Not Found')) {
                     trigger_error('Repository Not Found: ' . $infoReleasesUrl);
                 } else {
                     $file              = json_decode($curlReturn, false);

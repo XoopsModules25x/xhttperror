@@ -32,6 +32,8 @@
 require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
 require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php";
 xoops_load('XoopsLists');
 
@@ -51,7 +53,7 @@ $modversion['license_url']         = 'https://www.gnu.org/licenses/gpl-3.0.txt';
 $modversion['dirname']             = $moduleDirName;
 $modversion['release_info']        = 'in progress';
 $modversion['release_file']        = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/docs/changelog.txt';
-$modversion['min_php']             = '7.1';
+$modversion['min_php']             = '7.2';
 $modversion['min_xoops']           = '2.5.10';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.5'];
@@ -94,7 +96,7 @@ $modversion['onInstall'] = 'include/install_function.php';
 // Main menu
 $modversion['hasMain'] = false;
 
-// Blocks
+// ------------------- Blocks ------------------- //
 
 // Search
 $modversion['hasSearch'] = false;
@@ -110,7 +112,7 @@ $modversion['helpsection'] = [
     ['name' => _MI_XHTTPERR_SUPPORT, 'link' => 'page=support'],
 ];
 
-// Templates
+// ------------------- Templates ------------------- //
 $i = 0;
 ++$i;
 $modversion['templates'][$i]['file']        = 'xhttperror_index.tpl';
@@ -126,53 +128,80 @@ $modversion['templates'][$i]['description'] = '';
 //$modversion['templates'][$i]['type'] = 'admin';
 
 // Preferences/Config
-$i = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'text_editor';
-$modversion['config'][$i]['title']       = '_MI_XHTTPERR_FORM_EDITOR';
-$modversion['config'][$i]['description'] = '_MI_XHTTPERR_FORM_EDITOR_DESC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = 'dhtmltextarea';
-$modversion['config'][$i]['options']     = \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor');
-$modversion['config'][$i]['category']    = 'global';
-// Ignore error reports for admins
-++$i;
-$modversion['config'][$i]['name']        = 'ignore_admin';
-$modversion['config'][$i]['title']       = '_MI_XHTTPERR_IGNOREADMIN';
-$modversion['config'][$i]['description'] = '_MI_XHTTPERR_IGNOREADMIN_DESC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = true;
-// Option to turn off error reporting
-++$i;
-$modversion['config'][$i]['name']        = 'error_reporting';
-$modversion['config'][$i]['title']       = '_MI_XHTTPERR_REPORTING';
-$modversion['config'][$i]['description'] = '_MI_XHTTPERR_REPORTING_DESC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = false;
-++$i;
-// Show title in page title
-$modversion['config'][$i]['name']        = 'title_as_page_title';
-$modversion['config'][$i]['title']       = '_MI_XHTTPERR_PAGETTL';
-$modversion['config'][$i]['description'] = '_MI_XHTTPERR_PAGETTL_DESC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = '1';
-$modversion['config'][$i]['options']     = [
-    '_MI_XHTTPERR_PAGETTL1' => '0',
-    '_MI_XHTTPERR_PAGETTL2' => '1',
-    '_MI_XHTTPERR_PAGETTL3' => '2',
+$modversion['config'][] = [
+    'name'        => 'text_editor',
+    'title'       => '_MI_XHTTPERR_FORM_EDITOR',
+    'description' => '_MI_XHTTPERR_FORM_EDITOR_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'dhtmltextarea',
+    'options'     => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+    'category'    => 'global',
 ];
-// Reports per page
-++$i;
-$modversion['config'][$i]['name']        = 'reports_per_page';
-$modversion['config'][$i]['title']       = '_MI_XHTTPERR_NUMREPS';
-$modversion['config'][$i]['description'] = '_MI_XHTTPERR_NUMREPS_DESC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = '50';
 
+// Ignore error reports for admins
+$modversion['config'][] = [
+    'name'        => 'ignore_admin',
+    'title'       => '_MI_XHTTPERR_IGNOREADMIN',
+    'description' => '_MI_XHTTPERR_IGNOREADMIN_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => true,
+];
+
+// Option to turn off error reporting
+$modversion['config'][] = [
+    'name'        => 'error_reporting',
+    'title'       => '_MI_XHTTPERR_REPORTING',
+    'description' => '_MI_XHTTPERR_REPORTING_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => false,
+];
+
+// Show title in page title
+$modversion['config'][] = [
+    'name'        => 'title_as_page_title',
+    'title'       => '_MI_XHTTPERR_PAGETTL',
+    'description' => '_MI_XHTTPERR_PAGETTL_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => '1',
+    'options'     => ['_MI_XHTTPERR_PAGETTL1' => '0', '_MI_XHTTPERR_PAGETTL2' => '1', '_MI_XHTTPERR_PAGETTL3' => '2',],
+];
+
+// Reports per page
+$modversion['config'][] = [
+    'name'        => 'reports_per_page',
+    'title'       => '_MI_XHTTPERR_NUMREPS',
+    'description' => '_MI_XHTTPERR_NUMREPS_DESC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => '50',
+];
 // Notifications
 $modversion['hasNotification'] = false;
+
+/**
+ * Make Sample button visible?
+ */
+$modversion['config'][] = [
+    'name'        => 'displaySampleButton',
+    'title'       => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLE_BUTTON',
+    'description' => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLE_BUTTON_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1,
+];
+
+/**
+ * Show Developer Tools?
+ */
+$modversion['config'][] = [
+    'name'        => 'displayDeveloperTools',
+    'title'       => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS',
+    'description' => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];

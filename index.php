@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use XoopsModules\Xhttperror;
 
@@ -23,17 +23,17 @@ if (!isset($_GET['error'])) {
 } else {
     // Save error info to database
     // We may want to turn this off on busy sites.
-    if (false === $helper->getConfig('error_reporting')) {
-        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && true !== $helper->getConfig('ignore_admin'))) {
+    if (false == $helper->getConfig('error_reporting')) {
+        if (!$xoopsUser || ($xoopsUser->isAdmin($xoopsModule->mid()) && true != $helper->getConfig('ignore_admin'))) {
             // create report
             $serverVars                 = [];
             $serverVars['HTTP_REFERER'] = xoops_getenv('HTTP_REFERER');
             $serverVars['REMOTE_ADDR']  = xoops_getenv('REMOTE_ADDR');
             //$serverVars[''] =
-            $referer      = xoops_getenv('HTTP_REFERER');
+            $referer      = $_GET['HTTP_REFERER'] ?? xoops_getenv('HTTP_REFERER');
             $useragent    = xoops_getenv('HTTP_USER_AGENT');
-            $remoteaddr   = xoops_getenv('REMOTE_ADDR');
-            $requesteduri = xoops_getenv('REQUEST_URI');
+            $remoteaddr   = $_GET['REMOTE_ADDR'] ?? xoops_getenv('REMOTE_ADDR');
+            $requesteduri = $_GET['REQUEST_URI'] ?? xoops_getenv('REQUEST_URI');
 
             if (empty($xoopsUser)) {
                 $uid = 0; // anonymous

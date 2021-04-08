@@ -2,9 +2,6 @@
 
 namespace XoopsModules\Xhttperror;
 
-use XoopsModules\Xhttperror;
-use XoopsModules\Xhttperror\Common;
-
 /**
  * Class Utility
  */

@@ -34,9 +34,8 @@ class ReportHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * ReportHandler constructor.
-     * @param \XoopsDatabase|null $db
      */
-    public function __construct(\XoopsDatabase $db = null)
+    public function __construct(?\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'xhttperror_reports', Report::class, 'report_id', 'report_date');
     }

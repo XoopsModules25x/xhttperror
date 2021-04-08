@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -28,6 +29,7 @@
  * ****************************************************************************
  */
 
+use Xmf\Module\Admin;
 use XoopsModules\Xhttperror;
 
 // require_once  dirname(__DIR__) . '/class/Helper.php';
@@ -37,7 +39,7 @@ $helper = Xhttperror\Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('feedback');
 
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }

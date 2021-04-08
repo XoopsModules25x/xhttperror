@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * ****************************************************************************
  *  - A Project by Developers TEAM For Xoops - ( https://xoops.org )
@@ -28,13 +29,14 @@
  * ****************************************************************************
  */
 
+use Xmf\Module\Admin;
 use XoopsModules\Xhttperror;
 
 include dirname(__DIR__) . '/preloads/autoloader.php';
 
-require  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(__DIR__, 3) . '/include/cp_header.php';
 //require $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
-require  dirname(__DIR__) . '/include/common.php';
+require dirname(__DIR__) . '/include/common.php';
 
 require_once XOOPS_ROOT_PATH . '/class/tree.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
@@ -44,13 +46,13 @@ xoops_load('XoopsUserUtility');
 
 require_once dirname(__DIR__) . '/include/functions.php';
 
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName = \basename(\dirname(__DIR__));
 /** @var Xhttperror\Helper $helper */
 $helper      = Xhttperror\Helper::getInstance();
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16    = Admin::iconUrl('', 16);
+$pathIcon32    = Admin::iconUrl('', 32);
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 // Load language files
@@ -60,22 +62,24 @@ $helper->loadLanguage('main');
 
 $myts = \MyTextSanitizer::getInstance();
 
-if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new \XoopsTpl();
 }
 
 ///** @var \XoopsModuleHandler $moduleHandler */
-//$moduleHandler   = xoops_getHandler('module');
+///** @var \XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
 //$xoopsModule     = $moduleHandler->getByDirname($dirname);
 $moduleInfo      = $helper->getModule()->mid();
-$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16      = Admin::iconUrl('', 16);
+$pathIcon32      = Admin::iconUrl('', 32);
 $pathImageModule = $helper->url('assets/images');
 
 // Get user groups
 $groupPermHandler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     if (!$grouppermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);

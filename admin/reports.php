@@ -28,6 +28,10 @@
  *  $Date$:    Date of last commit
  * ****************************************************************************
  */
+
+use Xmf\Module\Admin;
+use Xmf\Request;
+
 $currentFile = basename(__FILE__);
 require_once __DIR__ . '/admin_header.php';
 $op = $_REQUEST['op'] ?? 'list_reports';
@@ -44,7 +48,7 @@ switch ($op) {
         // render start here
         xoops_cp_header();
         // render submenu
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
         if ($countReports > 0) {
@@ -68,7 +72,7 @@ switch ($op) {
         break;
     case 'delete_report':
         $report = $reportHandler->get($_REQUEST['report_id']);
-        if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
+        if (Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header($currentFile, 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }

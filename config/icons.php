@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
-/**
- * @return object
- */
+/** @return object */
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$moduleDirName = basename(dirname(__DIR__));
+use Xmf\Module\Admin;
+
+$pathIcon16    = Admin::iconUrl('', 16);
+$moduleDirName = \basename(\dirname(__DIR__));
 
 return (object)[
     //    'name'  => mb_strtoupper($moduleDirName) . ' IconConfigurator',
@@ -21,4 +21,3 @@ return (object)[
     '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
     //    ],
 ];
-

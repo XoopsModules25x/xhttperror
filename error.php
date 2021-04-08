@@ -1,5 +1,7 @@
 <?php
 
+use Xmf\Request;
+
 ob_start();
 @set_time_limit(5);
 @ini_set('memory_limit', '64M');
@@ -98,9 +100,9 @@ function print_error_page()
     ];
 
     // Get the Status Code
-    if (\Xmf\Request::hasVar('REDIRECT_STATUS', 'SERVER') && (200 != $_SERVER['REDIRECT_STATUS'])) {
+    if (Request::hasVar('REDIRECT_STATUS', 'SERVER') && (200 != $_SERVER['REDIRECT_STATUS'])) {
         $sc = $_SERVER['REDIRECT_STATUS'];
-    } elseif (\Xmf\Request::hasVar('REDIRECT_REDIRECT_STATUS', 'SERVER') && (200 != $_SERVER['REDIRECT_REDIRECT_STATUS'])) {
+    } elseif (Request::hasVar('REDIRECT_REDIRECT_STATUS', 'SERVER') && (200 != $_SERVER['REDIRECT_REDIRECT_STATUS'])) {
         $sc = $_SERVER['REDIRECT_REDIRECT_STATUS'];
     }
     $sc = ($_GET['error'] ?? 404);
