@@ -29,7 +29,17 @@
  * ****************************************************************************
  */
 
+use Xmf\Request;
 use Xmf\Module\Admin;
+use XoopsModules\Xhttperror\{
+    Common\TestdataButtons,
+    Helper,
+    Utility
+};
+
+/** @var Admin $adminObject */
+/** @var Helper $helper */
+/** @var Utility $utility */
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
@@ -75,7 +85,7 @@ if (xhttperror_checkModuleAdmin()) {
     //------------- Test Data Buttons ----------------------------
     if ($helper->getConfig('displaySampleButton')) {
         TestdataButtons::loadButtonConfig($adminObject);
-        $adminObject->displayButton('left', '');;
+        $adminObject->displayButton('left', '');
     }
     $op = Request::getString('op', 0, 'GET');
     switch ($op) {

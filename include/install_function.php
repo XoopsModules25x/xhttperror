@@ -29,7 +29,10 @@
  * ****************************************************************************
  */
 
-use XoopsModules\Xhttperror\Helper;
+use XoopsModules\Xhttperror\{
+    Helper
+};
+/** @var Helper $helper */
 
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
@@ -69,7 +72,6 @@ function xoops_module_install_xhttperror(\XoopsObject $module)
     $ret = true;
     $msg = '';
     // load classes
-    /** @var \XoopsModules\Xhttperror\Helper $helper */
     $helper       = Helper::getInstance();
     $errorHandler = $helper->getHandler('Error');
     $error        = $errorHandler->create();

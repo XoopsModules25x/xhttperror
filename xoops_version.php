@@ -61,8 +61,8 @@ $modversion['image']               = 'assets/images/logoModule.png';
 $modversion['official']            = 0; //1 indicates supported by Xoops CORE Dev Team, 0 means 3rd party supported
 
 //$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
-$modversion['modicons16'] = "modules/{$moduleDirName}/assets/images/icons/16x16";
-$modversion['modicons32'] = "modules/{$moduleDirName}/assets/images/icons/32x32";
+$modversion['modicons16'] = "assets/images/icons/16x16";
+$modversion['modicons32'] = "assets/images/icons/32x32";
 
 // About
 $modversion['demo_site_url']       = '';

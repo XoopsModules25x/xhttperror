@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
 
-use XoopsModules\Xhttperror;
+use XoopsModules\Xhttperror\{
+    Helper
+};
+/** @var Helper $helper */
 
 // inludes and stuff
 require_once __DIR__ . '/header.php';
@@ -8,8 +11,7 @@ require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'xhttperror_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
-/** @var Xhttperror\Helper $helper */
-$helper = Xhttperror\Helper::getInstance();
+$helper = Helper::getInstance();
 
 //require 'include/functions.php';
 $myts = \MyTextSanitizer::getInstance();

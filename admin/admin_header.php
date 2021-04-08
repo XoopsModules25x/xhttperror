@@ -30,7 +30,10 @@
  */
 
 use Xmf\Module\Admin;
-use XoopsModules\Xhttperror;
+use XoopsModules\Xhttperror\{
+    Helper
+};
+/** @var Helper $helper */
 
 include dirname(__DIR__) . '/preloads/autoloader.php';
 
@@ -46,9 +49,10 @@ xoops_load('XoopsUserUtility');
 
 require_once dirname(__DIR__) . '/include/functions.php';
 
+global $xoopsUser, $xoopsModule;
+
 $moduleDirName = \basename(\dirname(__DIR__));
-/** @var Xhttperror\Helper $helper */
-$helper      = Xhttperror\Helper::getInstance();
+$helper      = Helper::getInstance();
 $adminObject = Admin::getInstance();
 
 $pathIcon16    = Admin::iconUrl('', 16);

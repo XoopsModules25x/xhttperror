@@ -31,6 +31,7 @@
 
 use Xmf\Module\Admin;
 use Xmf\Request;
+/** @var Helper $helper */
 
 $currentFile = basename(__FILE__);
 require_once __DIR__ . '/admin_header.php';
