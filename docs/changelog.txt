@@ -1,0 +1,47 @@
+<h5>Key:</h5>
++ Added feature.
+- Removed.
+! Bug fix.
+o General comment.
+
+<h5>1.11 Beta 1  [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.4.6
+<hr>
++ delete multiple reports (luciorota)
+! HTTP_REFERER, REMOTE_ADDR, REQUEST_URI are incorrect (luciorota)
++ XOOPS 2.5.10, PHP 7 (mamba)
++ Converted to XOOPS 2.5.8 Admin GUI (mamba)
+- removed @version (mamba)
++ PSR+2 code cosmetics (mamba)
++ addNavigation(basename(__FILE__))  (mamba)
++ dirname(__FILE__) to __DIR__ (mamba)
++ replaced < br /> with < br > (mamba)
++ Unnecessary double quotes (mamba)
++ reference mismatch (mamba)
++ Hardening to type safe (mamba)
++ update Help (mamba)
++ changed _handler to Handler (mamba)
++ removed '/' from void HTML elements (&lt;br>, &lt;img>, etc) (mamba)
++ HTML 5: removed 'selected' and 'checked' (mamba)
++ updated file headers for consistency (mamba)
++ renamed several $indexAdmin with $adminObject for consistency (mamba)
++ Updates for PayPal changes (zyspec)
++ added Contributing.md (mamba)
++ moved functions to Utility class (mamba)
++ include_once to require_once (mamba)
++ php-cs-fixer updates (mamba)
++ started conversion to XMF (mamba)
+    &nbsp;&nbsp;+ updated addInfoBoxLine entries (mamba)
+    &nbsp;&nbsp;+ displayNavigation(basename(__FILE__))  (mamba)
+    &nbsp;&nbsp;+ changed to +>displayButton('left') (mamba)
+
+
+<h5>1.01            [2014-04-23]</h5>
+<hr>
++ moved all images, CSS, and JS files to /assets (mamba)
++ renamed .html Smarty templates to .tpl (mamba)
+
+
+<h5>1.00 [2012/08/06]</h5>
+<hr>
+
+o First public release.
