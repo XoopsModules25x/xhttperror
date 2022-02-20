@@ -37,7 +37,7 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php";
 xoops_load('XoopsLists');
 
-$modversion['version']             = '1.11';
+$modversion['version']             = '1.11.0';
 $modversion['module_status']       = 'Beta 1'; //"Stable";
 $modversion['release_date']        = '2020/05/14'; // 'Y/m/d'
 $modversion['name']                = _MI_XHTTPERR_NAME;
